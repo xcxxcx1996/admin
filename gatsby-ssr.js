@@ -6,7 +6,7 @@ import { AccountProvider } from "./src/context/account"
 import { CacheProvider } from "./src/context/cache"
 import { InterfaceProvider } from "./src/context/interface"
 import { medusaUrl, queryClient } from "./src/services/config"
-
+// import withTrans from "./src/i18n/withTrans"
 export const wrapPageElement = ({ element }) => {
   return (
     <MedusaProvider

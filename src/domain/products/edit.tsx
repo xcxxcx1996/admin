@@ -1,3 +1,4 @@
+import { RouteComponentProps } from "@reach/router"
 import { useAdminProduct, useAdminUpdateProduct } from "medusa-react"
 import React, { useEffect, useState } from "react"
 import { FieldValues } from "react-hook-form"
@@ -21,7 +22,13 @@ import {
   useProductForm,
 } from "./product-form/form/product-form-context"
 
-const EditProductPage = ({ id }) => {
+// type EditProductProps = {
+//   id: string
+// } & RouteComponentProps
+const EditProductPage: React.FC<RouteComponentProps<{ id: string }>> = ({
+  id,
+}) => {
+  id = id ?? ""
   const notification = useNotification()
   const { product, isLoading } = useAdminProduct(id, {
     keepPreviousData: true,

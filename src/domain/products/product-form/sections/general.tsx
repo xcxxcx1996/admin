@@ -21,6 +21,7 @@ import RadioGroup from "../../../../components/organisms/radio-group"
 import useImperativeDialog from "../../../../hooks/use-imperative-dialog"
 import useNotification from "../../../../hooks/use-notification"
 import { getErrorMessage } from "../../../../utils/error-messages"
+import { useTranslation } from "react-i18next"
 import {
   SINGLE_PRODUCT_VIEW,
   useProductForm,
@@ -37,7 +38,7 @@ const General = ({ showViewOptions = true, isEdit = false, product }) => {
   } = useProductForm()
   const { product_types } = useAdminProductTypes(undefined, { cacheTime: 0 })
   const { collections } = useAdminCollections()
-
+  const { t } = useTranslation()
   const typeOptions =
     product_types?.map((tag) => ({ label: tag.value, value: tag.id })) || []
   const collectionOptions =
@@ -62,11 +63,11 @@ const General = ({ showViewOptions = true, isEdit = false, product }) => {
     <GeneralBodyCard
       isEdit={isEdit}
       product={product}
-      title="General"
+      title={t("common.general")}
       subtitle="To start selling, all you need is a name, price, and image"
     >
       <div className="mt-large">
-        <h6 className="inter-base-semibold mb-1">Details</h6>
+        <h6 className="inter-base-semibold mb-1">{t("common.detail")}</h6>
         <label
           htmlFor="name"
           className="inter-small-regular text-grey-50 block max-w-[370px] mb-base"
@@ -77,7 +78,7 @@ const General = ({ showViewOptions = true, isEdit = false, product }) => {
         <div className="flex gap-8 mb-base">
           <Input
             id="name"
-            label="Name"
+            label={t("common.general")}
             name="title"
             placeholder="Jacket, Sunglasses..."
             required
@@ -89,7 +90,7 @@ const General = ({ showViewOptions = true, isEdit = false, product }) => {
           />
           <Input
             tooltipContent="Handles are human friendly unique identifiers that are appropriate for URL slugs."
-            label="Handle"
+            label={t("products.handle")}
             name="handle"
             placeholder="bathrobe"
             prefix="/"
@@ -107,7 +108,7 @@ const General = ({ showViewOptions = true, isEdit = false, product }) => {
           <Textarea
             name="description"
             id="description"
-            label="Description"
+            label={t("common.description")}
             placeholder="Short description of the product..."
             className="row-span-full"
             rows={8}
@@ -116,7 +117,7 @@ const General = ({ showViewOptions = true, isEdit = false, product }) => {
           <Controller
             as={Select}
             control={control}
-            label="Collection"
+            label={t("products.collection")}
             name="collection"
             placeholder="Select collection..."
             options={collectionOptions}
@@ -128,7 +129,7 @@ const General = ({ showViewOptions = true, isEdit = false, product }) => {
             render={({ value, onChange }) => {
               return (
                 <Select
-                  label="Type"
+                  label={t("products.type")}
                   placeholder="Select type..."
                   options={typeOptions}
                   onChange={onChange}
@@ -147,7 +148,7 @@ const General = ({ showViewOptions = true, isEdit = false, product }) => {
             render={({ onChange, value }) => {
               return (
                 <TagInput
-                  label="Tags (separated by comma)"
+                  label={t("products.tags")}
                   placeholder="Spring, Summer..."
                   onChange={onChange}
                   values={value || []}
@@ -158,7 +159,11 @@ const General = ({ showViewOptions = true, isEdit = false, product }) => {
           />
         </div>
         <div className="flex item-center gap-x-1.5 mb-xlarge">
-          <Checkbox name="discountable" ref={register} label="Discountable" />
+          <Checkbox
+            name="discountable"
+            ref={register}
+            label={t("products.discountable")}
+          />
           <IconTooltip
             content={
               "When unchecked discounts will not be applied to this product"
@@ -172,11 +177,11 @@ const General = ({ showViewOptions = true, isEdit = false, product }) => {
             className="flex items-center gap-4 mt-xlarge"
           >
             <RadioGroup.SimpleItem
-              label="Simple product"
+              label={t("products.simple_product")}
               value={SINGLE_PRODUCT_VIEW}
             />
             <RadioGroup.SimpleItem
-              label="Product with variants"
+              label={t("products.variant_product")}
               value={VARIANTS_VIEW}
             />
           </RadioGroup.Root>
@@ -192,42 +197,55 @@ const GeneralBodyCard = ({ isEdit, product, ...props }) => {
   const notification = useNotification()
   const updateProduct = useAdminUpdateProduct(params?.id)
   const deleteProduct = useAdminDeleteProduct(params?.id)
+  const { t } = useTranslation()
 
   const onDelete = async () => {
     const shouldDelete = await dialog({
-      heading: "Delete Product",
-      text: "Are you sure you want to delete this product",
+      heading: t("products.delete_heading"),
+      text: t("products.delete_text"),
     })
     if (shouldDelete) {
       deleteProduct.mutate(undefined, {
         onSuccess: () => {
-          notification("Success", "Product deleted successfully", "success")
+          notification(
+            t("common.status.success"),
+            t("products.delete_success"),
+            "success"
+          )
           navigate("/a/products/")
         },
         onError: (err) => {
-          notification("Ooops", getErrorMessage(err), "error")
+          notification(t("common.status.error"), getErrorMessage(err), "error")
         },
       })
     }
   }
 
   const onStatusChange = async () => {
-    const newStatus = product?.status === "published" ? "draft" : "published"
+    const newStatus =
+      product?.status === "published"
+        ? t("common.status.draft")
+        : t("common.status.success")
     updateProduct.mutate(
       {
         status: newStatus,
       },
       {
         onSuccess: () => {
-          const pastTense = newStatus === "published" ? "published" : "drafted"
+          const pastTense =
+            newStatus === "published"
+              ? t("common.status.success")
+              : t("common.status.draft")
           notification(
-            "Success",
-            `Product ${pastTense} successfully`,
+            t("common.status.success"),
+            `${t("common.status.product")} ${pastTense} ${t(
+              "common.status.successfully"
+            )}`,
             "success"
           )
         },
         onError: (err) => {
-          notification("Ooops", getErrorMessage(err), "error")
+          notification(t("common.status.error"), getErrorMessage(err), "error")
         },
       }
     )
@@ -235,7 +253,7 @@ const GeneralBodyCard = ({ isEdit, product, ...props }) => {
 
   const actionables = [
     {
-      label: "Delete Product",
+      label: t("products.delete_product"),
       onClick: onDelete,
       variant: "danger" as const,
       icon: <TrashIcon />,
@@ -250,8 +268,8 @@ const GeneralBodyCard = ({ isEdit, product, ...props }) => {
         isEdit ? (
           <StatusSelector
             isDraft={product?.status === "draft"}
-            activeState="Published"
-            draftState="Draft"
+            activeState={t("common.status.published")}
+            draftState={t("common.status.drafted")}
             onChange={onStatusChange}
           />
         ) : undefined

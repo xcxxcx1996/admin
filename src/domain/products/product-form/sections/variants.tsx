@@ -16,6 +16,7 @@ import NewOption from "../../details/variants/option-edit"
 import VariantEditor from "../../details/variants/variant-editor"
 import { useProductForm } from "../form/product-form-context"
 import { buildOptionsMap } from "../utils"
+import { useTranslation } from "react-i18next"
 
 const Variants = ({ isEdit, product }) => {
   const {
@@ -29,7 +30,7 @@ const Variants = ({ isEdit, product }) => {
   const [showAddOption, setShowAddOption] = useState(false)
   const notification = useNotification()
   const createVariant = useAdminCreateVariant(product?.id)
-
+  const { t } = useTranslation()
   useEffect(() => {
     if (isEdit) {
       return
@@ -113,18 +114,18 @@ const Variants = ({ isEdit, product }) => {
 
   return (
     <BodyCard
-      title="Variants"
-      subtitle="Add variations of this product. Offer your customers different options for price, color, format, size, shape, etc."
+      title={t("products.variant.title")}
+      subtitle={t("products.variant.subtitle")}
       forceDropdown={true}
       actionables={
         isEdit && [
           {
-            label: "Add variant",
+            label: t("products.variant.add"),
             onClick: () => setShowAddVariantModal(true),
             icon: <PlusIcon size={20} />,
           },
           {
-            label: "Edit options",
+            label: t("products.option.edit"),
             onClick: () => setShowAddOption(true),
             icon: <EditIcon size={20} />,
           },
@@ -136,7 +137,7 @@ const Variants = ({ isEdit, product }) => {
           <>
             <div className="flex items-center mb-base">
               <h6 className="inter-base-semibold text-grey-90 mr-1.5">
-                Product Options
+                {t("products.option.header")}
               </h6>
             </div>
             <div className="flex flex-col gap-y-base max-w-[570px] w-full mb-4">
@@ -169,14 +170,16 @@ const Variants = ({ isEdit, product }) => {
               ))}
               <div className="mt-xs">
                 <Button onClick={handleAddOption} size="small" variant="ghost">
-                  + Add an option
+                  {" + " + t("products.option.add")}
                 </Button>
               </div>
             </div>
             <div className="flex justify-center mb-base flex-col space-y-2">
               <div className="flex space-x-2">
-                <h6 className="inter-base-semibold text-grey-90">Variants</h6>
-                <IconTooltip content="Add product options to create variants" />
+                <h6 className="inter-base-semibold text-grey-90">
+                  {t("products.variant.title")}
+                </h6>
+                <IconTooltip content={t("products.variant.tip")} />
               </div>
             </div>
           </>
@@ -199,7 +202,7 @@ const Variants = ({ isEdit, product }) => {
         <VariantEditor
           onCancel={() => setShowAddVariantModal(false)}
           onSubmit={handleAddVariant}
-          title="Add variant"
+          title={t("products.variant.add")}
           optionsMap={buildOptionsMap(product)}
         />
       )}

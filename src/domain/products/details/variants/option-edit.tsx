@@ -9,12 +9,13 @@ import Input from "../../../../components/molecules/input"
 import Modal from "../../../../components/molecules/modal"
 import useNotification from "../../../../hooks/use-notification"
 import { getErrorMessage } from "../../../../utils/error-messages"
+import { useTranslation } from "react-i18next"
 
 const NewOption = ({ productId, options, onDismiss }) => {
   const optionsArray = useMemo(() => {
     return [...options]
   }, [options])
-
+  const { t } = useTranslation()
   const [toSave, setToSave] = useState(optionsArray)
   const notification = useNotification()
 
@@ -87,11 +88,15 @@ const NewOption = ({ productId, options, onDismiss }) => {
       })
     )
       .then(() => {
-        notification("Success", "Options updated", "success")
+        notification(
+          t("common.status.success"),
+          t("products.option.updated"),
+          "success"
+        )
         onDismiss()
       })
       .catch((err) => {
-        notification("Error", getErrorMessage(err), "error")
+        notification(t("common.status.error"), getErrorMessage(err), "error")
       })
   }
 
@@ -120,7 +125,7 @@ const NewOption = ({ productId, options, onDismiss }) => {
             )}
             <div className="flex w-full justify-end mt-4">
               <Button size="small" variant="secondary" onClick={onAddOption}>
-                + Add option
+                {"+ " + t("products.option.add")}
               </Button>
             </div>
           </Modal.Content>

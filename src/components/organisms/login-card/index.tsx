@@ -2,6 +2,7 @@ import { navigate } from "gatsby"
 import { useAdminLogin } from "medusa-react"
 import React, { useState } from "react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import Button from "../../fundamentals/button"
 import SigninInput from "../../molecules/input-signin"
 
@@ -18,7 +19,7 @@ const LoginCard: React.FC<LoginCardProps> = ({ toResetPassword }) => {
   const [isInvalidLogin, setIsInvalidLogin] = useState(false)
   const { register, handleSubmit, reset } = useForm<FormValues>()
   const login = useAdminLogin()
-
+  const { t } = useTranslation()
   const onSubmit = (values: FormValues) => {
     login.mutate(values, {
       onSuccess: () => {
@@ -34,13 +35,13 @@ const LoginCard: React.FC<LoginCardProps> = ({ toResetPassword }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col items-center">
         <span className="inter-2xlarge-semibold mt-4 text-grey-90">
-          Welcome back!
+          {t("login.welcome")}
         </span>
         <span className="inter-base-regular text-grey-50 mt-2">
-          It's great to see you 👋🏼
+          {t("login.welcome_slogan_1")}
         </span>
         <span className="inter-base-regular text-grey-50 mb-xlarge">
-          Log in to your account below
+          {t("login.welcome_slogan_2")}
         </span>
         <SigninInput
           placeholder="Email..."
@@ -57,7 +58,7 @@ const LoginCard: React.FC<LoginCardProps> = ({ toResetPassword }) => {
         />
         {isInvalidLogin && (
           <span className="text-rose-50 w-full mt-2 inter-small-regular">
-            These credentials do not match our records
+            {t("login.error_text")}
           </span>
         )}
         <Button
@@ -67,14 +68,14 @@ const LoginCard: React.FC<LoginCardProps> = ({ toResetPassword }) => {
           type="submit"
           loading={login.isLoading}
         >
-          Continue
+          {t("login.button_login")}
         </Button>
-        <span
+        {/* <span
           className="inter-small-regular text-grey-50 mt-8 cursor-pointer"
           onClick={toResetPassword}
         >
           Reset password
-        </span>
+        </span> */}
       </div>
     </form>
   )

@@ -21,6 +21,7 @@ import ViewProductsTable from "../../../components/templates/collection-product-
 import useNotification from "../../../hooks/use-notification"
 import Medusa from "../../../services/api"
 import { getErrorMessage } from "../../../utils/error-messages"
+import { useTranslation } from "react-i18next"
 
 const CollectionDetails: React.FC<RouteComponentProps> = ({ location }) => {
   const ensuredPath = location!.pathname.replace("/a/collections/", ``)
@@ -32,7 +33,7 @@ const CollectionDetails: React.FC<RouteComponentProps> = ({ location }) => {
   const [showAddProducts, setShowAddProducts] = useState(false)
   const notification = useNotification()
   const [updates, setUpdates] = useState(0)
-
+  const { t } = useTranslation()
   const handleDelete = () => {
     deleteCollection.mutate(undefined, {
       onSuccess: () => navigate(`/a/collections`),
@@ -125,12 +126,12 @@ const CollectionDetails: React.FC<RouteComponentProps> = ({ location }) => {
                     forceDropdown
                     actions={[
                       {
-                        label: "Edit Collection",
+                        label: t("collections.edit"),
                         onClick: () => setShowEdit(true),
                         icon: <EditIcon size="20" />,
                       },
                       {
-                        label: "Delete",
+                        label: t("collections.delete"),
                         onClick: () => setShowDelete(!showDelete),
                         variant: "danger",
                         icon: <TrashIcon size="20" />,
@@ -144,7 +145,9 @@ const CollectionDetails: React.FC<RouteComponentProps> = ({ location }) => {
               </div>
               {collection.metadata && (
                 <div className="mt-large flex flex-col gap-y-base">
-                  <h3 className="inter-base-semibold">Metadata</h3>
+                  <h3 className="inter-base-semibold">
+                    {t("common.metadata")}
+                  </h3>
                   <div>
                     <ViewRaw raw={collection.metadata} name="metadata" />
                   </div>
@@ -154,12 +157,12 @@ const CollectionDetails: React.FC<RouteComponentProps> = ({ location }) => {
           )}
         </div>
         <BodyCard
-          title="Products"
+          title={t("products.title")}
           subtitle="To start selling, all you need is a name, price, and image."
           className="h-full"
           actionables={[
             {
-              label: "Edit Products",
+              label: t("products.edit"),
               icon: <EditIcon size="20" />,
               onClick: () => setShowAddProducts(!showAddProducts),
             },
@@ -191,10 +194,10 @@ const CollectionDetails: React.FC<RouteComponentProps> = ({ location }) => {
       {showDelete && (
         <DeletePrompt
           handleClose={() => setShowDelete(!showDelete)}
-          heading="Delete collection"
-          successText="Successfully deleted collection"
+          heading={t("collections.delete")}
+          successText={t("collections.delete_success")}
           onDelete={async () => handleDelete()}
-          confirmText="Yes, delete"
+          confirmText={t("collections.delete_confirm")}
         />
       )}
       {showAddProducts && (

@@ -9,16 +9,17 @@ import CustomerGroupContext, {
   CustomerGroupContextContainer,
 } from "./context/customer-group-context"
 import CustomerGroupsTable from "../../../components/templates/customer-group-table/customer-groups-table"
+import { useTranslation } from "react-i18next"
 
 /*
  * Customer groups index page
  */
 function Index(_: RouteComponentProps) {
   const { showModal } = useContext(CustomerGroupContext)
-
+  const { t } = useTranslation()
   const actions = [
     {
-      label: "New group",
+      label: t("customers.groups.create"),
       onClick: showModal,
       icon: (
         <span className="text-grey-90">

@@ -1,4 +1,4 @@
-import { Router, useLocation } from "@reach/router"
+import { RouteComponentProps, Router, useLocation } from "@reach/router"
 import { navigate } from "gatsby"
 import { useAdminCreateBatchJob, useAdminCreateCollection } from "medusa-react"
 import React, { useEffect, useState } from "react"
@@ -19,7 +19,7 @@ import NewProductPage from "./new"
 
 const VIEWS = ["products", "collections"]
 
-const ProductIndex = () => {
+const ProductIndex: React.FC<RouteComponentProps> = () => {
   const location = useLocation()
   const [view, setView] = useState("products")
 
@@ -121,6 +121,7 @@ const ProductIndex = () => {
     const reqObj = {
       type: "product-export",
       context: {},
+      dry_run: false,
     }
 
     createBatchJob.mutate(reqObj, {

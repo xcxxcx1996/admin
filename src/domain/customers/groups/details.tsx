@@ -22,6 +22,7 @@ import CustomerGroupContext, {
 } from "./context/customer-group-context"
 import useQueryFilters from "../../../hooks/use-query-filters"
 import DeletePrompt from "../../../components/organisms/delete-prompt"
+import { useTranslation } from "react-i18next"
 
 /**
  * Default filtering config for querying customer group customers list endpoint.
@@ -64,6 +65,7 @@ function CustomerGroupCustomersList(props: CustomerGroupCustomersListProps) {
     groupId,
     queryObject
   )
+  const { t } = useTranslation()
 
   const { mutate: addCustomers } = useAdminAddCustomersToCustomerGroup(groupId)
   const { mutate: removeCustomers } = useAdminRemoveCustomersFromCustomerGroup(
@@ -85,7 +87,7 @@ function CustomerGroupCustomersList(props: CustomerGroupCustomersListProps) {
 
   const actions = [
     {
-      label: "Edit customers",
+      label: t("customer.groups.edit"),
       onClick: () => setShowCustomersModal(true),
       icon: (
         <span className="text-grey-90">
@@ -169,15 +171,15 @@ function CustomerGroupDetailsHeader(props: CustomerGroupDetailsHeaderProps) {
   const { mutate: deleteGroup } = useAdminDeleteCustomerGroup(
     props.customerGroup.id
   )
-
+  const { t } = useTranslation()
   const actions = [
     {
-      label: "Edit",
+      label: t("common.edit"),
       onClick: showModal,
       icon: <EditIcon size={20} />,
     },
     {
-      label: "Delete",
+      label: t("common.delete"),
       onClick: () => {
         setShowDeleteConfirmation(true)
       },
@@ -205,10 +207,10 @@ function CustomerGroupDetailsHeader(props: CustomerGroupDetailsHeaderProps) {
         <DeletePrompt
           onDelete={onDeleteConfirmed}
           handleClose={handleConfirmDialogClose}
-          confirmText="Yes, delete"
-          heading="Delete the group"
-          successText="Group deleted"
-          text="Are you sure you want to delete this customer group?"
+          confirmText={t("customers.groups.delete_confirm")}
+          heading={t("customers.groups.delete")}
+          successText={t("customers.groups.delete_success")}
+          text={t("customers.groups.delete_text")}
         />
       )}
     </>
@@ -222,6 +224,7 @@ type CustomerGroupDetailsProps = { id: string }
  */
 function CustomerGroupDetails(p: CustomerGroupDetailsProps) {
   const { customer_group } = useAdminCustomerGroup(p.id)
+  const { t } = useTranslation()
 
   if (!customer_group) {
     return null
@@ -231,7 +234,9 @@ function CustomerGroupDetails(p: CustomerGroupDetailsProps) {
     <CustomerGroupContextContainer group={customer_group}>
       <div className="-mt-4 pb-4">
         <Breadcrumb
-          currentPage={customer_group ? customer_group.name : "Customer Group"}
+          currentPage={
+            customer_group ? customer_group.name : t("customers.groups.title")
+          }
           previousBreadcrumb="Groups"
           previousRoute="/a/customers/groups"
         />

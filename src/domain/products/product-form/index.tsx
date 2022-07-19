@@ -1,3 +1,4 @@
+import { t } from "i18next"
 import { useAdminStore } from "medusa-react"
 import * as React from "react"
 import RawJSON from "../../../components/organisms/raw-json"
@@ -44,7 +45,7 @@ const ProductForm = ({ product, isEdit = false }: ProductFormProps) => {
         <StockAndInventory />
       </div>
       <div className="mt-large">
-        <RawJSON data={product} title="Raw product" />
+        <RawJSON data={product} title={t("products.raw")} />
       </div>
     </>
   )

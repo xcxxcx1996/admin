@@ -9,6 +9,7 @@ import {
 import CustomerGroupModal from "../customer-group-modal"
 import { getErrorMessage } from "../../../../utils/error-messages"
 import useNotification from "../../../../hooks/use-notification"
+import { useTranslation } from "react-i18next"
 
 type CustomerGroupContextT = {
   group?: CustomerGroup
@@ -35,7 +36,7 @@ export function CustomerGroupContextContainer(
   const { mutate: updateGroup } = useAdminUpdateCustomerGroup(props.group?.id)
 
   const [isModalVisible, setIsModalVisible] = useState(false)
-
+  const { t } = useTranslation()
   const showModal = () => setIsModalVisible(true)
   const hideModal = () => setIsModalVisible(false)
 
@@ -43,16 +44,17 @@ export function CustomerGroupContextContainer(
     const isEdit = !!props.group
     const method = isEdit ? updateGroup : createGroup
 
-    const message = `Successfully ${
-      isEdit ? "edited" : "created"
-    } the customer group`
+    const message = `${t("common.status.successfully")} ${
+      isEdit ? t("common.status.edit") : t("common.status.created")
+    } ${t("customer.group")}`
 
     method(data, {
       onSuccess: () => {
-        notification("Success", message, "success")
+        notification(t("common.status.success"), message, "success")
         hideModal()
       },
-      onError: (err) => notification("Error", getErrorMessage(err), "error"),
+      onError: (err: any) =>
+        notification(t("common.status.error"), getErrorMessage(err), "error"),
     })
   }
 

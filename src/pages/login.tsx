@@ -8,7 +8,6 @@ import LoginLayout from "../components/templates/login-layout"
 
 const LoginPage = () => {
   const [resetPassword, setResetPassword] = useState(false)
-
   return (
     <LoginLayout>
       <SEO title="Login" />

@@ -1,3 +1,4 @@
+import { RouteComponentProps } from "@reach/router"
 import { navigate } from "gatsby"
 import { useAdminCreateProduct } from "medusa-react"
 import React, { useEffect, useState } from "react"
@@ -20,7 +21,7 @@ import {
 
 const TOAST_ID = "new-product-dirty"
 
-const NewProductPage = () => {
+const NewProductPage: React.FC<RouteComponentProps> = () => {
   const notification = useNotification()
   const createProduct = useAdminCreateProduct()
   const [isLoading, setIsLoading] = useState(false)

@@ -1,6 +1,7 @@
 import { useAdminUpdateCustomer } from "medusa-react"
 import React, { useEffect } from "react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import Button from "../../../components/fundamentals/button"
 import InputField from "../../../components/molecules/input"
 import Modal from "../../../components/molecules/modal"
@@ -13,16 +14,20 @@ const EditCustomerModal = ({ handleClose, customer }) => {
   const notification = useNotification()
 
   const updateCustomer = useAdminUpdateCustomer(customer.id)
-
+  const { t } = useTranslation()
   const submit = (data) => {
     updateCustomer.mutate(data, {
       onSuccess: () => {
         handleClose()
-        notification("Success", "Successfully updated customer", "success")
+        notification(
+          t("common.status.success"),
+          t("customers.update_success"),
+          "success"
+        )
       },
       onError: (err) => {
         handleClose()
-        notification("Error", getErrorMessage(err), "error")
+        notification(t("common.status.error"), getErrorMessage(err), "error")
       },
     })
   }
@@ -40,29 +45,38 @@ const EditCustomerModal = ({ handleClose, customer }) => {
     <Modal handleClose={handleClose}>
       <Modal.Body>
         <Modal.Header handleClose={handleClose}>
-          <span className="inter-xlarge-semibold">Customer Details</span>
+          <span className="inter-xlarge-semibold">{t("customers.edit")}</span>
         </Modal.Header>
         <Modal.Content>
-          <div className="inter-base-semibold text-grey-90 mb-4">General</div>
+          <div className="inter-base-semibold text-grey-90 mb-4">
+            {t("common.general")}
+          </div>
           <div className="w-full flex mb-4 space-x-2">
             <InputField
-              label="First Name"
+              label={t("customer.first_name")}
               name="first_name"
               placeholder="Lebron"
               ref={register}
             />
             <InputField
-              label="Last Name"
+              label={t("customer.last_name")}
               name="last_name"
               placeholder="James"
               ref={register}
             />
           </div>
-          <div className="inter-base-semibold text-grey-90 mb-4">Contact</div>
+          <div className="inter-base-semibold text-grey-90 mb-4">
+            {t("customer.contact")}
+          </div>
           <div className="flex space-x-2">
-            <InputField label="Email" name="email" disabled ref={register} />
             <InputField
-              label="Phone number"
+              label={t("customer.email")}
+              name="email"
+              disabled
+              ref={register}
+            />
+            <InputField
+              label={t("customer.phone")}
               name="phone"
               placeholder="+45 42 42 42 42"
               ref={register}

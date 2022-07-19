@@ -1,0 +1,156 @@
+{
+  "login": {
+    "welcome": "YunJiuDing Welcome back!",
+    "welcome_slogan_1": "It's great to see you 👋🏼",
+    "welcome_slogan_2": "Log in to your account below",
+    "button_login": "Login",
+    "error_text": "These credentials do not match our records"
+  },
+  "home": {
+    "footerText": "Built with Gatsby"
+  },
+  "common": {
+    "save_button": "Save",
+    "discard_button": "Discard",
+    "save_publish": "Save and publish",
+    "save_draft": "Save as draft",
+    "cancel_button": "Cancel",
+    "general": "General",
+    "detail": "Details",
+    "description": "Description",
+    "title": "Title",
+    "name": "Name",
+    "edit": "Edit",
+    "create": "Create a new",
+    "publish": "Publish",
+    "status": {
+      "published": "published",
+      "created": "created",
+      "edit": "edit",
+      "drafted": "drafted",
+      "success": "Success",
+      "product": "Product",
+      "successfully": "successfully",
+      "error": "Ooops"
+    },
+    "metadata": "Metadata",
+    "true": "True",
+    "false": "False"
+  },
+  "draft_orders": {},
+  "oauth": {},
+  "products": {
+    "title": "Products",
+    "edit": "Edit Products",
+    "raw": "Raw product",
+    "export_product": "Export Products",
+    "new_product": "New Product",
+    "new_collection": "New Collection",
+    "simple_product": "Simple product",
+    "delete_text": "Are you sure you want to delete this product",
+    "delete_heading": "Delete Product",
+    "delete_product": "Delete Product",
+    "delete_success": "Product deleted successfully",
+    "variant_product": "Product with variants",
+    "description": "Description",
+    "name": "Name",
+    "handle": "Handle",
+    "collection": "Collection",
+    "tags": "Tags (separated by comma)",
+    "discountable": "Discountable",
+    "type": "Type",
+    "option": {
+      "header": "Product Options",
+      "add_title": "Add Option",
+      "edit": "Edit options",
+      "input_title": "Title",
+      "add": "Add option",
+      "updated": "Options updated"
+    },
+    "images": {
+      "image_header": "Image",
+      "file_name_header": "File Name",
+      "thumbnail_header": "Thumbnail",
+      "placeholder": "1200 x 1600 (3:4) recommended, up to 10MB each",
+      "subtitle": "Add up to 10 images to your product"
+    },
+    "prices": {
+      "title": "Pricing",
+      "header": "Prices",
+      "amount": "Amount",
+      "add": "Add a price",
+      "variant_price": "Variant prices"
+    },
+    "stock": {
+      "tip": "Stock and inventory information",
+      "title": "Stock & Inventory",
+      "sku": "Stock Keeping Unit (SKU)",
+      "ean": "Barcode (EAN)",
+      "quantity": "Quantity in stock",
+      "material": "Material",
+      "barcode": "UPC Barcode",
+      "manage_inventory": "Manage Inventory",
+      "dimensions": "Dimensions",
+      "dimensions_tip": "Variant dimensions",
+      "height": "Height",
+      "width": "Width",
+      "length": "Length",
+      "weight": "Weight",
+      "customs": "Customs",
+      "mid_code": "MID Code",
+      "hs_code": "HS Code",
+      "country_origin": "Country of origin",
+      "allow_backorders": "Allow backorders"
+    },
+    "variant": {
+      "title": "Variants",
+      "subtitle": "Add variations of this product. Offer your customers different options for price, color, format, size, shape, etc.",
+      "tip": "Add product options to create variants",
+      "price": "Prices",
+      "price_tip": "Variant prices",
+      "add": "Add variant",
+      "edit": "Edit options"
+    }
+  },
+  "collections": {
+    "edit": "Edit Collection",
+    "detail": {},
+    "delete": "Delete collection",
+    "delete_success": "Successfully deleted collection",
+    "delete_confirm": "Yes, delete"
+  },
+  "giftcards": {},
+  "orders": {},
+  "customers": {
+    "edit": "Edit Customer",
+    "title": "Customers",
+    "delete": "Delete (not implemented yet)",
+    "detail": "Customer Details",
+    "first_seen": "First seen",
+    "order": "First seen",
+    "raw": "Raw customer",
+    "order_subtitle": "An overview of Customer Orders",
+    "user": "User",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "phone": "Phone",
+    "email": "Email",
+    "contact": "Contact",
+    "update_success": "Successfully updated customer",
+    "group": "the customer group",
+    "groups": {
+      "edit": "Edit customers",
+      "create": "New group",
+      "title": "Group",
+      "delete": "Delete the group",
+      "delete_success": "Group deleted",
+      "delete_confirm": "Yes, delete",
+      "delete_text": "Are you sure you want to delete this customer group?"
+    }
+  },
+  "discounts": {
+    "add": "Add Discount"
+  },
+  "pricing": {},
+  "settings": {}
+}

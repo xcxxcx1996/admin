@@ -14,6 +14,7 @@ import { convertEmptyStringToNull } from "../../../../utils/convert-empty-string
 import { countries as countryData } from "../../../../utils/countries"
 import { focusByName } from "../../../../utils/focus-by-name"
 import usePricesFieldArray from "../../product-form/form/usePricesFieldArray"
+import { useTranslation } from "react-i18next"
 
 const defaultVariant = {
   prices: [] as any,
@@ -32,7 +33,7 @@ const VariantEditor = ({
     label: c.name,
     value: c.alpha2.toLowerCase(),
   }))
-
+  const { t } = useTranslation()
   const { store } = useAdminStore()
   const [selectedCountry, setSelectedCountry] = useState(() => {
     const defaultCountry = variant.origin_country
@@ -131,11 +132,11 @@ const VariantEditor = ({
               tabIndex={0}
               className="inter-base-semibold mb-4 flex items-center gap-xsmall"
             >
-              {"General"}
+              {t("common.general")}
             </label>
 
             <div className="grid grid-cols-1 gap-y-small">
-              <Input label="Title" name="title" ref={register} />
+              <Input label={t("common.title")} name="title" ref={register} />
               {fields.map((field, index) => (
                 <div key={field.indexId}>
                   <Input
@@ -160,9 +161,9 @@ const VariantEditor = ({
               tabIndex={0}
               className="inter-base-semibold mb-4 flex items-center"
             >
-              {"Prices"}
+              {t("products.prices.header")}
               <span className="text-rose-50 mr-xsmall">*</span>
-              <IconTooltip content={"Variant prices"} />
+              <IconTooltip content={t("products.prices.variant_price")} />
             </label>
 
             <div className="grid grid-cols-1 gap-y-xsmall">
@@ -192,7 +193,7 @@ const VariantEditor = ({
                             }
                           >
                             <CurrencyInput.AmountInput
-                              label="Amount"
+                              label={t("products.prices.amount")}
                               onChange={(amount) =>
                                 onChange({ ...value, amount })
                               }
@@ -223,19 +224,30 @@ const VariantEditor = ({
               name="add-price"
               disabled={availableCurrencies?.length === 0}
             >
-              <PlusIcon size={20} /> Add a price
+              <PlusIcon size={20} />
+              {t("products.prices.add")}
             </Button>
           </div>
           <div className="mb-8">
             <label className="inter-base-semibold flex items-center gap-xsmall">
-              {"Stock & Inventory"}
-              <IconTooltip content={"Stock and inventory information"} />
+              {t("products.stock.title")}
+              <IconTooltip content={t("products.stock.tip")} />
             </label>
             <div className="w-full mt-4 grid medium:grid-cols-2 grid-cols-1 gap-y-base gap-x-xsmall">
-              <Input label="SKU" name="sku" placeholder="SKU" ref={register} />
-              <Input label="EAN" name="ean" placeholder="EAN" ref={register} />
               <Input
-                label="Inventory quantity"
+                label={t("products.stock.sku")}
+                name="sku"
+                placeholder={t("products.stock.sku")}
+                ref={register}
+              />
+              <Input
+                label={t("products.stock.ean")}
+                name="ean"
+                placeholder={t("products.stock.ean")}
+                ref={register}
+              />
+              <Input
+                label={t("products.stock.quantity")}
                 name="inventory_quantity"
                 placeholder="100"
                 type="number"
@@ -243,9 +255,9 @@ const VariantEditor = ({
               />
 
               <Input
-                label="UPC Barcode"
+                label={t("products.stock.barcode")}
                 name="barcode"
-                placeholder="Barcode"
+                placeholder={t("products.stock.barcode")}
                 ref={register}
               />
             </div>
@@ -254,7 +266,7 @@ const VariantEditor = ({
               <div className="flex item-center gap-x-1.5">
                 <Checkbox
                   name="manage_inventory"
-                  label="Manage Inventory"
+                  label={t("products.stock.manage_inventory")}
                   ref={register}
                 />
                 <IconTooltip
@@ -267,7 +279,7 @@ const VariantEditor = ({
                 <Checkbox
                   name="allow_backorder"
                   ref={register}
-                  label="Allow backorders"
+                  label={t("products.stock.allow_backorder")}
                 />
                 <IconTooltip
                   content={
@@ -280,29 +292,30 @@ const VariantEditor = ({
 
           <div className="mb-8">
             <label className="inter-base-semibold flex items-center gap-xsmall">
-              Dimensions <IconTooltip content={"Variant dimensions"} />
+              {t("products.stock.dimensions")}{" "}
+              <IconTooltip content={"Variant dimensions"} />
             </label>
             <div className="w-full mt-4 grid medium:grid-cols-2 grid-cols-1 gap-y-base gap-x-xsmall">
               <Input
-                label="Height"
+                label={t("products.stock.height")}
                 placeholder="Product Height"
                 name="height"
                 ref={register}
               />
               <Input
-                label="Width"
+                label={t("products.stock.width")}
                 placeholder="Product Width"
                 name="width"
                 ref={register}
               />
               <Input
-                label="Length"
+                label={t("products.stock.length")}
                 name="length"
                 placeholder="Product Length"
                 ref={register}
               />
               <Input
-                label="Weight"
+                label={t("products.stock.weight")}
                 name="weight"
                 placeholder="Product Weight"
                 ref={register}
@@ -315,28 +328,28 @@ const VariantEditor = ({
             </label>
             <div className="w-full grid mt-4 medium:grid-cols-2 grid-cols-1 gap-y-base gap-x-xsmall">
               <Input
-                label="MID Code"
-                placeholder="MID Code"
+                label={t("products.stock.mid_code")}
+                placeholder={t("products.stock.mid_code")}
                 name="mid_code"
                 ref={register}
               />
               <Input
-                label="HS Code"
-                placeholder="HS Code"
+                label={t("products.stock.hs_code")}
+                placeholder={t("products.stock.hs_code")}
                 name="hs_code"
                 ref={register}
               />
               <Select
                 enableSearch
-                label={"Country of origin"}
+                label={t("products.stock.country_origin")}
                 options={countryOptions}
                 value={selectedCountry}
                 onChange={setSelectedCountry}
               />
               <Input
-                label="Material"
+                label={t("products.stock.material")}
                 name="material"
-                placeholder="Material"
+                placeholder={t("products.stock.material")}
                 ref={register}
               />
             </div>

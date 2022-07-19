@@ -1,5 +1,5 @@
 import ConfettiGenerator from "confetti-js"
-import { Link, navigate } from "gatsby"
+import { navigate } from "gatsby"
 import { useAdminAcceptInvite } from "medusa-react"
 import qs from "qs"
 import React, { useEffect, useState } from "react"
@@ -184,12 +184,12 @@ const InvitePage = ({ location }) => {
                     >
                       Create account
                     </Button>
-                    <Link
-                      to="/login"
+                    <a
+                      href="/login"
                       className="inter-small-regular text-grey-50 mt-large"
                     >
                       Already signed up? Log in
-                    </Link>
+                    </a>
                   </>
                 )}
               </form>

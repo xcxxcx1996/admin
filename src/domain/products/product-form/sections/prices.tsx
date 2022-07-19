@@ -7,6 +7,7 @@ import BodyCard from "../../../../components/organisms/body-card"
 import CurrencyInput from "../../../../components/organisms/currency-input"
 import { useProductForm } from "../form/product-form-context"
 import usePricesFieldArray from "../form/usePricesFieldArray"
+import { useTranslation } from "react-i18next"
 
 const Prices = ({ currencyCodes, defaultCurrencyCode, defaultAmount }) => {
   const { register, control } = useProductForm()
@@ -27,14 +28,17 @@ const Prices = ({ currencyCodes, defaultCurrencyCode, defaultAmount }) => {
       defaultCurrencyCode,
     }
   )
+  const { t } = useTranslation()
 
   return (
     <BodyCard
-      title="Pricing"
+      title={t("products.prices.title")}
       subtitle="Give products a price for each of the currencies that you sell in"
     >
       <div className="mt-base">
-        <h6 className="inter-base-semibold text-grey-90 mr-1.5">Prices</h6>
+        <h6 className="inter-base-semibold text-grey-90 mr-1.5">
+          {t("products.prices.header")}
+        </h6>
 
         <div className="max-w-[630px]">
           {fields.map((field, index) => {
@@ -67,7 +71,7 @@ const Prices = ({ currencyCodes, defaultCurrencyCode, defaultAmount }) => {
                           }
                         >
                           <CurrencyInput.AmountInput
-                            label="Amount"
+                            label={t("products.prices.amount")}
                             onChange={(amount) =>
                               onChange({ ...value, amount })
                             }
@@ -99,7 +103,7 @@ const Prices = ({ currencyCodes, defaultCurrencyCode, defaultAmount }) => {
               disabled={availableCurrencies?.length === 0}
             >
               <PlusIcon size={20} />
-              Add a price
+              {t("products.prices.add")}
             </Button>
           </div>
         </div>

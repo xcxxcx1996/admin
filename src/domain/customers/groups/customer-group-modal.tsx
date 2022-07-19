@@ -6,6 +6,7 @@ import Modal from "../../../components/molecules/modal"
 import Input from "../../../components/molecules/input"
 import Button from "../../../components/fundamentals/button"
 import Metadata, { MetadataField } from "../../../components/organisms/metadata"
+import { useTranslation } from "react-i18next"
 
 type CustomerGroupModalProps = {
   handleClose: () => void
@@ -18,7 +19,7 @@ type CustomerGroupModalProps = {
  */
 function CustomerGroupModal(props: CustomerGroupModalProps) {
   const { initialData, handleSubmit, handleClose } = props
-
+  const { t } = useTranslation()
   const isEdit = !!initialData
 
   const [metadata, setMetadata] = useState<MetadataField[]>(
@@ -56,7 +57,8 @@ function CustomerGroupModal(props: CustomerGroupModalProps) {
       <Modal.Body>
         <Modal.Header handleClose={handleClose}>
           <span className="inter-xlarge-semibold">
-            {props.initialData ? "Edit" : "Create a New"} Customer Group
+            {props.initialData ? t("common.edit") : t("common.create")} Customer
+            Group
           </span>
         </Modal.Header>
 
@@ -65,7 +67,7 @@ function CustomerGroupModal(props: CustomerGroupModalProps) {
             <span className="inter-base-semibold">Details</span>
             <div className="flex space-x-4">
               <Input
-                label="Title"
+                label={t("common.title")}
                 name="name"
                 placeholder="Customer group name"
                 required
@@ -95,7 +97,10 @@ function CustomerGroupModal(props: CustomerGroupModalProps) {
               variant="primary"
               onClick={handleFromSubmit(onSubmit)}
             >
-              <span>{props.initialData ? "Edit" : "Publish"} Group</span>
+              <span>
+                {props.initialData ? t("common.edit") : t("common.publish")}{" "}
+                {t("customers.groups.title")}
+              </span>
             </Button>
           </div>
         </Modal.Footer>
