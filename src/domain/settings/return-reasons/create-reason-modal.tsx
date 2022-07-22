@@ -5,6 +5,7 @@ import Button from "../../../components/fundamentals/button"
 import Input from "../../../components/molecules/input"
 import Modal from "../../../components/molecules/modal"
 import useNotification from "../../../hooks/use-notification"
+import { useTranslation } from "react-i18next"
 
 type CreateReturnReasonModalProps = {
   handleClose: () => void
@@ -25,16 +26,20 @@ const CreateReturnReasonModal = ({
   })
   const notification = useNotification()
   const createRR = useAdminCreateReturnReason()
-
+  const { t } = useTranslation()
   const onCreate = async (data) => {
     await createRR.mutateAsync(data, {
       onSuccess: () => {
-        notification("Success", "Created a new return reason", "success")
+        notification(
+          t("common.status.success"),
+          t("settings.return_reason.create_success"),
+          "success"
+        )
       },
       onError: () => {
         notification(
-          "Error",
-          "Cant create a Return reason with an existing code",
+          t("common.status.error"),
+          t("settings.return_reason.create_error"),
           "error"
         )
       },
@@ -46,21 +51,23 @@ const CreateReturnReasonModal = ({
     <Modal handleClose={handleClose}>
       <Modal.Body>
         <Modal.Header handleClose={handleClose}>
-          <span className="inter-xlarge-semibold">Add Reason</span>
+          <span className="inter-xlarge-semibold">
+            {t("settings.return_reason.add")}
+          </span>
         </Modal.Header>
         <Modal.Content>
           <div className="flex">
             <Input
               ref={register({ required: true })}
               name="value"
-              label="Value"
+              label={t("common.value")}
               placeholder="wrong_size"
             />
             <Input
               className="ml-base"
               ref={register({ required: true })}
               name="label"
-              label="Label"
+              label={t("common.label")}
               placeholder="Wrong size"
             />
           </div>
@@ -68,7 +75,7 @@ const CreateReturnReasonModal = ({
             className="mt-large"
             ref={register}
             name="description"
-            label="Description"
+            label={t("common.description")}
             placeholder="Customer received a wrong size"
           />
         </Modal.Content>
@@ -80,7 +87,7 @@ const CreateReturnReasonModal = ({
               size="large"
               onClick={handleClose}
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               loading={createRR.isLoading}
@@ -89,7 +96,7 @@ const CreateReturnReasonModal = ({
               variant="primary"
               onClick={handleSubmit(onCreate)}
             >
-              Create
+              {t("common.create")}
             </Button>
           </div>
         </Modal.Footer>

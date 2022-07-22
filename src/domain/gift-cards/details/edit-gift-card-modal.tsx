@@ -62,7 +62,7 @@ const EditGiftCardModal = ({
                 className="mr-2"
                 type="button"
               >
-                Cancel
+                {t("common.cancel")}
               </Button>
               <Button
                 loading={updating}
@@ -71,7 +71,7 @@ const EditGiftCardModal = ({
                 size="small"
                 type="submit"
               >
-                Save
+                {t("common.save")}
               </Button>
             </div>
           </Modal.Footer>

@@ -43,9 +43,9 @@ const useCopyPriceList = () => {
     try {
       const data = await createPriceList.mutateAsync(copy)
       navigate(`/a/pricing/${data.price_list.id}`)
-      notification("Success", "Successfully copied price list", "success")
+      notification(t("common.status.success"), "Successfully copied price list", "success")
     } catch (err) {
-      notification("Error", getErrorMessage(err), "error")
+      notification(t("common.status.error"), getErrorMessage(err), "error")
     }
   }
 

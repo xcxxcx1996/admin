@@ -9,6 +9,7 @@ import React, {
 } from "react"
 import useNotification from "../../../../../hooks/use-notification"
 import { getErrorMessage } from "../../../../../utils/error-messages"
+import { useTranslation } from "react-i18next"
 import {
   ConditionMap,
   DiscountConditionOperator,
@@ -70,7 +71,7 @@ export const ConditionsProvider = ({
 }: ConditionsProviderProps) => {
   const [conditions, setConditions] = useState<ConditionMap>(defaultConditions)
   const { mutate } = useAdminUpdateDiscount(discount.id)
-
+  const { t } = useTranslation()
   const notification = useNotification()
 
   const reset = () => {
@@ -130,13 +131,13 @@ export const ConditionsProvider = ({
       {
         onSuccess: () => {
           notification(
-            "Condtions were succesfully added",
-            "Discount conditions updated",
+            t("discounts.conditions.success_add"),
+            t("discounts.conditions.updated"),
             "success"
           )
         },
         onError: (err) => {
-          notification("Error", getErrorMessage(err), "error")
+          notification(t("common.status.error"), getErrorMessage(err), "error")
         },
       }
     )

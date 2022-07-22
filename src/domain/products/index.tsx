@@ -16,6 +16,7 @@ import useToggleState from "../../hooks/use-toggle-state"
 import { getErrorMessage } from "../../utils/error-messages"
 import EditProductPage from "./edit"
 import NewProductPage from "./new"
+import { useTranslation } from "react-i18next"
 
 const VIEWS = ["products", "collections"]
 
@@ -59,7 +60,7 @@ const ProductIndex: React.FC<RouteComponentProps> = () => {
               onClick={() => openExportModal()}
             >
               <ExportIcon size={20} />
-              Export Products
+              {t("products.export_product")}
             </Button>
             <Button
               variant="secondary"
@@ -67,7 +68,7 @@ const ProductIndex: React.FC<RouteComponentProps> = () => {
               onClick={() => navigate(`/a/products/new`)}
             >
               <PlusIcon size={20} />
-              New Product
+              {t("products.new_product")}
             </Button>
           </div>
         )
@@ -80,7 +81,7 @@ const ProductIndex: React.FC<RouteComponentProps> = () => {
               onClick={() => setShowNewCollection(!showNewCollection)}
             >
               <PlusIcon size={20} />
-              New Collection
+              新建集合
             </Button>
           </div>
         )
@@ -108,15 +109,19 @@ const ProductIndex: React.FC<RouteComponentProps> = () => {
       { ...data, metadata },
       {
         onSuccess: ({ collection }) => {
-          notification("Success", "Successfully created collection", "success")
+          notification(
+            t("common.status.success"),
+            "Successfully created collection",
+            "success"
+          )
           navigate(`/a/collections/${collection.id}`)
           setShowNewCollection(false)
         },
-        onError: (err) => notification("Error", getErrorMessage(err), "error"),
+        onError: (err) => notification(t("common.status.error"), getErrorMessage(err), "error"),
       }
     )
   }
-
+  const { t } = useTranslation()
   const handleCreateExport = () => {
     const reqObj = {
       type: "product-export",
@@ -126,10 +131,14 @@ const ProductIndex: React.FC<RouteComponentProps> = () => {
 
     createBatchJob.mutate(reqObj, {
       onSuccess: () => {
-        notification("Success", "Successfully initiated export", "success")
+        notification(
+          t("common.status.success"),
+          t("orders.notification.export_success"),
+          "success"
+        )
       },
       onError: (err) => {
-        notification("Error", getErrorMessage(err), "error")
+        notification(t("common.status.error"), getErrorMessage(err), "error")
       },
     })
 
@@ -163,7 +172,7 @@ const ProductIndex: React.FC<RouteComponentProps> = () => {
       )}
       {exportModalOpen && (
         <ExportModal
-          title="Export Products"
+          title={t("products.export_product")}
           handleClose={() => closeExportModal()}
           onSubmit={handleCreateExport}
           loading={createBatchJob.isLoading}

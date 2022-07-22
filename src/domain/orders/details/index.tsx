@@ -40,6 +40,7 @@ import EmailModal from "./email-modal"
 import MarkShippedModal from "./mark-shipped"
 import OrderLine from "./order-line"
 import CreateRefundModal from "./refund"
+import { useTranslation } from "react-i18next"
 import {
   DisplayTotal,
   FormattedAddress,
@@ -59,57 +60,9 @@ type OrderDetailFulfillment = {
   claim?: ClaimOrder
 }
 
-const gatherAllFulfillments = (order) => {
-  if (!order) {
-    return []
-  }
-
-  const all: OrderDetailFulfillment[] = []
-
-  order.fulfillments.forEach((f, index) => {
-    all.push({
-      title: `Fulfillment #${index + 1}`,
-      type: "default",
-      fulfillment: f,
-    })
-  })
-
-  if (order.claims?.length) {
-    order.claims.forEach((claim) => {
-      if (claim.fulfillment_status !== "not_fulfilled") {
-        claim.fulfillments.forEach((fulfillment, index) => {
-          all.push({
-            title: `Claim fulfillment #${index + 1}`,
-            type: "claim",
-            fulfillment,
-            claim,
-          })
-        })
-      }
-    })
-  }
-
-  if (order.swaps?.length) {
-    order.swaps.forEach((swap) => {
-      if (swap.fulfillment_status !== "not_fulfilled") {
-        swap.fulfillments.forEach((fulfillment, index) => {
-          all.push({
-            title: `Swap fulfillment #${index + 1}`,
-            type: "swap",
-            fulfillment,
-            swap,
-          })
-        })
-      }
-    })
-  }
-
-  return all
-}
-
 const OrderDetails = ({ id }) => {
   const dialog = useImperativeDialog()
-
+  const { t } = useTranslation()
   const [addressModal, setAddressModal] = useState<null | {
     address: Address
     type: "billing" | "shipping"
@@ -138,12 +91,14 @@ const OrderDetails = ({ id }) => {
 
   const [, handleCopy] = useClipboard(`${order?.display_id!}`, {
     successDuration: 5500,
-    onCopied: () => notification("Success", "Order ID copied", "success"),
+    onCopied: () =>
+      notification(t("common.status.success"), "Order ID copied", "success"),
   })
 
   const [, handleCopyEmail] = useClipboard(order?.email!, {
     successDuration: 5500,
-    onCopied: () => notification("Success", "Email copied", "success"),
+    onCopied: () =>
+      notification(t("common.status.success"), "Email copied", "success"),
   })
 
   // @ts-ignore
@@ -197,9 +152,60 @@ const OrderDetails = ({ id }) => {
 
     return cancelOrder.mutate(void {}, {
       onSuccess: () =>
-        notification("Success", "Successfully canceled order", "success"),
-      onError: (err) => notification("Error", getErrorMessage(err), "error"),
+        notification(
+          t("common.status.success"),
+          t("orders.notification.cancel_order_success"),
+          "success"
+        ),
+      onError: (err) =>
+        notification(t("common.status.error"), getErrorMessage(err), "error"),
     })
+  }
+  const gatherAllFulfillments = (order) => {
+    if (!order) {
+      return []
+    }
+    const all: OrderDetailFulfillment[] = []
+
+    order.fulfillments.forEach((f, index) => {
+      all.push({
+        title: `Fulfillment #${index + 1}`,
+        type: "default",
+        fulfillment: f,
+      })
+    })
+
+    if (order.claims?.length) {
+      order.claims.forEach((claim) => {
+        if (claim.fulfillment_status !== "not_fulfilled") {
+          claim.fulfillments.forEach((fulfillment, index) => {
+            all.push({
+              title: `Claim fulfillment #${index + 1}`,
+              type: "claim",
+              fulfillment,
+              claim,
+            })
+          })
+        }
+      })
+    }
+
+    if (order.swaps?.length) {
+      order.swaps.forEach((swap) => {
+        if (swap.fulfillment_status !== "not_fulfilled") {
+          swap.fulfillments.forEach((fulfillment, index) => {
+            all.push({
+              title: `Swap fulfillment #${index + 1}`,
+              type: "swap",
+              fulfillment,
+              swap,
+            })
+          })
+        }
+      })
+    }
+
+    return all
   }
 
   const handleUpdateAddress = async ({ data, type }) => {
@@ -217,10 +223,15 @@ const OrderDetails = ({ id }) => {
 
     return updateOrder.mutate(updateObj, {
       onSuccess: () => {
-        notification("Success", "Successfully updated address", "success")
+        notification(
+          t("common.status.success"),
+          "Successfully updated address",
+          "success"
+        )
         setAddressModal(null)
       },
-      onError: (err) => notification("Error", getErrorMessage(err), "error"),
+      onError: (err) =>
+        notification(t("common.status.error"), getErrorMessage(err), "error"),
     })
   }
 
@@ -230,13 +241,14 @@ const OrderDetails = ({ id }) => {
     return updateOrder.mutate(updateObj, {
       onSuccess: () => {
         notification(
-          "Success",
+          t("common.status.success"),
           "Successfully updated the email address",
           "success"
         )
         setEmailModal(null)
       },
-      onError: (err) => notification("Error", getErrorMessage(err), "error"),
+      onError: (err) =>
+        notification(t("common.status.error"), getErrorMessage(err), "error"),
     })
   }
 
@@ -244,7 +256,7 @@ const OrderDetails = ({ id }) => {
 
   const customerActionables = [
     {
-      label: "Edit Shipping Address",
+      label: t("orders.actions.edit_shipping_address"),
       icon: <TruckIcon size={"20"} />,
       onClick: () =>
         setAddressModal({
@@ -327,7 +339,7 @@ const OrderDetails = ({ id }) => {
               <div className="flex mt-6 space-x-6 divide-x">
                 <div className="flex flex-col">
                   <div className="inter-smaller-regular text-grey-50 mb-1">
-                    Email
+                    {t("customers.email")}
                   </div>
                   <button
                     className="text-grey-90 active:text-violet-90 cursor-pointer gap-x-1 flex items-center"
@@ -376,7 +388,7 @@ const OrderDetails = ({ id }) => {
                     totalAmount={-1 * order?.discount_total}
                     totalTitle={
                       <div className="flex inter-small-regular text-grey-90 items-center">
-                        Discount:{" "}
+                        {t("orders.field.discount")}:{" "}
                         <Badge className="ml-3" variant="default">
                           {discount.code}
                         </Badge>
@@ -409,7 +421,7 @@ const OrderDetails = ({ id }) => {
                 <DisplayTotal
                   currency={order?.currency_code}
                   totalAmount={order?.shipping_total}
-                  totalTitle={"Shipping"}
+                  totalTitle={t("orders.field.shipping")}
                 />
                 <DisplayTotal
                   currency={order?.currency_code}
@@ -517,7 +529,7 @@ const OrderDetails = ({ id }) => {
                     size="small"
                     onClick={() => setShowFulfillment(true)}
                   >
-                    Create Fulfillment
+                    {t("orders.actions.create_fulfillment")}
                   </Button>
                 )
               }
@@ -526,7 +538,7 @@ const OrderDetails = ({ id }) => {
                 {order?.shipping_methods.map((method) => (
                   <div className="flex flex-col">
                     <span className="inter-small-regular text-grey-50">
-                      Shipping Method
+                      {t("orders.field.shipping_method")}
                     </span>
                     <span className="inter-small-regular text-grey-90 mt-2">
                       {method?.shipping_option?.name || ""}
@@ -562,7 +574,7 @@ const OrderDetails = ({ id }) => {
             </BodyCard>
             <BodyCard
               className={"w-full mb-4 min-h-0 h-auto"}
-              title="Customer"
+              title={t("customers.title")}
               actionables={customerActionables}
             >
               <div className="mt-6">
@@ -595,7 +607,7 @@ const OrderDetails = ({ id }) => {
                     </div>
                   </div>
                   <FormattedAddress
-                    title={"Shipping"}
+                    title={t("orders.field.shipping")}
                     addr={order?.shipping_address}
                   />
                   <FormattedAddress

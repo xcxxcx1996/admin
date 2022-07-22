@@ -11,10 +11,11 @@ import TextArea from "../../../../components/molecules/textarea"
 import CurrencyInput from "../../../../components/organisms/currency-input"
 import useNotification from "../../../../hooks/use-notification"
 import { getErrorMessage } from "../../../../utils/error-messages"
+import { useTranslation } from "react-i18next"
 
 const RefundMenu = ({ order, onDismiss }) => {
   const { register, handleSubmit, control } = useForm()
-
+  const { t } = useTranslation()
   const [noNotification, setNoNotification] = useState(order.no_notification)
 
   const notification = useNotification()
@@ -26,7 +27,7 @@ const RefundMenu = ({ order, onDismiss }) => {
 
   const reasonOptions = [
     { label: "Discount", value: "discount" },
-    { label: "Other", value: "other" },
+    { label: t("orders.field.other"), value: "other" },
   ]
 
   const handleValidateRefundAmount = (value) => {
@@ -43,11 +44,19 @@ const RefundMenu = ({ order, onDismiss }) => {
       },
       {
         onSuccess: () => {
-          notification("Success", "Successfully refunded order", "success")
+          notification(
+            t("common.status.success"),
+            t("orders.notification.refund_order_success"),
+            "success"
+          )
           onDismiss()
         },
         onError: (error) => {
-          notification("Error", getErrorMessage(error), "error")
+          notification(
+            t("common.status.error"),
+            getErrorMessage(error),
+            "error"
+          )
         },
       }
     )
@@ -60,7 +69,9 @@ const RefundMenu = ({ order, onDismiss }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body>
           <Modal.Header handleClose={onDismiss}>
-            <h2 className="inter-xlarge-semibold">Create a refund</h2>
+            <h2 className="inter-xlarge-semibold">
+              {t("orders.actions.create_refund")}
+            </h2>
           </Modal.Header>
           <Modal.Content>
             {isSystemPayment && (
@@ -69,14 +80,16 @@ const RefundMenu = ({ order, onDismiss }) => {
                   <AlertIcon size={20} />
                 </div>
                 <div className="flex flex-col">
-                  <span className="inter-small-semibold">Attention!</span>
-                  One or more of your payments is a system payment. Be aware,
-                  that captures and refunds are not handled by Medusa for such
-                  payments.
+                  <span className="inter-small-semibold">
+                    {t("orders.actions.attention")}
+                  </span>
+                  {t("orders.description.attention")}
                 </div>
               </div>
             )}
-            <span className="inter-base-semibold">Details</span>
+            <span className="inter-base-semibold">
+              {t("orders.field.detail")}
+            </span>
             <div className="grid gap-y-base mt-4">
               <CurrencyInput
                 size="small"
@@ -89,7 +102,7 @@ const RefundMenu = ({ order, onDismiss }) => {
                   rules={{ required: true, min: 1 }}
                   render={(props) => (
                     <CurrencyInput.AmountInput
-                      label={"Refund Amount"}
+                      label={t("orders.field.refund_amount")}
                       amount={props.value}
                       invalidMessage={`Cannot refund more than the order's net total.`}
                       onValidate={handleValidateRefundAmount}
@@ -101,11 +114,14 @@ const RefundMenu = ({ order, onDismiss }) => {
               <Controller
                 name="reason"
                 control={control}
-                defaultValue={{ label: "Discount", value: "discount" }}
+                defaultValue={{
+                  label: t("orders.field.discount"),
+                  value: "discount",
+                }}
                 rules={{ required: true }}
                 render={(props) => (
                   <Select
-                    label="Reason"
+                    label={t("orders.field.reason")}
                     options={reasonOptions}
                     value={props.value}
                     onChange={props.onChange}
@@ -114,7 +130,7 @@ const RefundMenu = ({ order, onDismiss }) => {
               />
               <TextArea
                 name="note"
-                label="Note"
+                label={t("orders.field.note")}
                 placeholder="Discount for loyal customer"
                 ref={register}
               />
@@ -155,7 +171,7 @@ const RefundMenu = ({ order, onDismiss }) => {
                   className="w-[112px]"
                   variant="ghost"
                 >
-                  Cancel
+                  {t("common.cancel")}
                 </Button>
                 <Button
                   type="submit"
@@ -163,7 +179,7 @@ const RefundMenu = ({ order, onDismiss }) => {
                   className="w-[112px]"
                   variant="primary"
                 >
-                  Complete
+                  {t("orders.actions.complete")}
                 </Button>
               </div>
             </div>

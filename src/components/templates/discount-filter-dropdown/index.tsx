@@ -5,6 +5,7 @@ import FilterDropdownItem from "../../../components/molecules/filter-dropdown/it
 import SaveFilterItem from "../../../components/molecules/filter-dropdown/save-field"
 import TabFilter from "../../../components/molecules/filter-tab"
 import PlusIcon from "../../fundamentals/icons/plus-icon"
+import { useTranslation } from "react-i18next"
 
 const dynamicFilters = ["normal", "dynamic"]
 
@@ -29,7 +30,7 @@ const DiscountFilters = ({
 }) => {
   const [tempState, setTempState] = useState(filters)
   const [name, setName] = useState("")
-
+  const { t } = useTranslation()
   const handleRemoveTab = (val) => {
     if (onRemoveTab) {
       onRemoveTab(val)
@@ -89,7 +90,7 @@ const DiscountFilters = ({
             )}
           >
             <div className="flex rounded-rounded items-center bg-grey-5 border border-grey-20 inter-small-semibold px-2 h-6">
-              Filters
+              {t("common.filters")}
               <div className="text-grey-40 ml-1 flex items-center rounded">
                 <span className="text-violet-60 inter-small-semibold">
                   {numberOfFilters ? numberOfFilters : "0"}
@@ -103,20 +104,12 @@ const DiscountFilters = ({
         }
       >
         <FilterDropdownItem
-          filterTitle="Types"
+          filterTitle={t("products.type")}
           options={dynamicFilters}
           filters={tempState.isDynamic.filter}
           open={tempState.isDynamic.open}
           setFilter={(val) => setSingleFilter("isDynamic", val)}
         />
-        {/* Backend support missing
-        <FilterDropdownItem
-          filterTitle="Date"
-          options={dateFilters}
-          filters={tempState.date.filter}
-          open={tempState.date.open}
-          setFilter={(val) => setSingleFilter("date", val)}
-      /> */}
         <SaveFilterItem
           saveFilter={handleSaveTab}
           name={name}

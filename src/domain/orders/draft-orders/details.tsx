@@ -28,6 +28,7 @@ import { getErrorMessage } from "../../../utils/error-messages"
 import { formatAmountWithSymbol } from "../../../utils/prices"
 import AddressModal from "../details/address-modal"
 import { DisplayTotal, FormattedAddress } from "../details/templates"
+import { useTranslation } from "react-i18next"
 
 const DraftOrderDetails = ({ id }) => {
   type DeletePromptData = {
@@ -35,7 +36,7 @@ const DraftOrderDetails = ({ id }) => {
     onDelete: () => any
     show: boolean
   }
-
+  const { t } = useTranslation()
   const initDeleteState: DeletePromptData = {
     resource: "",
     onDelete: () => Promise.resolve(console.log("Delete resource")),
@@ -68,11 +69,12 @@ const DraftOrderDetails = ({ id }) => {
   const updateOrder = useAdminUpdateDraftOrder(id)
 
   const notification = useNotification()
-
   const OrderStatusComponent = () => {
     switch (draft_order?.status) {
       case "completed":
-        return <StatusDot title="Completed" variant="success" />
+        return (
+          <StatusDot title={t("orders.status.completed")} variant="success" />
+        )
       case "open":
         return <StatusDot title="Open" variant="default" />
       default:
@@ -86,8 +88,13 @@ const DraftOrderDetails = ({ id }) => {
     const action = () => {
       markPaid.mutate(void {}, {
         onSuccess: () =>
-          notification("Success", "Successfully mark as paid", "success"),
-        onError: (err) => notification("Error", getErrorMessage(err), "error"),
+          notification(
+            t("common.status.success"),
+            "Successfully mark as paid",
+            "success"
+          ),
+        onError: (err) =>
+          notification(t("common.status.error"), getErrorMessage(err), "error"),
       })
     }
 
@@ -101,8 +108,13 @@ const DraftOrderDetails = ({ id }) => {
   const handleDeleteOrder = async () => {
     return cancelOrder.mutate(void {}, {
       onSuccess: () =>
-        notification("Success", "Successfully canceled order", "success"),
-      onError: (err) => notification("Error", getErrorMessage(err), "error"),
+        notification(
+          t("common.status.success"),
+          t("orders.notification.cancel_order_success"),
+          "success"
+        ),
+      onError: (err) =>
+        notification(t("common.status.error"), getErrorMessage(err), "error"),
     })
   }
 
@@ -127,10 +139,15 @@ const DraftOrderDetails = ({ id }) => {
 
     return updateOrder.mutate(updateObj, {
       onSuccess: () => {
-        notification("Success", "Successfully updated address", "success")
+        notification(
+          t("common.status.success"),
+          "Successfully updated address",
+          "success"
+        )
         setAddressModal(null)
       },
-      onError: (err) => notification("Error", getErrorMessage(err), "error"),
+      onError: (err) =>
+        notification(t("common.status.error"), getErrorMessage(err), "error"),
     })
   }
 
@@ -200,7 +217,7 @@ const DraftOrderDetails = ({ id }) => {
               <div className="flex mt-6 space-x-6 divide-x">
                 <div className="flex flex-col">
                   <div className="inter-smaller-regular text-grey-50 mb-1">
-                    Email
+                    {t("customers.email")}
                   </div>
                   <div>{cart?.email}</div>
                 </div>
@@ -293,7 +310,7 @@ const DraftOrderDetails = ({ id }) => {
                     className="flex justify-between mt-4 items-center"
                   >
                     <div className="flex inter-small-regular text-grey-90 items-center">
-                      Discount:{" "}
+                      {t("orders.field.discount")}:{" "}
                       <Badge className="ml-3" variant="default">
                         {discount.code}
                       </Badge>
@@ -312,7 +329,7 @@ const DraftOrderDetails = ({ id }) => {
                 <DisplayTotal
                   currency={region?.currency_code}
                   totalAmount={cart?.shipping_total}
-                  totalTitle={"Shipping"}
+                  totalTitle={t("orders.field.shipping")}
                 />
                 <DisplayTotal
                   currency={region?.currency_code}
@@ -343,7 +360,7 @@ const DraftOrderDetails = ({ id }) => {
                 <DisplayTotal
                   currency={region?.currency_code}
                   totalAmount={cart?.shipping_total}
-                  totalTitle={"Shipping"}
+                  totalTitle={t("orders.field.shipping")}
                 />
                 <DisplayTotal
                   currency={region?.currency_code}
@@ -372,12 +389,15 @@ const DraftOrderDetails = ({ id }) => {
                 )}
               </div>
             </BodyCard>
-            <BodyCard className={"w-full mb-4 min-h-0 h-auto"} title="Shipping">
+            <BodyCard
+              className={"w-full mb-4 min-h-0 h-auto"}
+              title={t("orders.field.shipping")}
+            >
               <div className="mt-6">
                 {cart?.shipping_methods.map((method) => (
                   <div className="flex flex-col">
                     <span className="inter-small-regular text-grey-50">
-                      Shipping Method
+                      {t("orders.field.shipping_method")}
                     </span>
                     <span className="inter-small-regular text-grey-90 mt-2">
                       {method?.shipping_option.name || ""}
@@ -406,7 +426,7 @@ const DraftOrderDetails = ({ id }) => {
               title="Customer"
               actionables={[
                 {
-                  label: "Edit Shipping Address",
+                  label: t("orders.actions.edit_shipping_address"),
                   icon: <TruckIcon size={"20"} />,
                   onClick: () =>
                     setAddressModal({
@@ -463,7 +483,7 @@ const DraftOrderDetails = ({ id }) => {
                     </div>
                   </div>
                   <FormattedAddress
-                    title={"Shipping"}
+                    title={t("orders.field.shipping")}
                     addr={cart?.shipping_address}
                   />
                   <FormattedAddress

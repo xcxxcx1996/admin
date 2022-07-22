@@ -17,6 +17,7 @@ import SelectRegionScreen from "./components/select-region"
 import SelectShippingMethod from "./components/select-shipping"
 import ShippingDetails from "./components/shipping-details"
 import Summary from "./components/summary"
+import { useTranslation } from "react-i18next"
 
 const defaultFormValues = {
   region: null,
@@ -31,6 +32,7 @@ const defaultFormValues = {
 }
 
 const NewOrder = ({ onDismiss, refresh }) => {
+  const { t } = useTranslation()
   const [searchResults, setSearchResults] = useState([])
   const [customerAddresses, setCustomerAddresses] = useState([])
   const [items, setItems] = useState([])
@@ -220,7 +222,11 @@ const NewOrder = ({ onDismiss, refresh }) => {
       navigate(`/a/draft-orders/${data.draft_order.id}`)
       onDismiss()
     } catch (error) {
-      notification("Error", "Something went wrong. Please try again", "error")
+      notification(
+        t("common.status.error"),
+        "Something went wrong. Please try again",
+        "error"
+      )
     }
 
     setCreatingOrder(false)

@@ -7,6 +7,7 @@ import { SelectableTable } from "../selectable-table"
 import useQueryFilters from "../../../hooks/use-query-filters"
 import { columns, ProductHeader, ProductRow } from "./product-table-config"
 import { mapIdsToItems } from "./utils"
+import { useTranslation } from "react-i18next"
 
 const defaultQueryProps = {
   limit: 12,
@@ -56,12 +57,12 @@ const AddProductsModal = ({
     onSave(selectedItems)
     close()
   }
-
+  const { t } = useTranslation()
   return (
     <Modal open handleClose={close}>
       <Modal.Body>
         <Modal.Header handleClose={close}>
-          <h2 className="inter-xlarge-semibold">Add Products</h2>
+          <h2 className="inter-xlarge-semibold">{t("products.new_product")}</h2>
         </Modal.Header>
         <Modal.Content>
           <div className="w-full flex flex-col justify-between min-h-[300px] h-full ">
@@ -90,14 +91,14 @@ const AddProductsModal = ({
               className="rounded-rounded h-8 w-[128px]"
               onClick={close}
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               variant="primary"
               className="rounded-rounded h-8 w-[128px]"
               onClick={handleSave}
             >
-              Save
+              {t("common.save")}
             </Button>
           </div>
         </Modal.Footer>

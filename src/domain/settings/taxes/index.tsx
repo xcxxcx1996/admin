@@ -8,13 +8,14 @@ import BodyCard from "../../../components/organisms/body-card"
 import RadioGroup from "../../../components/organisms/radio-group"
 import TwoSplitPane from "../../../components/templates/two-split-pane"
 import TaxDetails from "./details"
+import { useTranslation } from "react-i18next"
 
 const Taxes = () => {
   const { regions, isLoading, refetch } = useAdminRegions()
   const [selectedRegion, setSelectedRegion] = useState<string | undefined>(
     undefined
   )
-
+  const { t } = useTranslation()
   useEffect(() => {
     if (!isLoading && regions && selectedRegion === null) {
       setSelectedRegion(regions[0].id)
@@ -52,18 +53,18 @@ const Taxes = () => {
       <div>
         <BreadCrumb
           previousRoute="/a/settings"
-          previousBreadcrumb="Settings"
-          currentPage="Taxes"
+          previousBreadcrumb={t("settings.title")}
+          currentPage={t("settings.tax.title")}
         />
         <TwoSplitPane threeCols>
           <BodyCard
             forceDropdown
-            title="Regions"
-            subtitle="Select the region you wish to manage taxes for"
+            title={t("settings.regions.title")}
+            subtitle={t("settings.regions.title")}
             actionables={[
               {
                 icon: <GearIcon />,
-                label: "Go to Region settings",
+                label: t("settings.tax.to_region"),
                 onClick: () => navigate("/a/settings/regions"),
               },
             ]}
@@ -99,8 +100,8 @@ const Taxes = () => {
           </BodyCard>
           <TaxDetails
             id={selectedRegion}
-            onDelete={handleDelete}
-            handleSelect={handleSelect}
+            // onDelete={handleDelete}
+            // handleSelect={handleSelect}
           />
         </TwoSplitPane>
       </div>

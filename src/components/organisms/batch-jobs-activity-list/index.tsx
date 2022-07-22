@@ -18,6 +18,7 @@ import MedusaIcon from "../../fundamentals/icons/medusa-icon"
 import { ActivityCard } from "../../molecules/activity-card"
 import BatchJobFileCard from "../../molecules/batch-job-file-card"
 import { batchJobDescriptionBuilder } from "./utils"
+import { useTranslation } from "react-i18next"
 
 const BatchJobActivityList = ({ batchJobs }: { batchJobs?: BatchJob[] }) => {
   return (
@@ -31,6 +32,7 @@ const BatchJobActivityList = ({ batchJobs }: { batchJobs?: BatchJob[] }) => {
 
 const BatchJobActivityCard = ({ batchJob }: { batchJob: BatchJob }) => {
   const activityCardRef = useRef<HTMLDivElement>(null)
+  const { t } = useTranslation()
   const notification = useNotification()
   const { store } = useAdminStore()
   const {
@@ -89,7 +91,7 @@ const BatchJobActivityCard = ({ batchJob }: { batchJob: BatchJob }) => {
       activityCardRef.current?.removeChild(link)
     } catch (e) {
       notification(
-        "Error",
+        t("common.status.error"),
         "Something went wrong while downloading the export file",
         "error"
       )
@@ -103,10 +105,14 @@ const BatchJobActivityCard = ({ batchJob }: { batchJob: BatchJob }) => {
 
     try {
       await deleteFile({ file_key: batchJob.result?.file_key })
-      notification("Success", "Export file has been removed", "success")
+      notification(
+        t("common.status.success"),
+        "Export file has been removed",
+        "success"
+      )
     } catch (e) {
       notification(
-        "Error",
+        t("common.status.error"),
         "Something went wrong while deleting the export file",
         "error"
       )
@@ -168,11 +174,12 @@ const BatchJobActivityCard = ({ batchJob }: { batchJob: BatchJob }) => {
         <div className="flex mt-6">
           {canDownload && (
             <div className="flex">
-              {buildButton(onDeleteFile, "danger", "Delete")}
+              {buildButton(onDeleteFile, "danger", t("common.delete"))}
               {buildButton(onDownloadFile, "ghost", "Download", "ml-2")}
             </div>
           )}
-          {canCancel && buildButton(() => cancelBatchJob(), "danger", "Cancel")}
+          {canCancel &&
+            buildButton(() => cancelBatchJob(), "danger", t("common.cancel"))}
         </div>
       )
     )

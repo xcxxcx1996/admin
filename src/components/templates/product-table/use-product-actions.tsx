@@ -11,6 +11,7 @@ import TrashIcon from "../../fundamentals/icons/trash-icon"
 import UnpublishIcon from "../../fundamentals/icons/unpublish-icon"
 import { ActionType } from "../../molecules/actionables"
 import useCopyProduct from "./use-copy-product"
+import { useTranslation } from "react-i18next"
 
 const useProductActions = (product) => {
   const notification = useNotification()
@@ -18,7 +19,7 @@ const useProductActions = (product) => {
   const copyProduct = useCopyProduct()
   const deleteProduct = useAdminDeleteProduct(product?.id)
   const updateProduct = useAdminUpdateProduct(product?.id)
-
+  const { t } = useTranslation()
   const handleDelete = async () => {
     const shouldDelete = await dialog({
       heading: "Delete Product",
@@ -32,12 +33,15 @@ const useProductActions = (product) => {
 
   const getActions = (): ActionType[] => [
     {
-      label: "Edit",
+      label: t("common.edit"),
       onClick: () => navigate(`/a/products/${product.id}`),
       icon: <EditIcon size={20} />,
     },
     {
-      label: product.status === "published" ? "Unpublish" : "Publish",
+      label:
+        product.status === "published"
+          ? t("common.unpublish")
+          : t("common.publish"),
       onClick: () => {
         const newStatus = product.status === "published" ? "draft" : "published"
         updateProduct.mutate(
@@ -47,7 +51,7 @@ const useProductActions = (product) => {
           {
             onSuccess: () => {
               notification(
-                "Success",
+                t("common.status.success"),
                 `Successfully ${
                   product.status === "published" ? "unpublished" : "published"
                 } product`,
@@ -55,7 +59,7 @@ const useProductActions = (product) => {
               )
             },
             onError: (err) =>
-              notification("Error", getErrorMessage(err), "error"),
+              notification(t("common.status.error"), getErrorMessage(err), "error"),
           }
         )
       },
@@ -67,12 +71,12 @@ const useProductActions = (product) => {
         ),
     },
     {
-      label: "Duplicate",
+      label: t("common.duplicate"),
       onClick: () => copyProduct(product),
       icon: <DuplicateIcon size={20} />,
     },
     {
-      label: "Delete",
+      label: t("common.delete"),
       variant: "danger",
       onClick: handleDelete,
       icon: <TrashIcon size={20} />,

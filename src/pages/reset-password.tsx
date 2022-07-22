@@ -106,7 +106,7 @@ const ResetPasswordPage = ({ location }) => {
                   Choose a new password below 👇🏼
                 </span>
                 <SigninInput
-                  placeholder="Email"
+                  placeholder={t("customers.email")}
                   name="first_name"
                   value={email}
                   readOnly

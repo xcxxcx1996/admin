@@ -1,5 +1,6 @@
 import { useAdminProducts } from "medusa-react"
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import Spinner from "../../../../../../components/atoms/spinner"
 import Modal from "../../../../../../components/molecules/modal"
 import useQueryFilters from "../../../../../../hooks/use-query-filters"
@@ -22,6 +23,7 @@ const DetailsProductConditionSelector = ({
   onClose,
 }: AddConditionSelectorProps) => {
   const params = useQueryFilters(defaultQueryProps)
+  const { t } = useTranslation()
 
   const { conditions } = useConditions()
 
@@ -60,9 +62,9 @@ const DetailsProductConditionSelector = ({
               options={{
                 enableSearch: true,
                 immediateSearchFocus: true,
-                searchPlaceholder: "Search products...",
+                searchPlaceholder: t("discounts.search.products"),
               }}
-              resourceName="Products"
+              resourceName={t("products.title")}
               totalCount={count || 0}
               selectedIds={items.map((i) => i.id)}
               data={products}

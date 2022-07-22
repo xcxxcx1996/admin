@@ -4,6 +4,7 @@ import * as React from "react"
 import Accordion from "../../../../components/organisms/accordion"
 import { merge } from "../../details/sections/prices-details/utils"
 import ProductPrices from "./product-prices"
+import { useTranslation } from "react-i18next"
 
 type PricesSectionProps = {
   isEdit?: boolean
@@ -16,6 +17,7 @@ const defaultQueryFilters = {
 }
 
 const PricesSection = ({ isEdit = false, id }: PricesSectionProps) => {
+  const { t } = useTranslation()
   const { products = [], isLoading } = useAdminPriceListProducts(
     id!,
     defaultQueryFilters,
@@ -32,7 +34,7 @@ const PricesSection = ({ isEdit = false, id }: PricesSectionProps) => {
       forceMountContent
       required
       value="prices"
-      title="Prices"
+      title={t("products.prices.header")}
       description="You will be able to override the prices for the products you add here"
       tooltip="Define the price overrides for the price list"
     >

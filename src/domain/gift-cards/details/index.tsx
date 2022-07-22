@@ -39,7 +39,7 @@ const GiftCardDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
 
   const actions = [
     {
-      label: "Edit",
+      label: t("common.edit"),
       onClick: () => setShowEdit(true),
       icon: <EditIcon size={20} />,
     },
@@ -64,11 +64,11 @@ const GiftCardDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
       { ...data },
       {
         onSuccess: () => {
-          notification("Success", "Succesfully updated Gift Card", "success")
+          notification(t("common.status.success"), "Succesfully updated Gift Card", "success")
           setShowEdit(false)
           setShowUpdateBalance(false)
         },
-        onError: (err) => notification("Error", getErrorMessage(err), "error"),
+        onError: (err) => notification(t("common.status.error"), getErrorMessage(err), "error"),
       }
     )
   }

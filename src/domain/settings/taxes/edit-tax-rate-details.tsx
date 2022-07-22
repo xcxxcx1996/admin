@@ -4,11 +4,11 @@ import Input from "../../../components/molecules/input"
 export const EditTaxRateDetails = ({ lockName, register }) => {
   return (
     <div>
-      <p className="inter-base-semibold mb-base">Details</p>
+      <p className="inter-base-semibold mb-base">{t("orders.field.detail")}</p>
       <Input
         disabled={lockName}
         name="name"
-        label="Name"
+        label={t("common.name")}
         placeholder={lockName ? "Default" : "Rate name"}
         ref={register({ required: !lockName })}
         className="mb-base min-w-[335px] w-full"

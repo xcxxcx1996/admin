@@ -2,6 +2,7 @@ import * as RadixPopover from "@radix-ui/react-popover"
 import React, { ReactNode, useEffect, useRef, useState } from "react"
 import { useWindowDimensions } from "../../../hooks/use-window-dimensions"
 import Button from "../../fundamentals/button"
+import { useTranslation } from "react-i18next"
 
 type FilterDropdownContainerProps = {
   submitFilters: () => void
@@ -17,6 +18,7 @@ const FilterDropdownContainer: React.FC<FilterDropdownContainerProps> = ({
 }) => {
   const { height } = useWindowDimensions()
   const ref = useRef(null)
+  const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const [heightStyle, setHeightStyle] = useState({
     maxHeight: height,
@@ -56,7 +58,7 @@ const FilterDropdownContainer: React.FC<FilterDropdownContainerProps> = ({
             variant="ghost"
             onClick={() => onClear()}
           >
-            Clear
+            {t("common.clear")}
           </Button>
           <Button
             tabIndex={-1}
@@ -65,7 +67,7 @@ const FilterDropdownContainer: React.FC<FilterDropdownContainerProps> = ({
             size="small"
             onClick={() => onSubmit()}
           >
-            Apply
+            {t("common.apply")}
           </Button>
         </div>
         {React.Children.map(children, (child) => {

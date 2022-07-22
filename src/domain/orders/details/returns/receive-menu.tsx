@@ -13,6 +13,7 @@ import RMASelectReturnProductTable from "../../../../components/organisms/rma-se
 import useNotification from "../../../../hooks/use-notification"
 import { getErrorMessage } from "../../../../utils/error-messages"
 import { displayAmount } from "../../../../utils/prices"
+import { useTranslation } from "react-i18next"
 
 type Item = {
   item_id: string
@@ -44,7 +45,7 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
   const [toReturn, setToReturn] = useState<
     Record<string, { quantity: number }>
   >({})
-
+  const { t } = useTranslation()
   const notification = useNotification()
 
   const allItems: Omit<LineItem, "beforeInsert">[] = useMemo(() => {
@@ -64,8 +65,7 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
       }
     }
 
-    const withAdjustedQuantity = allItems
-      .filter((i) => idLookUp.includes(i.id))
+    const withAdjustedQuantity = allItems.filter((i) => idLookUp.includes(i.id))
 
     return withAdjustedQuantity
   }, [order, returnRequest])
@@ -78,7 +78,8 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
       if (item && item.quantity - item.returned_quantity > 0) {
         returns[i.item_id] = {
           ...item,
-          quantity: returnRequest.items.find((i) => i.item_id === item.id)?.quantity
+          quantity: returnRequest.items.find((i) => i.item_id === item.id)
+            ?.quantity,
         }
       }
     })
@@ -113,8 +114,7 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
 
     const shippingTotal =
       (returnRequest.shipping_method &&
-        returnRequest.shipping_method.price *
-          (1 + shippingTaxRate / 100)) ||
+        returnRequest.shipping_method.price * (1 + shippingTaxRate / 100)) ||
       0
 
     const total = itemTotal - shippingTotal
@@ -135,10 +135,18 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
       return onReceiveSwap(items)
         .then(() => onDismiss())
         .then(() =>
-          notification("Success", "Successfully received return", "success")
+          notification(
+            t("common.status.success"),
+            t("orders.notification.received_success"),
+            "success"
+          )
         )
         .catch((error) =>
-          notification("Error", getErrorMessage(error), "error")
+          notification(
+            t("common.status.error"),
+            getErrorMessage(error),
+            "error"
+          )
         )
         .finally(() => setSubmitting(false))
     }
@@ -148,10 +156,18 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
       return onReceiveReturn(items, Math.round(refundAmount))
         .then(() => onDismiss())
         .then(() =>
-          notification("Success", "Successfully returned order", "success")
+          notification(
+            t("common.status.success"),
+            t("orders.notification.return_success"),
+            "success"
+          )
         )
         .catch((error) =>
-          notification("Error", getErrorMessage(error), "error")
+          notification(
+            t("common.status.error"),
+            getErrorMessage(error),
+            "error"
+          )
         )
         .finally(() => setSubmitting(false))
     }
@@ -172,7 +188,7 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
     <Modal handleClose={onDismiss}>
       <Modal.Body>
         <Modal.Header handleClose={onDismiss}>
-          <h2 className="inter-xlarge-semibold">Receive Return</h2>
+          <h2 className="inter-xlarge-semibold">{t("orders.field.received_return")}</h2>
         </Modal.Header>
         <Modal.Content>
           <h3 className="inter-base-semibold">Items to receive</h3>
@@ -188,7 +204,7 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
               {returnRequest.shipping_method &&
                 returnRequest.shipping_method.price !== undefined && (
                   <div className="my-4 flex justify-between">
-                    <span className="inter-base-semibold">Shipping cost</span>
+                    <span className="inter-base-semibold">{t("orders.field.ship_cost")}</span>
                     <span>
                       {(
                         (returnRequest.shipping_method.price / 100) *
@@ -203,7 +219,7 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
               {!refunded && (
                 <div>
                   <div className="flex inter-base-semibold justify-between w-full">
-                    <span>Total Refund</span>
+                    <span>{t("orders.field.total_refund")}</span>
                     <div className="flex items-center">
                       {!refundEdited && (
                         <>
@@ -249,7 +265,7 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
               size="small"
               variant="ghost"
             >
-              Back
+              {t("common.back")}
             </Button>
             <Button
               onClick={onSubmit}
@@ -258,7 +274,7 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
               variant="primary"
               size="small"
             >
-              Complete
+              {t("orders.actions.complete")}
             </Button>
           </div>
         </Modal.Footer>

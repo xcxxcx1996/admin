@@ -7,8 +7,10 @@ import IconTooltip from "../../../components/molecules/icon-tooltip"
 import Select from "../../../components/molecules/select"
 import useNotification from "../../../hooks/use-notification"
 import { getErrorMessage } from "../../../utils/error-messages"
+import { useTranslation } from "react-i18next"
 
 export const RegionTaxForm = ({ region }) => {
+  const { t } = useTranslation()
   const {
     register,
     handleSubmit,
@@ -22,7 +24,7 @@ export const RegionTaxForm = ({ region }) => {
       tax_provider_id: {
         label:
           region.tax_provider_id === null
-            ? "System Tax Provider"
+            ? t("settings.tax.system_tax_provider")
             : region.tax_provider_id,
         value: region.tax_provider_id,
       },
@@ -37,7 +39,7 @@ export const RegionTaxForm = ({ region }) => {
       tax_provider_id: {
         label:
           region.tax_provider_id === null
-            ? "System Tax Provider"
+            ? t("settings.tax.system_tax_provider")
             : region.tax_provider_id,
         value: region.tax_provider_id,
       },
@@ -55,7 +57,7 @@ export const RegionTaxForm = ({ region }) => {
     if (tax_providers) {
       return [
         {
-          label: "System Tax Provider",
+          label: t("settings.tax.system_tax_provider"),
           value: null,
         },
         ...tax_providers.map((tp) => ({
@@ -66,7 +68,7 @@ export const RegionTaxForm = ({ region }) => {
     }
     return [
       {
-        label: "System Tax Provider",
+        label: t("settings.tax.system_tax_provider"),
         value: null,
       },
     ]
@@ -81,13 +83,13 @@ export const RegionTaxForm = ({ region }) => {
     updateRegion.mutate(toSubmit, {
       onSuccess: () => {
         notification(
-          "Success",
-          "Region tax settings were successfully updated.",
+          t("common.status.success"),
+          t("settings.tax.region_update_success"),
           "success"
         )
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -103,7 +105,7 @@ export const RegionTaxForm = ({ region }) => {
           render={(props) => (
             <Select
               disabled={isProvidersLoading}
-              label="Tax Provider"
+              label={t("settings.tax.provider")}
               options={providerOptions}
               value={props.value}
               onChange={props.onChange}
@@ -116,26 +118,18 @@ export const RegionTaxForm = ({ region }) => {
             className="inter-base-regular"
             name="automatic_taxes"
             ref={register}
-            label="Calculate taxes automatically?"
+            label={t("settings.tax.automatically")}
           />
-          <IconTooltip
-            content={
-              "When checked Medusa will automatically apply tax calculations to Carts in this Region. When unchecked you will have to manually compute taxes at checkout. Manual taxes are recommended if using a 3rd party tax provider to avoid performing too many requests"
-            }
-          />
+          <IconTooltip content={t("settings.tax.automatically_tip")} />
         </div>
         <div className="flex item-center gap-x-1.5">
           <Checkbox
             className="inter-base-regular"
             name="gift_cards_taxable"
             ref={register}
-            label="Apply tax to gift cards?"
+            label={t("settings.tax.giftcard")}
           />
-          <IconTooltip
-            content={
-              "When checked taxes will be applied to gift cards on checkout. In some contries tax regulations require that taxes are applied to gift cards on purchase."
-            }
-          />
+          <IconTooltip content={t("settings.tax.giftcard_description")} />
         </div>
       </div>
       <div className="flex justify-end">
@@ -146,7 +140,7 @@ export const RegionTaxForm = ({ region }) => {
             size="medium"
             type="submit"
           >
-            Save
+            {t("common.save")}
           </Button>
         )}
       </div>

@@ -88,7 +88,7 @@ export const useProductColumns = () => {
       {
         Header: () => (
           <div className="flex items-center gap-1">
-            Status <SortingIcon size={16} />
+            {t("orders.field.status")} <SortingIcon size={16} />
           </div>
         ),
         accessor: "status",

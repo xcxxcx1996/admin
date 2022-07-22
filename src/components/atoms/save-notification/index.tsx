@@ -65,7 +65,7 @@ const SaveNotification: React.FC<SaveNotificationProps> = ({
           className="inter-small-semibold flex items-center justify-center h-1/2 px-base"
           onClick={onDismiss}
         >
-          Discard
+          {t("common.discard")}
         </button>
       </div>
     </ToasterContainer>

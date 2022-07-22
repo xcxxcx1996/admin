@@ -38,7 +38,7 @@ const Note: React.FC<NoteProps> = ({ event }) => {
           <EventActionables
             actions={[
               {
-                label: "Delete",
+                label: t("common.delete"),
                 icon: <TrashIcon size={20} />,
                 onClick: () => setShowDelete(!showDelete),
                 variant: "danger",

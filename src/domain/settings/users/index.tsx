@@ -5,8 +5,10 @@ import BodyCard from "../../../components/organisms/body-card"
 import InviteModal from "../../../components/organisms/invite-modal"
 import PlusIcon from "../../../components/fundamentals/icons/plus-icon"
 import UserTable from "../../../components/templates/user-table"
+import { useTranslation } from "react-i18next"
 
 const Users: React.FC = () => {
+  const { t } = useTranslation()
   const [users, setUsers] = useState([])
   const [invites, setInvites] = useState([])
   const [shouldRefetch, setShouldRefetch] = useState(0)
@@ -33,7 +35,7 @@ const Users: React.FC = () => {
 
   const actionables = [
     {
-      label: "Invite Users",
+      label: t("settings.user.invite"),
       onClick: () => setShowInviteModal(true),
       icon: (
         <span className="text-grey-90">
@@ -42,18 +44,17 @@ const Users: React.FC = () => {
       ),
     },
   ]
-
   return (
     <div className="flex flex-col h-full">
       <div className="w-full flex flex-col grow">
         <BreadCrumb
           previousRoute="/a/settings"
-          previousBreadcrumb="Settings"
-          currentPage="The Team"
+          previousBreadcrumb={t("settings.title")}
+          currentPage={t("settings.user.title")}
         />
         <BodyCard
-          title="The Team"
-          subtitle="Manage users of your Medusa Store"
+          title={t("settings.user.title")}
+          subtitle={t("settings.user.subtitle")}
           actionables={actionables}
         >
           <div className="flex grow  flex-col pt-2">

@@ -4,6 +4,7 @@ import ListIcon from "../../fundamentals/icons/list-icon"
 import TileIcon from "../../fundamentals/icons/tile-icon"
 import ImagePlaceholder from "../../fundamentals/image-placeholder"
 import StatusIndicator from "../../fundamentals/status-indicator"
+import { useTranslation } from "react-i18next"
 
 const useProductTableColumn = ({ setTileView, setListView, showList }) => {
   const getProductStatus = (title) => {
@@ -20,11 +21,12 @@ const useProductTableColumn = ({ setTileView, setListView, showList }) => {
         return <StatusIndicator title={title} variant={"default"} />
     }
   }
+  const { t } = useTranslation()
 
   const columns = useMemo(
     () => [
       {
-        Header: "Name",
+        Header: t("common.name"),
         accessor: "title",
         Cell: ({ row: { original } }) => {
           return (
@@ -47,19 +49,19 @@ const useProductTableColumn = ({ setTileView, setListView, showList }) => {
         },
       },
       {
-        Header: "Collection",
+        Header: "集合",
         accessor: "collection", // accessor is the "key" in the data
         Cell: ({ cell: { value } }) => {
           return <div>{value?.title || "-"}</div>
         },
       },
       {
-        Header: "Status",
+        Header: "状态",
         accessor: "status",
         Cell: ({ cell: { value } }) => getProductStatus(value),
       },
       {
-        Header: "Inventory",
+        Header: "库存",
         accessor: "variants",
         Cell: ({ cell: { value } }) => (
           <div>

@@ -1,5 +1,6 @@
 import { useAdminProductTags } from "medusa-react"
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import Spinner from "../../../../../../components/atoms/spinner"
 import Modal from "../../../../../../components/molecules/modal"
 import useQueryFilters from "../../../../../../hooks/use-query-filters"
@@ -19,6 +20,7 @@ const EditTagConditionSelector = ({ onClose }) => {
   const [operator, setOperator] = useState<DiscountConditionOperator>(
     conditions.product_tags.operator
   )
+  const { t } = useTranslation()
 
   const { isLoading, count, product_tags } = useAdminProductTags(
     params.queryObject,
@@ -46,7 +48,7 @@ const EditTagConditionSelector = ({ onClose }) => {
               options={{
                 enableSearch: true,
                 immediateSearchFocus: true,
-                searchPlaceholder: "Search by tag...",
+                searchPlaceholder: t("discount.search.tags"),
               }}
               resourceName="Tags"
               totalCount={count || 0}

@@ -12,12 +12,13 @@ import useNotification from "../../hooks/use-notification"
 import useToggleState from "../../hooks/use-toggle-state"
 import { getErrorMessage } from "../../utils/error-messages"
 import Details from "./details"
+import { useTranslation } from "react-i18next"
 
 const VIEWS = ["orders", "drafts"]
 
 const OrderIndex: React.FC<RouteComponentProps> = () => {
   const view = "orders"
-
+  const { t } = useTranslation()
   const createBatchJob = useAdminCreateBatchJob()
   const notification = useNotification()
 
@@ -35,7 +36,7 @@ const OrderIndex: React.FC<RouteComponentProps> = () => {
         onClick={() => openExportModal()}
       >
         <ExportIcon size={20} />
-        Export Orders
+        {t("orders.actions.export")}
       </Button>,
     ]
   }, [view])
@@ -49,10 +50,14 @@ const OrderIndex: React.FC<RouteComponentProps> = () => {
 
     createBatchJob.mutate(reqObj, {
       onSuccess: () => {
-        notification("Success", "Successfully initiated export", "success")
+        notification(
+          t("common.status.success"),
+          t("orders.notification.export_success"),
+          "success"
+        )
       },
       onError: (err) => {
-        notification("Error", getErrorMessage(err), "error")
+        notification(t("common.status.error"), getErrorMessage(err), "error")
       },
     })
 
@@ -83,7 +88,7 @@ const OrderIndex: React.FC<RouteComponentProps> = () => {
       </div>
       {exportModalOpen && (
         <ExportModal
-          title="Export Orders"
+          title={t("orders.actions.export")}
           handleClose={() => closeExportModal()}
           onSubmit={handleCreateExport}
           loading={createBatchJob.isLoading}

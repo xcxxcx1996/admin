@@ -61,10 +61,10 @@ const useCopyProduct = () => {
       const newProduct = data?.product
       if (newProduct) {
         navigate(`/a/products/${newProduct.id}`)
-        notification("Success", "Created a new product", "success")
+        notification(t("common.status.success"), "Created a new product", "success")
       }
     } catch (err) {
-      notification("Error", getErrorMessage(err), "error")
+      notification(t("common.status.error"), getErrorMessage(err), "error")
     }
   }
 

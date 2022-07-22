@@ -1,5 +1,6 @@
 import React from "react"
 import Badge from "../../fundamentals/badge"
+import { useTranslation } from "react-i18next"
 
 enum RequirementType {
   MAX_SUBTOTAL = "max_subtotal",
@@ -31,6 +32,7 @@ const ShippingOption: React.FC<ShippingOptionProps> = ({
   currency_code,
   onEdit,
 }) => {
+  const { t } = useTranslation()
   return (
     <div className="flex items-baseline justify-between p-base rounded-base border border-grey-20">
       <div className="truncate">
@@ -45,9 +47,11 @@ const ShippingOption: React.FC<ShippingOptionProps> = ({
           {option.amount !== undefined &&
             `${option.amount / 100} ${currency_code.toUpperCase()}`}
           {option.requirements.length
-            ? option.requirements.map(r => {
+            ? option.requirements.map((r) => {
                 const type =
-                  r.type === "max_subtotal" ? "Max. subtotal" : "Min. subtotal"
+                  r.type === "max_subtotal"
+                    ? t("settings.region.max")
+                    : t("settings.region.min")
                 return ` - ${type}: ${
                   r.amount / 100
                 } ${currency_code.toUpperCase()}`
@@ -60,7 +64,7 @@ const ShippingOption: React.FC<ShippingOptionProps> = ({
           onClick={onEdit}
           className="inter-small-semibold text-violet-60"
         >
-          Edit
+          {t("common.edit")}
         </button>
       </div>
     </div>

@@ -14,6 +14,7 @@ import { checkForDirtyState } from "../../utils/form-helpers"
 import { handleFormError } from "../../utils/handle-form-error"
 import ProductForm from "./product-form"
 import { formValuesToCreateProductMapper } from "./product-form/form/mappers"
+import { useTranslation } from "react-i18next"
 import {
   ProductFormProvider,
   useProductForm,
@@ -22,6 +23,7 @@ import {
 const TOAST_ID = "new-product-dirty"
 
 const NewProductPage: React.FC<RouteComponentProps> = () => {
+  const { t } = useTranslation()
   const notification = useNotification()
   const createProduct = useAdminCreateProduct()
   const [isLoading, setIsLoading] = useState(false)
@@ -55,12 +57,16 @@ const NewProductPage: React.FC<RouteComponentProps> = () => {
     createProduct.mutate(formValuesToCreateProductMapper(newData, viewType), {
       onSuccess: ({ product }) => {
         setIsLoading(false)
-        notification("Success", "Product was succesfully created", "success")
+        notification(
+          t("common.status.success"),
+          "Product was succesfully created",
+          "success"
+        )
         navigate(`/a/products/${product.id}`)
       },
       onError: (error) => {
         setIsLoading(false)
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -82,6 +88,7 @@ const SaveNotification = ({ isLoading = false }) => {
     additionalDirtyState,
   } = useProductForm()
   const [visible, setVisible] = useState(false)
+  const { t } = useTranslation()
 
   const onPublish = (values: FieldValues) => {
     onSubmit({ ...values, status: "published" })
@@ -122,19 +129,19 @@ const SaveNotification = ({ isLoading = false }) => {
           <FormToasterContainer.MultiActionButton
             actions={[
               {
-                label: "Save and publish",
+                label: t("common.save_publish"),
                 onClick: handleSubmit(onPublish, handleFormError),
               },
               {
-                label: "Save as draft",
+                label: t("common.save_draft"),
                 onClick: handleSubmit(onSaveDraft, handleFormError),
               },
             ]}
           >
-            Save
+            {t("common.save")}
           </FormToasterContainer.MultiActionButton>
           <FormToasterContainer.DiscardButton onClick={resetForm}>
-            Discard
+            {t("common.discard")}
           </FormToasterContainer.DiscardButton>
         </FormToasterContainer.Actions>
       </FormToasterContainer>

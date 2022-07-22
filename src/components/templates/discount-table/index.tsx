@@ -10,6 +10,7 @@ import DiscountFilters from "../discount-filter-dropdown"
 import { usePromotionTableColumns } from "./use-promotion-columns"
 import { usePromotionFilters } from "./use-promotion-filters"
 import usePromotionActions from "./use-promotion-row-actions"
+import { useTranslation } from "react-i18next"
 
 const DEFAULT_PAGE_SIZE = 15
 
@@ -39,7 +40,7 @@ const DiscountTable: React.FC = () => {
     expand: "rule,rule.conditions,rule.conditions.products",
     ...queryObject,
   })
-
+  const { t } = useTranslation()
   const [query, setQuery] = useState("")
   const [numPages, setNumPages] = useState(0)
 
@@ -189,7 +190,7 @@ const DiscountTable: React.FC = () => {
         limit={queryObject.limit}
         offset={queryObject.offset}
         pageSize={queryObject.offset + rows.length}
-        title="Discounts"
+        title={t("discounts.title")}
         currentPage={pageIndex + 1}
         pageCount={pageCount}
         nextPage={handleNext}

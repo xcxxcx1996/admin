@@ -12,6 +12,7 @@ import useImperativeDialog from "../../../../hooks/use-imperative-dialog"
 import useNotification from "../../../../hooks/use-notification"
 import { getErrorMessage } from "../../../../utils/error-messages"
 import { TrackingLink } from "./tracking-link"
+import { useTranslation } from "react-i18next"
 
 export const FormattedFulfillment = ({
   setFullfilmentToShip,
@@ -24,7 +25,7 @@ export const FormattedFulfillment = ({
   const cancelFulfillment = useAdminCancelFulfillment(order.id)
   const cancelSwapFulfillment = useAdminCancelSwapFulfillment(order.id)
   const cancelClaimFulfillment = useAdminCancelClaimFulfillment(order.id)
-
+  const { t } = useTranslation()
   const { fulfillment } = fulfillmentObj
   const hasLinks = !!fulfillment.tracking_links?.length
 
@@ -49,8 +50,8 @@ export const FormattedFulfillment = ({
     const { resourceId, resourceType } = getData()
 
     const shouldCancel = await dialog({
-      heading: "Cancel fulfillment?",
-      text: "Are you sure you want to cancel the fulfillment?",
+      heading: t("orders.notification.cancel_fulfillment"),
+      text: t("orders.notification.cancel_fulfillment_text"),
     })
 
     if (!shouldCancel) {
@@ -63,9 +64,17 @@ export const FormattedFulfillment = ({
           { swap_id: resourceId, fulfillment_id: fulfillment.id },
           {
             onSuccess: () =>
-              notification("Success", "Successfully canceled swap", "success"),
+              notification(
+                t("common.status.success"),
+                t("orders.notification.canceled_swap_success"),
+                "success"
+              ),
             onError: (err) =>
-              notification("Error", getErrorMessage(err), "error"),
+              notification(
+                t("common.status.error"),
+                getErrorMessage(err),
+                "error"
+              ),
           }
         )
       case "claim":
@@ -73,17 +82,33 @@ export const FormattedFulfillment = ({
           { claim_id: resourceId, fulfillment_id: fulfillment.id },
           {
             onSuccess: () =>
-              notification("Success", "Successfully canceled claim", "success"),
+              notification(
+                t("common.status.success"),
+                t("orders.notification.cancel_claim_success"),
+                "success"
+              ),
             onError: (err) =>
-              notification("Error", getErrorMessage(err), "error"),
+              notification(
+                t("common.status.error"),
+                getErrorMessage(err),
+                "error"
+              ),
           }
         )
       default:
         return cancelFulfillment.mutate(fulfillment.id, {
           onSuccess: () =>
-            notification("Success", "Successfully canceled order", "success"),
+            notification(
+              t("common.status.success"),
+              t("orders.notification.cancel_order_success"),
+              "success"
+            ),
           onError: (err) =>
-            notification("Error", getErrorMessage(err), "error"),
+            notification(
+              t("common.status.error"),
+              getErrorMessage(err),
+              "error"
+            ),
         })
     }
   }

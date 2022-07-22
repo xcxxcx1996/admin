@@ -28,6 +28,7 @@ import { getErrorMessage } from "../../../../utils/error-messages"
 import { formatAmountWithSymbol } from "../../../../utils/prices"
 import RMASelectProductSubModal from "../rma-sub-modals/products"
 import { filterItems } from "../utils/create-filtering"
+import { useTranslation } from "react-i18next"
 
 type SwapMenuProps = {
   order: Omit<Order, "beforeInsert">
@@ -62,7 +63,7 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
     undefined
   )
   const [noNotification, setNoNotification] = useState(order.no_notification)
-
+  const { t } = useTranslation()
   const notification = useNotification()
 
   // Includes both order items and swap items
@@ -204,11 +205,15 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
     return mutate(data, {
       onSuccess: () => {
         refetch()
-        notification("Success", "Successfully created exchange", "success")
+        notification(
+          t("common.status.success"),
+          "Successfully created exchange",
+          "success"
+        )
         onDismiss()
       },
       onError: (err) => {
-        notification("Error", getErrorMessage(err), "error")
+        notification(t("common.status.error"), getErrorMessage(err), "error")
       },
     })
   }
@@ -217,11 +222,13 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
     <LayeredModal context={layeredModalContext} handleClose={onDismiss}>
       <Modal.Body>
         <Modal.Header handleClose={onDismiss}>
-          <h2 className="inter-xlarge-semibold">Register Exchange</h2>
+          <h2 className="inter-xlarge-semibold">
+            {t("orders.actions.register_exchange")}
+          </h2>
         </Modal.Header>
         <Modal.Content>
           <div className="mb-7">
-            <h3 className="inter-base-semibold">Items to return</h3>
+            <h3 className="inter-base-semibold">{t("orders.field.item_to_return")}</h3>
             <RMASelectProductTable
               order={order}
               allItems={allItems}
@@ -238,7 +245,7 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
               </div>
             ) : (
               <Select
-                label="Shipping Method"
+                label={t("orders.field.shipping_method")}
                 className="mt-2"
                 placeholder="Add a shipping method"
                 value={shippingMethod}
@@ -262,7 +269,7 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
             )}
           </div>
           <div className="flex justify-between mt-8 items-center">
-            <h3 className="inter-base-semibold ">Items to send</h3>
+            <h3 className="inter-base-semibold ">{t("orders.field.item_to_send")}</h3>
             {itemsToAdd.length === 0 ? (
               <Button
                 variant="ghost"
@@ -278,7 +285,7 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
                   )
                 }}
               >
-                Add Product
+                {t("orders.actions.add_product")}
               </Button>
             ) : (
               <></>
@@ -309,13 +316,13 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
                     )
                   }}
                 >
-                  Add Product
+                  {t("orders.actions.add_product")}
                 </Button>
               </div>
             </>
           )}
           <div className="flex text-grey-90 justify-between items-center inter-small-regular mt-8">
-            <span>Return Total</span>
+            <span>{t("orders.field.return_total")}</span>
             <span>
               {formatAmountWithSymbol({
                 currency: order.currency_code,
@@ -324,7 +331,7 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
             </span>
           </div>
           <div className="flex text-grey-90 justify-between items-center inter-small-regular mt-2">
-            <span>Additional Total</span>
+            <span>{t("orders.field.addition_total")}</span>
             <span>
               {formatAmountWithSymbol({
                 currency: order.currency_code,
@@ -335,11 +342,11 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
             </span>
           </div>
           <div className="flex text-grey-90 justify-between items-center inter-small-regular mt-2">
-            <span>Outbond Shipping</span>
-            <span>Calculated at checkout</span>
+            <span>{t("orders.field.outbond_shipping")}</span>
+            <span>{t("orders.field.checkout_calculated")}</span>
           </div>
           <div className="flex justify-between items-center inter-base-semibold mt-4">
-            <span>Estimated difference</span>
+            <span>{t("orders.field.different")}</span>
             <span className="inter-large-semibold">
               {formatAmountWithSymbol({
                 currency: order.currency_code,
@@ -387,7 +394,7 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
               type="submit"
               variant="primary"
             >
-              Complete
+              {t("orders.actions.complete")}
             </Button>
           </div>
         </Modal.Footer>

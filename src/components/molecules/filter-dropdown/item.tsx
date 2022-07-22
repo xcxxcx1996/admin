@@ -11,6 +11,7 @@ import ArrowRightIcon from "../../fundamentals/icons/arrow-right-icon"
 import CheckIcon from "../../fundamentals/icons/check-icon"
 import ChevronUpIcon from "../../fundamentals/icons/chevron-up"
 import InputField from "../input"
+import { useTranslation } from "react-i18next"
 
 const DAY_IN_SECONDS = 86400
 
@@ -26,6 +27,7 @@ const FilterDropdownItem = ({
   onShowNext,
   onShowPrev,
 }) => {
+  const { t } = useTranslation()
   const prefilled = useMemo(() => {
     try {
       const toReturn = filters.reduce((acc, f) => {
@@ -134,7 +136,7 @@ const FilterDropdownItem = ({
                 onClick={handlePrev}
                 className="font-semibold hover:text-violet-60 text-grey-90"
               >
-                Back
+                {t("common.back")}
               </button>
             </div>
           )}
@@ -142,7 +144,7 @@ const FilterDropdownItem = ({
             <div className="py-1 flex justify-center items-center">
               <Spinner size={"large"} variant={"secondary"} />
             </div>
-          ) : filterTitle === "Date" ? (
+          ) : filterTitle === t("common.date") ? (
             <DateFilter
               options={options}
               open={open}

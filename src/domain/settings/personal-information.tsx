@@ -12,6 +12,7 @@ import TwoSplitPane from "../../components/templates/two-split-pane"
 import { AccountContext } from "../../context/account"
 import useNotification from "../../hooks/use-notification"
 import { getErrorMessage } from "../../utils/error-messages"
+import { useTranslation } from "react-i18next"
 
 const PersonalInformation = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -19,27 +20,31 @@ const PersonalInformation = () => {
   const { register, setValue, handleSubmit } = useForm()
   const { handleUpdateUser, ...user } = useContext(AccountContext)
   const notification = useNotification()
-
+  const { t } = useTranslation()
   register("first_name")
   register("last_name")
 
   const submit = (data) => {
     handleUpdateUser(user.id, data)
       .then(() => {
-        notification("Success", "Successfully updated user", "success")
+        notification(
+          t("common.status.success"),
+          "Successfully updated user",
+          "success"
+        )
       })
       .catch((err) => {
-        notification("Error", getErrorMessage(err), "error")
+        notification(t("common.status.error"), getErrorMessage(err), "error")
       })
   }
 
   const events = [
     {
-      label: "Save",
+      label: t("common.save"),
       onClick: handleSubmit(submit),
     },
     {
-      label: "Cancel changes",
+      label: t("common.cancel_change"),
       onClick: () => navigate("/a/settings"),
     },
   ]
@@ -56,7 +61,7 @@ const PersonalInformation = () => {
     <div>
       <BreadCrumb
         currentPage={"Personal Information"}
-        previousBreadcrumb={"Settings"}
+        previousBreadcrumb={t("settings.title")}
         previousRoute="/a/settings"
       />
       <TwoSplitPane>
@@ -109,7 +114,7 @@ const PersonalInformation = () => {
                 onChange={(e) => setValue("last_name", e.target.value)}
               />
             </div>
-            <Input label="Email" value={user.email} disabled className="mt-6" />
+            <Input label={t("customers.email")} value={user.email} disabled className="mt-6" />
           </div>
           {modalIsOpen && (
             <FileUploadModal

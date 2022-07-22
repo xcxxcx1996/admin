@@ -55,10 +55,10 @@ const Information: React.FC<InformationProps> = ({ giftCard }) => {
       },
       {
         onSuccess: () => {
-          notification("Success", "Gift card updated successfully", "success")
+          notification(t("common.status.success"), "Gift card updated successfully", "success")
         },
         onError: (error) => {
-          notification("Error", getErrorMessage(error), "error")
+          notification(t("common.status.error"), getErrorMessage(error), "error")
         },
       }
     )
@@ -67,10 +67,10 @@ const Information: React.FC<InformationProps> = ({ giftCard }) => {
   const onDelete = () => {
     deleteGiftCard.mutate(undefined, {
       onSuccess: () => {
-        notification("Success", "Gift card updated successfully", "success")
+        notification(t("common.status.success"), "Gift card updated successfully", "success")
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -107,7 +107,7 @@ const Information: React.FC<InformationProps> = ({ giftCard }) => {
         <div className="flex space-x-8">
           <div className="flex flex-col w-1/2 space-y-4">
             <Input
-              label="Name"
+              label={t("common.name")}
               name="title"
               placeholder="Add name"
               defaultValue={giftCard?.title}
@@ -122,7 +122,7 @@ const Information: React.FC<InformationProps> = ({ giftCard }) => {
             />
           </div>
           <Input
-            label="Description"
+            label={t("common.description")}
             name="description"
             placeholder="Add a description"
             defaultValue={giftCard?.description}

@@ -5,6 +5,7 @@ import FilterDropdownContainer from "../../../components/molecules/filter-dropdo
 import FilterDropdownItem from "../../../components/molecules/filter-dropdown/item"
 import SaveFilterItem from "../../../components/molecules/filter-dropdown/save-field"
 import TabFilter from "../../../components/molecules/filter-tab"
+import { useTranslation } from "react-i18next"
 
 const statusFilters = ["active", "draft"]
 const typeFilters = ["sale", "override"]
@@ -21,7 +22,7 @@ const PriceListsFilter = ({
 }) => {
   const [tempState, setTempState] = useState(filters)
   const [name, setName] = useState("")
-
+  const { t } = useTranslation()
   const handleRemoveTab = (val) => {
     if (onRemoveTab) {
       onRemoveTab(val)
@@ -82,7 +83,7 @@ const PriceListsFilter = ({
             )}
           >
             <div className="flex rounded-rounded items-center bg-grey-5 border border-grey-20 inter-small-semibold px-2 h-6">
-              Filters
+              {t("common.filters")}
               <div className="text-grey-40 ml-1 flex items-center rounded">
                 <span className="text-violet-60 inter-small-semibold">
                   {numberOfFilters ? numberOfFilters : "0"}
@@ -96,7 +97,7 @@ const PriceListsFilter = ({
         }
       >
         <FilterDropdownItem
-          filterTitle="Status"
+          filterTitle={t("orders.field.status")}
           options={statusFilters}
           filters={tempState.status.filter}
           open={tempState.status.open}

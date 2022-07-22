@@ -1,8 +1,10 @@
 import moment from "moment"
 import React, { useMemo } from "react"
 import Tooltip from "../../atoms/tooltip"
+import { useTranslation } from "react-i18next"
 
 const useCollectionTableColumn = () => {
+  const { t } = useTranslation()
   const columns = useMemo(
     () => [
       {
@@ -36,7 +38,7 @@ const useCollectionTableColumn = () => {
         ),
       },
       {
-        Header: "Products",
+        Header: t("products.title"),
         accessor: "products",
         Cell: ({ cell: { value } }) => {
           return <div>{value?.length || "-"}</div>

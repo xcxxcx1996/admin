@@ -10,6 +10,7 @@ import Modal from "../../../../components/molecules/modal"
 import { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal"
 import Table, { TablePagination } from "../../../../components/molecules/table"
 import { useDebounce } from "../../../../hooks/use-debounce"
+import { useTranslation } from "react-i18next"
 
 const getProductStatusVariant = (status) => {
   switch (status) {
@@ -36,6 +37,7 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({
   selectedItems,
   isLargeModal = true,
 }) => {
+  const { t } = useTranslation()
   const PAGE_SIZE = 12
   const { pop } = useContext(LayeredModalContext)
   const [query, setQuery] = useState("")
@@ -52,7 +54,6 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({
     limit: PAGE_SIZE,
     offset,
   })
-
   useEffect(() => {
     if (typeof count !== "undefined") {
       setNumPages(Math.ceil(count / PAGE_SIZE))
@@ -62,7 +63,7 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({
   const columns = useMemo(() => {
     return [
       {
-        Header: "Name",
+        Header: t("common.name"),
         accessor: "title",
         Cell: ({ row: { original } }) => {
           return (
@@ -88,7 +89,7 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({
         },
       },
       {
-        Header: "Status",
+        Header: t("orders.field.status"),
         accessor: "status",
         Cell: ({ row: { original } }) => (
           <StatusIndicator
@@ -247,7 +248,7 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({
             limit={PAGE_SIZE}
             offset={offset}
             pageSize={offset + rows.length}
-            title="Products"
+            title={t("products.title")}
             currentPage={pageIndex + 1}
             pageCount={pageCount}
             nextPage={handleNext}
@@ -265,7 +266,7 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({
             className="w-[112px]"
             onClick={() => pop()}
           >
-            Back
+            {t("common.back")}
           </Button>
           <Button
             variant="primary"
@@ -273,7 +274,7 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({
             size="small"
             onClick={handleSubmit}
           >
-            Add
+            {t("common.add")}
           </Button>
         </div>
       </Modal.Footer>

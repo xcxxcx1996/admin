@@ -1,5 +1,6 @@
 import { useAdminCustomerGroups } from "medusa-react"
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import Spinner from "../../../../../../components/atoms/spinner"
 import Modal from "../../../../../../components/molecules/modal"
 import useQueryFilters from "../../../../../../hooks/use-query-filters"
@@ -21,6 +22,8 @@ import DetailsConditionFooter from "./details-condition-footer"
 const DetailsCustomerGroupConditionSelector = ({
   onClose,
 }: AddConditionSelectorProps) => {
+  const { t } = useTranslation()
+
   const params = useQueryFilters(defaultQueryProps)
 
   const { conditions } = useConditions()
@@ -64,9 +67,9 @@ const DetailsCustomerGroupConditionSelector = ({
               options={{
                 enableSearch: true,
                 immediateSearchFocus: true,
-                searchPlaceholder: "Search groups...",
+                searchPlaceholder: t("discounts.search.groups"),
               }}
-              resourceName="Customer groups"
+              resourceName={t("customers.groups.title")}
               totalCount={count || 0}
               selectedIds={items.map((i) => i.id)}
               data={customer_groups}

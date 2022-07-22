@@ -9,8 +9,10 @@ import TwoSplitPane from "../../../components/templates/two-split-pane"
 import useModal from "../../../hooks/use-toggle-state"
 import CreateReturnReasonModal from "./create-reason-modal"
 import ReturnReasonDetail from "./detail"
+import { useTranslation } from "react-i18next"
 
 const ReturnReasons = () => {
+  const { t } = useTranslation()
   const { state: isOpen, open, close } = useModal()
   const [selectedReason, setSelectedReason] = useState<any>(null)
   const { isLoading, return_reasons } = useAdminReturnReasons({
@@ -32,15 +34,15 @@ const ReturnReasons = () => {
     <div>
       <BreadCrumb
         previousRoute="/a/settings"
-        previousBreadcrumb="Settings"
-        currentPage="Return Reasons"
+        previousBreadcrumb={t("settings.title")}
+        currentPage={t("settings.return_reason.title")}
       />
       <TwoSplitPane>
         <BodyCard
-          title="Return Reasons"
+          title={t("settings.return_reason.title")}
           actionables={[
             {
-              label: "Add reason",
+              label: t("settings.return_reason.add"),
               icon: (
                 <span className="text-grey-90">
                   <PlusIcon size={20} />
@@ -49,7 +51,7 @@ const ReturnReasons = () => {
               onClick: open,
             },
           ]}
-          subtitle="Manage reasons for returned items"
+          subtitle="管理退货原因"
         >
           <div className="mt-large">
             {isLoading ? (

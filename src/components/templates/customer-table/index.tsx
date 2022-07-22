@@ -11,6 +11,7 @@ import EditIcon from "../../fundamentals/icons/edit-icon"
 import Table, { TablePagination } from "../../molecules/table"
 import { useCustomerColumns } from "./use-customer-columns"
 import { useCustomerFilters } from "./use-customer-filters"
+import { useTranslation } from "react-i18next"
 
 const DEFAULT_PAGE_SIZE = 15
 
@@ -33,7 +34,7 @@ const CustomerTable: React.FC<RouteComponentProps> = () => {
   const { customers, isLoading, count } = useAdminCustomers({
     ...queryObject,
   })
-
+  const { t } = useTranslation()
   const [query, setQuery] = useState(queryObject.query)
   const [numPages, setNumPages] = useState(0)
 
@@ -154,12 +155,12 @@ const CustomerTable: React.FC<RouteComponentProps> = () => {
                   color={"inherit"}
                   actions={[
                     {
-                      label: "Edit",
+                      label: t("common.edit"),
                       onClick: () => navigate(row.original.id),
                       icon: <EditIcon size={20} />,
                     },
                     {
-                      label: "Details",
+                      label: t("orders.field.detail"),
                       onClick: () => navigate(row.original.id),
                       icon: <DetailsIcon size={20} />,
                     },
@@ -185,7 +186,7 @@ const CustomerTable: React.FC<RouteComponentProps> = () => {
         limit={queryObject.limit}
         offset={queryObject.offset}
         pageSize={queryObject.offset + rows.length}
-        title="Customers"
+        title={t("customers.title")}
         currentPage={pageIndex + 1}
         pageCount={pageCount}
         nextPage={handleNext}

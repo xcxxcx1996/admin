@@ -13,7 +13,7 @@ type SavingStateProps = {
 
 const SuccessState: React.FC<SavingStateProps> = ({
   toast,
-  title = "Success",
+  title = t("common.status.success"),
   message = "Your changes have been saved.",
   onDismiss,
 }) => {

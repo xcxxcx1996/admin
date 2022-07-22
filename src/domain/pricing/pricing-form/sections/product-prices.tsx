@@ -1,6 +1,7 @@
 import { MoneyAmount, Product, ProductVariant } from "@medusajs/medusa"
 import { useAdminStore } from "medusa-react"
 import * as React from "react"
+import { useTranslation } from "react-i18next"
 import Button from "../../../../components/fundamentals/button"
 import EditIcon from "../../../../components/fundamentals/icons/edit-icon"
 import PlusIcon from "../../../../components/fundamentals/icons/plus-icon"
@@ -37,6 +38,8 @@ const ProductPrices = ({
   onSearch,
   onFileChosen,
 }: ProductPricesProps) => {
+  const { t } = useTranslation()
+
   const [showAdd, setShowAdd] = React.useState(false)
   const [
     selectedVariant,

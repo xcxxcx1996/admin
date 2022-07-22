@@ -53,9 +53,9 @@ const AddTypeConditionSelector = ({ onClose }: AddConditionSelectorProps) => {
               options={{
                 enableSearch: true,
                 immediateSearchFocus: true,
-                searchPlaceholder: "Search by type...",
+                searchPlaceholder: t("discounts.search.types"),
               }}
-              resourceName="Types"
+              resourceName={t("products.type")}
               totalCount={count || 0}
               selectedIds={items?.map((c) => c.id)}
               data={product_types}

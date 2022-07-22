@@ -1,4 +1,5 @@
 import React from "react"
+import { useTranslation } from "react-i18next"
 import Modal from "../../../../components/molecules/modal"
 import { DiscountConditionType } from "../../types"
 import EditCollectionConditionSelector from "./condition-tables/edit-condition-tables/collections"
@@ -16,10 +17,13 @@ const EditConditionsModal: React.FC<EditConditionsModalProps> = ({
   onClose,
   view,
 }) => {
+  const { t } = useTranslation()
   return (
     <Modal open handleClose={onClose}>
       <Modal.Header handleClose={onClose}>
-        <h1 className="inter-xlarge-semibold">Edit {getTitle(view)}</h1>
+        <h1 className="inter-xlarge-semibold">
+          {t("common.edit") + " "} {t("discounts.conditions." + getTitle(view))}
+        </h1>
       </Modal.Header>
       <Modal.Body>
         <Content view={view} onClose={onClose} />
@@ -28,21 +32,20 @@ const EditConditionsModal: React.FC<EditConditionsModalProps> = ({
   )
 }
 
-const getTitle = (view: DiscountConditionType) => {
-  switch (view) {
+const getTitle = (type: DiscountConditionType) => {
+  switch (type) {
     case DiscountConditionType.PRODUCTS:
-      return "products"
-    case DiscountConditionType.CUSTOMER_GROUPS:
-      return "groups"
-    case DiscountConditionType.PRODUCT_TAGS:
-      return "tags"
+      return "title_product"
     case DiscountConditionType.PRODUCT_COLLECTIONS:
-      return "collections"
+      return "title_collection"
+    case DiscountConditionType.PRODUCT_TAGS:
+      return "title_tag"
     case DiscountConditionType.PRODUCT_TYPES:
-      return "types"
+      return "title_type"
+    case DiscountConditionType.CUSTOMER_GROUPS:
+      return "title_customer_groups"
   }
 }
-
 const Content = ({ view, onClose }: EditConditionsModalProps) => {
   switch (view) {
     case DiscountConditionType.PRODUCTS:

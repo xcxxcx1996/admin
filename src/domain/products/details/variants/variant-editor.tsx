@@ -363,7 +363,7 @@ const VariantEditor = ({
               size="small"
               variant="ghost"
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               onClick={handleSubmit(handleSave)}
@@ -372,7 +372,7 @@ const VariantEditor = ({
               size="small"
               variant="primary"
             >
-              Save
+              {t("common.save")}
             </Button>
           </div>
         </Modal.Footer>

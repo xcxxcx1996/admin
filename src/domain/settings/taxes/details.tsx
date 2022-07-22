@@ -12,6 +12,7 @@ import EditTaxRate from "./edit"
 import { TaxRateRow } from "./tax-rate-row"
 import { RegionTaxForm } from "./region-form"
 import { TaxRateType, PaginationProps } from "../../../types/shared"
+import { useTranslation } from "react-i18next"
 
 type TaxRate = {
   id: string
@@ -35,7 +36,7 @@ const TaxDetails = ({ id }) => {
   const [showNew, setShowNew] = useState<boolean>(false)
   const [editRate, setEditRate] = useState<TaxRate | null>(null)
   const [tableEntries, setTableEntries] = useState<TaxRate[]>([])
-
+  const { t } = useTranslation()
   const { tax_rates, isLoading: taxRatesLoading } = useAdminTaxRates({
     region_id: id,
     ...pagination,
@@ -86,10 +87,10 @@ const TaxDetails = ({ id }) => {
   return (
     <>
       <BodyCard
-        title="Details"
+        title={t("common.detail")}
         actionables={[
           {
-            label: "New Tax Rate",
+            label: t("settings.tax.new_tax_rate"),
             onClick: () => setShowNew(true),
             icon: <PlusIcon />,
           },
@@ -132,7 +133,7 @@ const TaxDetails = ({ id }) => {
           )}
         </Table>
         <h3 className="inter-large-semibold mt-2xlarge mb-base">
-          Tax Calculation Settings
+          {t("settings.tax.tax_calculation_setting")}
         </h3>
         <div className="flex flex-1">
           {!regionIsLoading && <RegionTaxForm region={region} />}

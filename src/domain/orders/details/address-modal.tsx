@@ -52,7 +52,8 @@ const AddressModal: React.FC<AddressModalProps> = ({
       <Modal.Body>
         <Modal.Header handleClose={handleClose}>
           <span className="inter-xlarge-semibold">
-            {type === "billing" ? "Billing" : "Shipping"} Address
+            {type === "billing" ? "Billing" : t("orders.field.shipping")}{" "}
+            Address
           </span>
         </Modal.Header>
         <Modal.Content>
@@ -137,7 +138,7 @@ const AddressModal: React.FC<AddressModalProps> = ({
               size="large"
               onClick={handleClose}
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               size="large"
@@ -145,7 +146,7 @@ const AddressModal: React.FC<AddressModalProps> = ({
               variant="primary"
               onClick={handleSubmit(submit)}
             >
-              Save
+              {t("common.save")}
             </Button>
           </div>
         </Modal.Footer>

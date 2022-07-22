@@ -1,5 +1,6 @@
 import { Discount } from "@medusajs/medusa"
 import React, { useEffect, useMemo, useState } from "react"
+import { useTranslation } from "react-i18next"
 import Button from "../../../../../../components/fundamentals/button"
 import PlusIcon from "../../../../../../components/fundamentals/icons/plus-icon"
 import AddConditionsModal from "../../add-conditions-modal"
@@ -13,6 +14,7 @@ type ConditionsProps = {
 const Conditions: React.FC<ConditionsProps> = ({ discount }) => {
   const { setConditions, conditions, updateCondition } = useDiscountForm()
   const [showConditionsModal, setShowConditionsModal] = useState(false)
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (discount?.rule?.conditions) {
@@ -66,7 +68,7 @@ const Conditions: React.FC<ConditionsProps> = ({ discount }) => {
           className="mt-4 p-2 w-full rounded-rounded border"
         >
           <PlusIcon size={18} />
-          <span>Add Condition</span>
+          <span>{t("discounts.conditions.add")}</span>
         </Button>
       )}
       {showConditionsModal && (

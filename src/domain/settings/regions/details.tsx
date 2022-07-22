@@ -22,6 +22,7 @@ import { getErrorMessage } from "../../../utils/error-messages"
 import fulfillmentProvidersMapper from "../../../utils/fulfillment-providers.mapper"
 import paymentProvidersMapper from "../../../utils/payment-providers-mapper"
 import Shipping from "./shipping"
+import { useTranslation } from "react-i18next"
 
 const RegionDetails = ({ id, onDelete, handleSelect }) => {
   const [currencies, setCurrencies] = useState([])
@@ -34,7 +35,7 @@ const RegionDetails = ({ id, onDelete, handleSelect }) => {
 
   const { register, reset, setValue, handleSubmit } = useForm()
   const notification = useNotification()
-
+  const { t } = useTranslation()
   const { store, isLoading: storeIsLoading } = useAdminStore()
   const { fulfillment_providers, payment_providers } = store
   const createRegion = useAdminCreateRegion()
@@ -158,10 +159,18 @@ const RegionDetails = ({ id, onDelete, handleSelect }) => {
       },
       {
         onSuccess: () => {
-          notification("Success", "Successfully updated region", "success")
+          notification(
+            t("common.status.success"),
+            t("settings.region.update_success"),
+            "success"
+          )
         },
         onError: (error) => {
-          notification("Error", getErrorMessage(error), "error")
+          notification(
+            t("common.status.error"),
+            getErrorMessage(error),
+            "error"
+          )
         },
       }
     )
@@ -174,7 +183,11 @@ const RegionDetails = ({ id, onDelete, handleSelect }) => {
 
   const handleDuplicate = () => {
     if (!region) {
-      notification("Error", "Region not found", "error")
+      notification(
+        t("common.status.error"),
+        t("settings.region.not_found"),
+        "error"
+      )
       return
     }
 
@@ -189,11 +202,15 @@ const RegionDetails = ({ id, onDelete, handleSelect }) => {
 
     createRegion.mutate(payload, {
       onSuccess: ({ region }) => {
-        notification("Success", "Successfully duplicated region", "success")
+        notification(
+          t("common.status.success"),
+          t("settings.region.duplicate_success"),
+          "success"
+        )
         handleSelect(region.id)
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -206,7 +223,7 @@ const RegionDetails = ({ id, onDelete, handleSelect }) => {
         }
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -224,16 +241,16 @@ const RegionDetails = ({ id, onDelete, handleSelect }) => {
   return (
     <>
       <BodyCard
-        title="Details"
-        events={[{ label: "Save", onClick: handleSubmit(onSave) }]}
+        title={t("orders.field.detail")}
+        events={[{ label: t("common.save"), onClick: handleSubmit(onSave) }]}
         actionables={[
           {
-            label: "Duplicate Region",
+            label: t("settings.region.duplicate"),
             onClick: handleDuplicate,
             icon: <DuplicateIcon />,
           },
           {
-            label: "Delete Region",
+            label: t("settings.region.delete"),
             onClick: () => setShowDanger(true),
             icon: <TrashIcon />,
             variant: "danger",
@@ -252,7 +269,7 @@ const RegionDetails = ({ id, onDelete, handleSelect }) => {
               <div className="w-full">
                 <Input
                   name="name"
-                  label="Name"
+                  label={t("common.name")}
                   placeholder="Region name..."
                   ref={register({ required: true })}
                   className="mb-base"
@@ -266,7 +283,7 @@ const RegionDetails = ({ id, onDelete, handleSelect }) => {
                 <Select
                   isMultiSelect
                   enableSearch
-                  label="Countries"
+                  label={t("settings.region.country")}
                   hasSelectAll
                   options={countryOptions}
                   value={countries}
@@ -279,7 +296,7 @@ const RegionDetails = ({ id, onDelete, handleSelect }) => {
                     onChange={handlePaymentChange}
                     options={paymentOptions}
                     value={paymentProviders}
-                    label="Payment Providers"
+                    label={t("settings.region.payment")}
                     enableSearch
                     className="mb-base"
                   />
@@ -289,7 +306,7 @@ const RegionDetails = ({ id, onDelete, handleSelect }) => {
                     onChange={handleFulfillmentChange}
                     options={fulfillmentOptions}
                     value={fulfillmentProviders}
-                    label="Fulfillment Providers"
+                    label={t("settings.region.fulfillment")}
                     enableSearch
                     isMultiSelect
                   />
@@ -307,11 +324,11 @@ const RegionDetails = ({ id, onDelete, handleSelect }) => {
       {showDanger && (
         <DeletePrompt
           handleClose={() => setShowDanger(!showDanger)}
-          text="Are you sure you want to delete this region from your Medusa Store?"
-          heading="Delete region"
+          text={t("settings.region.delete_text")}
+          heading={t("settings.region.delete")}
           onDelete={handleDelete}
-          successText="Successfully deleted region"
-          confirmText="Yes, delete"
+          successText={t("settings.region.delete_success")}
+          confirmText={t("settings.region.delete_confirm")}
         />
       )}
     </>

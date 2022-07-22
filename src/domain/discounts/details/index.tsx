@@ -10,11 +10,13 @@ import { getErrorMessage } from "../../../utils/error-messages"
 import Conditions from "./conditions"
 import Configurations from "./configurations"
 import General from "./general"
+import { useTranslation } from "react-i18next"
 
 const Edit: React.FC<RouteComponentProps<{ id: string }>> = ({ id }) => {
   const { discount, isLoading } = useAdminDiscount(id!, undefined, {
     enabled: !!id,
   })
+  const { t } = useTranslation()
   const [showDelete, setShowDelete] = useState(false)
   const deleteDiscount = useAdminDeleteDiscount(id!)
   const notification = useNotification()
@@ -22,10 +24,14 @@ const Edit: React.FC<RouteComponentProps<{ id: string }>> = ({ id }) => {
   const handleDelete = () => {
     deleteDiscount.mutate(undefined, {
       onSuccess: () => {
-        notification("Success", "Discount deleted", "success")
+        notification(
+          t("common.status.success"),
+          t("discounts.delete_success"),
+          "success"
+        )
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -36,16 +42,16 @@ const Edit: React.FC<RouteComponentProps<{ id: string }>> = ({ id }) => {
         <DeletePrompt
           handleClose={() => setShowDelete(!showDelete)}
           onDelete={async () => handleDelete()}
-          successText="Discount deleted"
-          confirmText="Yes, delete"
-          text="Are you sure you want to delete this discount?"
-          heading="Delete discount"
+          successText={t("discounts.delete_success")}
+          confirmText={t("discounts.delete_confirm")}
+          text={t("discounts.delete_text")}
+          heading={t("discounts.delete")}
         />
       )}
 
       <Breadcrumb
-        currentPage="Add Discount"
-        previousBreadcrumb="Discount"
+        currentPage={t("discounts.add")}
+        previousBreadcrumb={t("discounts.title")}
         previousRoute="/a/discounts"
       />
       {isLoading || !discount ? (
@@ -57,7 +63,7 @@ const Edit: React.FC<RouteComponentProps<{ id: string }>> = ({ id }) => {
           <General discount={discount} />
           <Configurations discount={discount} />
           <Conditions discount={discount} />
-          <RawJSON data={discount} title="Raw discount" />
+          <RawJSON data={discount} title={t("discounts.raw")} />
         </div>
       )}
     </div>

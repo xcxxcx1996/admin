@@ -1,10 +1,11 @@
 import React, { useMemo, useState } from "react"
 import { useAdminProductTypes } from "medusa-react"
 import { SelectableTable } from "./selectable-table"
+import { useTranslation } from "react-i18next"
 
 export const ProductTypeSelector = ({ items, onChange }) => {
   const PAGE_SIZE = 12
-
+  const { t } = useTranslation()
   const [pagination, setPagination] = useState({
     limit: PAGE_SIZE,
     offset: 0,
@@ -15,7 +16,7 @@ export const ProductTypeSelector = ({ items, onChange }) => {
   const columns = useMemo(() => {
     return [
       {
-        Header: "Name",
+        Header: t("common.name"),
         accessor: "value",
         Cell: ({ row: { original } }) => {
           return <div className="w-[200px]">{original.value}</div>

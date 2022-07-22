@@ -14,13 +14,14 @@ import clsx from "clsx"
 import PlusIcon from "../../../../components/fundamentals/icons/plus-icon"
 import CrossIcon from "../../../../components/fundamentals/icons/cross-icon"
 import ImagePlaceholder from "../../../../components/fundamentals/image-placeholder"
+import { useTranslation } from "react-i18next"
 
 const Summary = ({ items, showCustomPrice, customOptionPrice, form }) => {
   const [showAddDiscount, setShowAddDiscount] = useState(false)
   const [checkingDiscount, setCheckingDiscount] = useState(false)
   const [discError, setDiscError] = useState(false)
   const [code, setCode] = useState()
-
+  const { t } = useTranslation()
   const {
     shipping,
     billing,
@@ -79,8 +80,10 @@ const Summary = ({ items, showCustomPrice, customOptionPrice, form }) => {
       <SummarySection title={"Items"} editIndex={1}>
         <Table>
           <Table.HeadRow className="text-grey-50 border-t inter-small-semibold">
-            <Table.HeadCell>Details</Table.HeadCell>
-            <Table.HeadCell className="text-right">Quantity</Table.HeadCell>
+            <Table.HeadCell>{t("orders.field.detail")}</Table.HeadCell>
+            <Table.HeadCell className="text-right">
+              {t("orders.field.quantity")}
+            </Table.HeadCell>
             <Table.HeadCell className="text-right">
               Price (excl. Taxes)
             </Table.HeadCell>
@@ -175,7 +178,7 @@ const Summary = ({ items, showCustomPrice, customOptionPrice, form }) => {
           <div className="flex flex-col w-full border-b border-t border-grey-20 pt-4 mt-4 last:border-b-0 inter-small-regular ">
             <div className="flex w-full justify-between inter-base-semibold mb-4">
               <span>
-                Discount
+                {t("orders.field.discount")}
                 <span className="inter-base-regular text-grey-50 ml-0.5">
                   (Code: {discount.code})
                 </span>
@@ -219,7 +222,7 @@ const Summary = ({ items, showCustomPrice, customOptionPrice, form }) => {
           </div>
         )}
       </SummarySection>
-      <SummarySection title={"Customer"} editIndex={2}>
+      <SummarySection title={t("customers.title")} editIndex={2}>
         <div className="flex items-center">
           <div className="w-5 h-5 mr-3">
             <Avatar

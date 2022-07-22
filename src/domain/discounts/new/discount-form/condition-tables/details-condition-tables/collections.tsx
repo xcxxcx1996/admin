@@ -17,12 +17,13 @@ import { defaultQueryProps } from "../shared/common"
 import ConditionOperator from "../shared/condition-operator"
 import { SelectableTable } from "../shared/selectable-table"
 import DetailsConditionFooter from "./details-condition-footer"
+import { useTranslation } from "react-i18next"
 
 const DetailsCollectionConditionSelector = ({
   onClose,
 }: AddConditionSelectorProps) => {
   const params = useQueryFilters(defaultQueryProps)
-
+  const { t } = useTranslation()
   const { conditions } = useConditions()
 
   const [items, setItems] = useState(
@@ -70,9 +71,9 @@ const DetailsCollectionConditionSelector = ({
               options={{
                 enableSearch: true,
                 immediateSearchFocus: true,
-                searchPlaceholder: "Search by title...",
+                searchPlaceholder: t("discounts.search.collection"),
               }}
-              resourceName="Collections"
+              resourceName={t("collections.title")}
               totalCount={count || 0}
               selectedIds={items?.map((c) => c.id)}
               data={collections}

@@ -6,6 +6,7 @@ import Input from "../../../../components/molecules/input"
 import Modal from "../../../../components/molecules/modal"
 import useNotification from "../../../../hooks/use-notification"
 import { getErrorMessage } from "../../../../utils/error-messages"
+import { useTranslation } from "react-i18next"
 
 type ResendModalProps = {
   notificationId: string
@@ -19,7 +20,7 @@ const ResendModal: React.FC<ResendModalProps> = ({
   handleCancel,
 }) => {
   const resendNotification = useAdminResendNotification(notificationId)
-
+  const { t } = useTranslation()
   const { register, handleSubmit } = useForm({
     defaultValues: { to: email },
   })
@@ -34,13 +35,14 @@ const ResendModal: React.FC<ResendModalProps> = ({
       {
         onSuccess: () => {
           notification(
-            "Success",
+            t("common.status.success"),
             `Notification re-send to ${data.to}`,
             "success"
           )
           handleCancel()
         },
-        onError: (err) => notification("Error", getErrorMessage(err), "error"),
+        onError: (err) =>
+          notification(t("common.status.error"), getErrorMessage(err), "error"),
       }
     )
   }
@@ -56,9 +58,9 @@ const ResendModal: React.FC<ResendModalProps> = ({
             <div className="flex flex-col">
               <div className="flex flex-col space-y-2">
                 <Input
-                  label={"Email"}
+                  label={t("customers.email")}
                   type="text"
-                  placeholder={"Email"}
+                  placeholder={t("customers.email")}
                   name={`to`}
                   ref={register({
                     required: "Must be filled",
@@ -76,7 +78,7 @@ const ResendModal: React.FC<ResendModalProps> = ({
                   size="large"
                   onClick={handleCancel}
                 >
-                  Cancel
+                  {t("common.cancel")}
                 </Button>
                 <Button
                   size="large"

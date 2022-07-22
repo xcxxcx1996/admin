@@ -13,6 +13,7 @@ import Button from "../../fundamentals/button"
 import Modal from "../../molecules/modal"
 import Table, { TablePagination } from "../../molecules/table"
 import { CUSTOMER_GROUPS_CUSTOMERS_TABLE_COLUMNS } from "./config"
+import { useTranslation } from "react-i18next"
 
 /**
  * Default filtering config for querying customers endpoint.
@@ -96,7 +97,7 @@ function EditCustomersTable(props: EditCustomersTableProps) {
     ...queryObject,
     groups: activeGroupId ? [activeGroupId] : null,
   })
-
+  const { t } = useTranslation()
   useEffect(() => {
     if (typeof count !== "undefined") {
       const controlledPageCount = Math.ceil(count / queryObject.limit)
@@ -211,7 +212,7 @@ function EditCustomersTable(props: EditCustomersTableProps) {
               limit={queryObject.limit}
               offset={queryObject.offset}
               pageSize={queryObject.offset + table.rows.length}
-              title="Customers"
+              title={t("customers.title")}
               currentPage={table.state.pageIndex + 1}
               pageCount={table.pageCount}
               nextPage={handleNext}
@@ -230,7 +231,7 @@ function EditCustomersTable(props: EditCustomersTableProps) {
               className="w-eventButton"
               onClick={onClose}
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               variant="primary"
@@ -238,7 +239,7 @@ function EditCustomersTable(props: EditCustomersTableProps) {
               className="w-eventButton"
               onClick={handleSubmit}
             >
-              Save
+              {t("common.save")}
             </Button>
           </div>
         </Modal.Footer>

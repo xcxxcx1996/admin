@@ -108,7 +108,7 @@ const EditPricesOverridesModal = ({
               size="large"
               onClick={close}
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               disabled
@@ -116,7 +116,7 @@ const EditPricesOverridesModal = ({
               className="w-32 text-small justify-center rounded-rounded"
               variant="primary"
             >
-              Save
+              {t("common.save")}
             </Button>
           </div>
         </Modal.Footer>

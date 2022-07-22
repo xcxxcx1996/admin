@@ -149,7 +149,7 @@ const EditDenominationsModal = ({
               onClick={handleClose}
               className="mr-2 min-w-[130px] justify-center"
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               variant="primary"
@@ -157,7 +157,7 @@ const EditDenominationsModal = ({
               className="mr-2 min-w-[130px] justify-center"
               onClick={submitHandler}
             >
-              Save
+              {t("common.save")}
             </Button>
           </div>
         </Modal.Footer>

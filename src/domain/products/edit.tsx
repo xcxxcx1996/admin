@@ -13,6 +13,7 @@ import { getErrorMessage } from "../../utils/error-messages"
 import { checkForDirtyState } from "../../utils/form-helpers"
 import { handleFormError } from "../../utils/handle-form-error"
 import ProductForm from "./product-form"
+import { useTranslation } from "react-i18next"
 import {
   formValuesToUpdateProductMapper,
   productToFormValuesMapper,
@@ -33,6 +34,7 @@ const EditProductPage: React.FC<RouteComponentProps<{ id: string }>> = ({
   const { product, isLoading } = useAdminProduct(id, {
     keepPreviousData: true,
   })
+  const { t } = useTranslation()
   const updateProduct = useAdminUpdateProduct(id)
   const [submitting, setSubmitting] = useState(false)
 
@@ -65,11 +67,15 @@ const EditProductPage: React.FC<RouteComponentProps<{ id: string }>> = ({
     updateProduct.mutate(formValuesToUpdateProductMapper(newData), {
       onSuccess: () => {
         setSubmitting(false)
-        notification("Success", "Product updated successfully", "success")
+        notification(
+          t("common.status.success"),
+          "Product updated successfully",
+          "success"
+        )
       },
       onError: (error) => {
         setSubmitting(false)
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -92,6 +98,7 @@ const EditProductPage: React.FC<RouteComponentProps<{ id: string }>> = ({
 const TOAST_ID = "edit-product-dirty"
 
 const UpdateNotification = ({ isLoading = false }) => {
+  const { t } = useTranslation()
   const {
     formState,
     onSubmit,
@@ -138,10 +145,10 @@ const UpdateNotification = ({ isLoading = false }) => {
           <FormToasterContainer.ActionButton
             onClick={handleSubmit(onUpdate, handleFormError)}
           >
-            Save
+            {t("common.save")}
           </FormToasterContainer.ActionButton>
           <FormToasterContainer.DiscardButton onClick={resetForm}>
-            Discard
+            {t("common.discard")}
           </FormToasterContainer.DiscardButton>
         </FormToasterContainer.Actions>
       </FormToasterContainer>

@@ -142,11 +142,11 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
     Medusa.orders
       .processSwapPayment(event.orderId, event.id)
       .then((_res) => {
-        notification("Success", "Payment processed successfully", "success")
+        notification(t("common.status.success"), "Payment processed successfully", "success")
         refetch()
       })
       .catch((err) => {
-        notification("Error", getErrorMessage(err), "error")
+        notification(t("common.status.error"), getErrorMessage(err), "error")
       })
   }
 

@@ -10,6 +10,7 @@ import TrashIcon from "../../fundamentals/icons/trash-icon"
 import UnpublishIcon from "../../fundamentals/icons/unpublish-icon"
 import EditIcon from "../../fundamentals/icons/edit-icon"
 import useCopyPromotion from "./use-copy-promotion"
+import { useTranslation } from "react-i18next"
 
 const usePromotionActions = (promotion) => {
   const notification = useNotification()
@@ -19,7 +20,7 @@ const usePromotionActions = (promotion) => {
 
   const updatePromotion = useAdminUpdateDiscount(promotion.id)
   const deletePromotion = useAdminDeleteDiscount(promotion?.id)
-
+  const { t } = useTranslation()
   const handleDelete = async () => {
     const shouldDelete = await dialog({
       heading: "Delete Discount",
@@ -34,12 +35,12 @@ const usePromotionActions = (promotion) => {
   const getRowActions = () => {
     return [
       {
-        label: "Edit",
+        label: t("common.edit"),
         icon: <EditIcon size={20} />,
         onClick: () => navigate(`/a/discounts/${promotion.id}`),
       },
       {
-        label: promotion.is_disabled ? "Publish" : "Unpublish",
+        label: promotion.is_disabled ? t("common.publish") : t("common.unpublish"),
         icon: promotion.is_disabled ? (
           <PublishIcon size={20} />
         ) : (
@@ -53,7 +54,7 @@ const usePromotionActions = (promotion) => {
             {
               onSuccess: () => {
                 notification(
-                  "Success",
+                  t("common.status.success"),
                   `Successfully ${
                     promotion.is_disabled ? "published" : "unpublished"
                   } discount`,
@@ -61,18 +62,18 @@ const usePromotionActions = (promotion) => {
                 )
               },
               onError: (err) =>
-                notification("Error", getErrorMessage(err), "error"),
+                notification(t("common.status.error"), getErrorMessage(err), "error"),
             }
           )
         },
       },
       {
-        label: "Duplicate",
+        label: t("common.duplicate"),
         icon: <DuplicateIcon size={20} />,
         onClick: () => copyPromotion(promotion),
       },
       {
-        label: "Delete",
+        label: t("common.delete"),
         icon: <TrashIcon size={20} />,
         variant: "danger",
         onClick: handleDelete,

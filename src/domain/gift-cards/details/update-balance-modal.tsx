@@ -47,7 +47,7 @@ const UpdateBalanceModal = ({
           <CurrencyInput readOnly currentCurrency={currencyCode} size="small">
             <CurrencyInput.AmountInput
               amount={giftCard.balance}
-              label="Price"
+              label={t("common.price")}
               onChange={handleChange}
             />
           </CurrencyInput>
@@ -60,7 +60,7 @@ const UpdateBalanceModal = ({
               onClick={handleClose}
               className="mr-2"
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               loading={updating}

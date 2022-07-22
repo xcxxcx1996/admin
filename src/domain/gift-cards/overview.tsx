@@ -49,8 +49,8 @@ const Overview: React.FC<RouteComponentProps> = () => {
       { status },
       {
         onSuccess: () =>
-          notification("Success", "Successfully updated Gift Card", "success"),
-        onError: (err) => notification("Error", getErrorMessage(err), "error"),
+          notification(t("common.status.success"), "Successfully updated Gift Card", "success"),
+        onError: (err) => notification(t("common.status.error"), getErrorMessage(err), "error"),
       }
     )
   }

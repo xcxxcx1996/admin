@@ -5,6 +5,7 @@ import { LayeredModalContext } from "../../../../components/molecules/modal/laye
 import { useForm } from "react-hook-form"
 import InputField from "../../../../components/molecules/input"
 import CurrencyInput from "../../../../components/organisms/currency-input"
+import { useTranslation } from "react-i18next"
 
 type CustomItemSubModalProps = {
   onSubmit: (title: string, amount: number, quantity: number) => void
@@ -27,6 +28,7 @@ const CustomItemSubModal: React.FC<CustomItemSubModalProps> = ({
     onSubmit(title, quantity, amount)
     pop()
   }
+  const { t } = useTranslation()
 
   return (
     <>
@@ -47,14 +49,14 @@ const CustomItemSubModal: React.FC<CustomItemSubModalProps> = ({
           >
             <CurrencyInput.AmountInput
               required
-              label="Price"
+              label={t("common.price")}
               amount={amount}
               onChange={(value) => setAmount(value || 0)}
             />
           </CurrencyInput>
           <InputField
             className="my-4"
-            label="Quantity"
+            label={t("orders.field.quantity")}
             name="quantity"
             type="number"
             required
@@ -70,7 +72,7 @@ const CustomItemSubModal: React.FC<CustomItemSubModalProps> = ({
             className="w-[112px]"
             onClick={() => pop()}
           >
-            Back
+            {t("common.back")}
           </Button>
           <Button
             variant="primary"
@@ -78,7 +80,7 @@ const CustomItemSubModal: React.FC<CustomItemSubModalProps> = ({
             size="small"
             onClick={handleSubmit(onSubmitItem)}
           >
-            Add
+            {t("common.add")}
           </Button>
         </div>
       </Modal.Footer>

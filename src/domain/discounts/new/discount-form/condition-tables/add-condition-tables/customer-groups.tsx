@@ -17,12 +17,13 @@ import {
 } from "../shared/groups"
 import { SelectableTable } from "../shared/selectable-table"
 import AddConditionFooter from "./add-condition-footer"
+import { useTranslation } from "react-i18next"
 
 const AddCustomerGroupConditionSelector = ({
   onClose,
 }: AddConditionSelectorProps) => {
   const params = useQueryFilters(defaultQueryProps)
-
+  const { t } = useTranslation()
   const { conditions } = useDiscountForm()
 
   const [items, setItems] = useState(conditions?.customer_groups?.items || [])
@@ -64,9 +65,9 @@ const AddCustomerGroupConditionSelector = ({
               options={{
                 enableSearch: true,
                 immediateSearchFocus: true,
-                searchPlaceholder: "Search groups...",
+                searchPlaceholder: t("discounts.search.groups"),
               }}
-              resourceName="Customer groups"
+              resourceName={t("customers.groups.title")}
               totalCount={count || 0}
               selectedIds={items.map((i) => i.id)}
               data={customer_groups}

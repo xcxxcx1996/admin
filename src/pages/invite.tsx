@@ -14,6 +14,7 @@ import SEO from "../components/seo"
 import LoginLayout from "../components/templates/login-layout"
 import useNotification from "../hooks/use-notification"
 import { getErrorMessage } from "../utils/error-messages"
+import { useTranslation } from "react-i18next"
 
 type formValues = {
   password: string
@@ -25,7 +26,9 @@ type formValues = {
 const InvitePage = ({ location }) => {
   const parsed = qs.parse(location.search.substring(1))
   const [signUp, setSignUp] = useState(false)
-
+  const accept = useAdminAcceptInvite()
+  const notification = useNotification()
+  const { t } = useTranslation()
   let token: Object | null = null
   if (parsed?.token) {
     try {
@@ -70,9 +73,6 @@ const InvitePage = ({ location }) => {
     },
   })
 
-  const accept = useAdminAcceptInvite()
-  const notification = useNotification()
-
   const handleAcceptInvite = (data: formValues) => {
     setPasswordMismatch(false)
 
@@ -95,7 +95,7 @@ const InvitePage = ({ location }) => {
           navigate("/login")
         },
         onError: (err) => {
-          notification("Error", getErrorMessage(err), "error")
+          notification(t("common.status.error"), getErrorMessage(err), "error")
         },
       }
     )

@@ -17,6 +17,7 @@ import { defaultQueryProps } from "../shared/common"
 import ConditionOperator from "../shared/condition-operator"
 import { SelectableTable } from "../shared/selectable-table"
 import AddConditionFooter from "./add-condition-footer"
+import { useTranslation } from "react-i18next"
 
 const AddCollectionConditionSelector = ({
   onClose,
@@ -39,7 +40,7 @@ const AddCollectionConditionSelector = ({
       keepPreviousData: true,
     }
   )
-
+  const { t } = useTranslation()
   const changed = (values: string[]) => {
     const selectedCollections =
       collections?.filter((collections) => values.includes(collections.id)) ||
@@ -67,9 +68,9 @@ const AddCollectionConditionSelector = ({
               options={{
                 enableSearch: true,
                 immediateSearchFocus: true,
-                searchPlaceholder: "Search by title...",
+                searchPlaceholder: t("discounts.search.collection"),
               }}
-              resourceName="Collections"
+              resourceName={t("collections.title")}
               totalCount={count || 0}
               selectedIds={items?.map((c) => c.id)}
               data={collections}

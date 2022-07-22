@@ -5,6 +5,7 @@ import Select from "../../../components/molecules/select"
 import Input from "../../../components/molecules/input"
 
 import { countries } from "../../../utils/countries"
+import { useTranslation } from "react-i18next"
 
 const AddressForm = ({
   form = {},
@@ -13,6 +14,7 @@ const AddressForm = ({
   address,
   allowedCountries,
 }) => {
+  const { t } = useTranslation()
   const countryOptions = countries
     .map((c) => {
       if (allowedCountries) {
@@ -62,8 +64,8 @@ const AddressForm = ({
               ref={form.register({
                 required: true,
               })}
-              placeholder="First Name"
-              label="First Name"
+              placeholder={t("customers.first_name")}
+              label={t("customers.first_name")}
               required={true}
               name={`${type}.first_name`}
             />
@@ -71,8 +73,8 @@ const AddressForm = ({
               ref={form.register({
                 required: true,
               })}
-              placeholder="Last Name"
-              label="Last Name"
+              placeholder={t("customers.last_name")}
+              label={t("customers.last_name")}
               required={true}
               name={`${type}.last_name`}
             />
@@ -89,7 +91,9 @@ const AddressForm = ({
           </div>
         </div>
         <div className="mt-8">
-          <span className="inter-base-semibold">Shipping Address</span>
+          <span className="inter-base-semibold">
+            {t("orders.field.shipping_address")}
+          </span>
           <div className="grid gap-y-base my-4">
             <Input
               ref={form.register({

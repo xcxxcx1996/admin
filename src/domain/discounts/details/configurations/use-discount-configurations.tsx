@@ -9,6 +9,7 @@ import { ActionType } from "../../../../components/molecules/actionables"
 import useNotification from "../../../../hooks/use-notification"
 import { getErrorMessage } from "../../../../utils/error-messages"
 import { removeNullish } from "../../../../utils/remove-nullish"
+import { useTranslation } from "react-i18next"
 
 type displaySetting = {
   title: string
@@ -33,21 +34,21 @@ const CommonDescription = ({ text }) => (
 const useDiscountConfigurations = (discount: Discount) => {
   const updateDiscount = useAdminUpdateDiscount(discount.id)
   const notification = useNotification()
-
+  const { t } = useTranslation()
   const conditions: displaySetting[] = []
 
   conditions.push({
-    title: "Start date",
+    title: t("discounts.configurations.start_date_label"),
     description: <DisplaySettingsDateDescription date={discount.starts_at} />,
   })
 
   if (discount.ends_at) {
     conditions.push({
-      title: "End date",
+      title: t("discounts.configurations.expire_date_label"),
       description: <DisplaySettingsDateDescription date={discount.ends_at} />,
       actions: [
         {
-          label: "Delete configuration",
+          label: t("discounts.configurations.delete"),
           icon: <TrashIcon size={20} />,
           variant: "danger",
           onClick: async () =>
@@ -56,13 +57,13 @@ const useDiscountConfigurations = (discount: Discount) => {
               {
                 onSuccess: () => {
                   notification(
-                    "Success",
+                    t("common.status.success"),
                     "Discount end date removed",
                     "success"
                   )
                 },
                 onError: (error) => {
-                  notification("Error", getErrorMessage(error), "error")
+                  notification(t("common.status.error"), getErrorMessage(error), "error")
                 },
               }
             ),
@@ -72,13 +73,13 @@ const useDiscountConfigurations = (discount: Discount) => {
   }
   if (discount.usage_limit) {
     conditions.push({
-      title: "Number of redemptions",
+      title: t("discounts.configurations.redemption_number"),
       description: (
         <CommonDescription text={discount.usage_limit.toLocaleString("en")} />
       ),
       actions: [
         {
-          label: "Delete configuration",
+          label: t("discounts.configurations.delete"),
           icon: <TrashIcon size={20} />,
           variant: "danger",
           onClick: async () =>
@@ -86,10 +87,14 @@ const useDiscountConfigurations = (discount: Discount) => {
               { usage_limit: null },
               {
                 onSuccess: () => {
-                  notification("Success", "Redemption limit removed", "success")
+                  notification(
+                    t("common.status.success"),
+                    t("discounts.configurations.success_remove_redemption"),
+                    "success"
+                  )
                 },
                 onError: (error) => {
-                  notification("Error", getErrorMessage(error), "error")
+                  notification(t("common.status.error"), getErrorMessage(error), "error")
                 },
               }
             ),
@@ -109,7 +114,7 @@ const useDiscountConfigurations = (discount: Discount) => {
       ),
       actions: [
         {
-          label: "Delete setting",
+          label: t("discounts.configurations.delete_setting"),
           icon: <TrashIcon size={20} />,
           variant: "danger",
           onClick: async () =>
@@ -118,13 +123,13 @@ const useDiscountConfigurations = (discount: Discount) => {
               {
                 onSuccess: () => {
                   notification(
-                    "Success",
-                    "Discount duration removed",
+                    t("common.status.success"),
+                    t("discounts.configurations.success_remove_duration"),
                     "success"
                   )
                 },
                 onError: (error) => {
-                  notification("Error", getErrorMessage(error), "error")
+                  notification(t("common.status.error"), getErrorMessage(error), "error")
                 },
               }
             ),

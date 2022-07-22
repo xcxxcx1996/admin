@@ -1,5 +1,6 @@
 import { useAdminGetDiscountCondition } from "medusa-react"
 import React, { useEffect, useMemo, useState } from "react"
+import { useTranslation } from "react-i18next"
 import Badge from "../../../../../../components/fundamentals/badge"
 import EditIcon from "../../../../../../components/fundamentals/icons/edit-icon"
 import TrashIcon from "../../../../../../components/fundamentals/icons/trash-icon"
@@ -55,6 +56,7 @@ const ConditionItem = <Type extends DiscountConditionType>({
   )
 
   const { updateCondition } = useDiscountForm()
+  const { t } = useTranslation()
 
   const [showEdit, setShowEdit] = useState(false)
 
@@ -173,7 +175,9 @@ const ConditionItem = <Type extends DiscountConditionType>({
             </Badge>
           </div>
           <div className="truncate flex flex-col justify-center flex-1 w-full">
-            <div className="inter-small-semibold">{getTitle(type)}</div>
+            <div className="inter-small-semibold">
+              {t("discounts.conditions." + getTitle(type))}
+            </div>
             <div className="w-full flex items-center inter-small-regular gap-x-xsmall flex-1">
               <div className="gap-x-2xsmall text-grey-50 flex items-center w-full inter-small-regular flex-1">
                 {visibleItems.map((item, i) => {
@@ -197,12 +201,12 @@ const ConditionItem = <Type extends DiscountConditionType>({
             forceDropdown
             actions={[
               {
-                label: "Edit",
+                label: t("common.edit"),
                 onClick: () => setShowEdit(true),
                 icon: <EditIcon size={16} />,
               },
               {
-                label: "Delete condition",
+                label: t("discounts.conditions.delete"),
                 onClick: () =>
                   updateCondition({
                     type,
@@ -227,15 +231,15 @@ const ConditionItem = <Type extends DiscountConditionType>({
 const getTitle = (type: DiscountConditionType) => {
   switch (type) {
     case DiscountConditionType.PRODUCTS:
-      return "Product"
+      return "title_product"
     case DiscountConditionType.PRODUCT_COLLECTIONS:
-      return "Collection"
+      return "title_collection"
     case DiscountConditionType.PRODUCT_TAGS:
-      return "Tag"
-    case DiscountConditionType.CUSTOMER_GROUPS:
-      return "Customer group"
+      return "title_tag"
     case DiscountConditionType.PRODUCT_TYPES:
-      return "Type"
+      return "title_type"
+    case DiscountConditionType.CUSTOMER_GROUPS:
+      return "title_customer_groups"
   }
 }
 

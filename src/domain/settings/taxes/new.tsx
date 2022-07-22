@@ -15,6 +15,7 @@ import useNotification from "../../../hooks/use-notification"
 import { getErrorMessage } from "../../../utils/error-messages"
 import TaxRuleSelector from "./tax-rule-selector"
 import { TaxRuleItem } from "./tax-rule-item"
+import { useTranslation } from "react-i18next"
 
 const NewTaxRate = ({ regionId, onDismiss }) => {
   const createTaxRate = useAdminCreateTaxRate()
@@ -26,17 +27,21 @@ const NewTaxRate = ({ regionId, onDismiss }) => {
     },
   })
   const notification = useNotification()
-
+  const { t } = useTranslation()
   const layeredModalContext = useContext(LayeredModalContext)
 
   const onSave = (data) => {
     createTaxRate.mutate(data, {
       onSuccess: () => {
-        notification("Success", "Successfully created tax rate.", "success")
+        notification(
+          t("common.status.success"),
+          t("settings.tax.create_success"),
+          "success"
+        )
         onDismiss()
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -82,10 +87,10 @@ const NewTaxRate = ({ regionId, onDismiss }) => {
           </Modal.Header>
           <Modal.Content>
             <div>
-              <p className="inter-base-semibold mb-base">Details</p>
+              <p className="inter-base-semibold mb-base">{t("orders.field.detail")}</p>
               <Input
                 name="name"
-                label="Name"
+                label={t("common.name")}
                 placeholder="Rate name"
                 ref={register({ required: true })}
                 className="mb-base min-w-[335px] w-full"
@@ -134,7 +139,7 @@ const NewTaxRate = ({ regionId, onDismiss }) => {
                         )
                       }}
                       index={1}
-                      name="Product Rules"
+                      name={t("settings.tax.product_rules")}
                       description={`Applies to ${
                         rules.products.length
                       } product${rules.products.length > 1 ? "s" : ""}`}
@@ -162,7 +167,7 @@ const NewTaxRate = ({ regionId, onDismiss }) => {
                         )
                       }}
                       index={2}
-                      name="Product Type Rules"
+                      name={t("settings.tax.type_rules")}
                       description={`Applies to ${
                         rules.product_types.length
                       } product type${
@@ -192,7 +197,7 @@ const NewTaxRate = ({ regionId, onDismiss }) => {
                         )
                       }}
                       index={3}
-                      name="Shipping Option Rules"
+                      name={t("settings.tax.option_rules")}
                       description={`Applies to ${
                         rules.shipping_options.length
                       } shipping option${
@@ -236,7 +241,7 @@ const NewTaxRate = ({ regionId, onDismiss }) => {
                 size="small"
                 className="w-eventButton justify-center"
               >
-                Cancel
+                {t("common.cancel")}
               </Button>
               <Button
                 type="submit"
@@ -244,7 +249,7 @@ const NewTaxRate = ({ regionId, onDismiss }) => {
                 size="small"
                 className="w-eventButton justify-center"
               >
-                Create
+                {t("common.create")}
               </Button>
             </div>
           </Modal.Footer>

@@ -7,6 +7,7 @@ import Table, { TablePagination } from "../../molecules/table"
 import { FilteringOptionProps } from "../../molecules/table/filtering-option"
 import useCollectionActions from "./use-collection-actions"
 import useCollectionTableColumn from "./use-collection-column"
+import { useTranslation } from "react-i18next"
 
 const DEFAULT_PAGE_SIZE = 15
 
@@ -63,7 +64,7 @@ const CollectionsTable: React.FC = () => {
     },
     usePagination
   )
-
+  const { t } = useTranslation()
   const handleNext = () => {
     if (canNextPage) {
       setOffset(offset + limit)
@@ -139,7 +140,7 @@ const CollectionsTable: React.FC = () => {
         limit={limit}
         offset={offset}
         pageSize={offset + rows.length}
-        title="Collections"
+        title={t("collections.title")}
         currentPage={pageIndex + 1}
         pageCount={pageCount}
         nextPage={handleNext}

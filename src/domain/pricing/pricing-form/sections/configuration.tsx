@@ -10,6 +10,7 @@ import Select from "../../../../components/molecules/select"
 import Accordion from "../../../../components/organisms/accordion"
 import { usePriceListForm } from "../form/pricing-form-context"
 import { ConfigurationField } from "../types"
+import { useTranslation } from "react-i18next"
 
 type ConfigurationProps = {
   priceList?: PriceList
@@ -34,6 +35,7 @@ const checkForEnabledConfigs = (
 }
 
 const Configuration: React.FC<ConfigurationProps> = () => {
+  const { t } = useTranslation()
   const { customer_groups, isLoading } = useAdminCustomerGroups()
   const {
     control,
@@ -88,12 +90,12 @@ const Configuration: React.FC<ConfigurationProps> = () => {
                     <>
                       <DatePicker
                         date={value}
-                        label="Start date"
+                        label={t("discounts.configrations.start_date_label")}
                         onSubmitDate={onChange}
                       />
                       <TimePicker
                         date={value}
-                        label="Start date"
+                        label={t("discounts.configrations.start_time_label")}
                         onSubmitDate={onChange}
                       />
                     </>
@@ -129,12 +131,12 @@ const Configuration: React.FC<ConfigurationProps> = () => {
                     <>
                       <DatePicker
                         date={value}
-                        label="End date"
+                        label={t("discounts.configrations.expire_date_label")}
                         onSubmitDate={onChange}
                       />
                       <TimePicker
                         date={value}
-                        label="End date"
+                        label={t("discounts.configrations.expire_time_label")}
                         onSubmitDate={onChange}
                       />
                     </>
@@ -170,7 +172,7 @@ const Configuration: React.FC<ConfigurationProps> = () => {
                   >
                     <Select
                       value={value}
-                      label="Customer Groups"
+                      label={t("customers.groups.title")}
                       onChange={onChange}
                       isMultiSelect
                       fullWidth

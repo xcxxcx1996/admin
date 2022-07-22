@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 import Button from "../../../../components/fundamentals/button"
 import ChevronRightIcon from "../../../../components/fundamentals/icons/chevron-right-icon"
 import IconTooltip from "../../../../components/molecules/icon-tooltip"
@@ -24,6 +25,7 @@ const AddConditionsModal = ({
   isDetails = false,
 }: AddConditionsModalProps) => {
   const layeredModalContext = useContext(LayeredModalContext)
+  const { t } = useTranslation()
 
   const [items, setItems] = useState<ConditionItem[]>(
     useConditionModalItems({ onClose, isDetails })
@@ -62,7 +64,7 @@ const AddConditionsModal = ({
           ) : (
             <div className="flex flex-col items-center justify-center flex-1 h-full">
               <span className="inter-base-regular text-grey-40">
-                Can't add anymore conditions
+                {t("discounts.conditions.no_more")}
               </span>
             </div>
           )}
@@ -76,7 +78,7 @@ const AddConditionsModal = ({
               size="small"
               onClick={onClose}
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               onClick={() => {
@@ -89,7 +91,7 @@ const AddConditionsModal = ({
               className="w-32 text-small justify-center"
               variant="primary"
             >
-              Save
+              {t("common.save")}
             </Button>
           </div>
         </Modal.Footer>

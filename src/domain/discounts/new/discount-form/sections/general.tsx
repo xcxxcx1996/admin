@@ -2,6 +2,7 @@ import { Discount } from "@medusajs/medusa"
 import { useAdminRegions } from "medusa-react"
 import React, { useEffect, useMemo, useState } from "react"
 import { Controller, useWatch } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import Checkbox from "../../../../../components/atoms/checkbox"
 import IconTooltip from "../../../../../components/molecules/icon-tooltip"
 import InputField from "../../../../../components/molecules/input"
@@ -20,6 +21,7 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
   const [fixedRegionCurrency, setFixedRegionCurrency] = useState<
     string | undefined
   >(initialCurrency)
+  const { t } = useTranslation()
 
   const { regions: opts } = useAdminRegions()
   const { register, control, type } = useDiscountForm()
@@ -64,7 +66,7 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
             name="regions"
             control={control}
             rules={{
-              required: "Atleast one region is required",
+              required: t("discounts.region_require"),
               validate: (value) =>
                 Array.isArray(value) ? value.length > 0 : !!value,
             }}
@@ -75,7 +77,7 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
                   onChange={(value) => {
                     onChange(type === "fixed" ? [value] : value)
                   }}
-                  label="Choose valid regions"
+                  label={t("discounts.region_label")}
                   isMultiSelect={type !== "fixed"}
                   hasSelectAll={type !== "fixed"}
                   enableSearch
@@ -87,7 +89,7 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
           />
           <div className="flex gap-x-base gap-y-base my-base">
             <InputField
-              label="Code"
+              label={t("discounts.code_label")}
               className="flex-1"
               placeholder="SUMMERSALE10"
               required
@@ -109,13 +111,13 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
                         name="rule.value"
                         control={control}
                         rules={{
-                          required: "Amount is required",
+                          required: t("discounts.amount_require"),
                           min: 1,
                         }}
                         render={({ value, onChange }) => {
                           return (
                             <CurrencyInput.AmountInput
-                              label={"Amount"}
+                              label={t("discounts.amount_label")}
                               required
                               amount={value}
                               onChange={onChange}
@@ -128,7 +130,7 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
                 ) : (
                   <div className="flex-1">
                     <InputField
-                      label="Percentage"
+                      label={t("discounts.percentage_label")}
                       min={0}
                       required
                       type="number"
@@ -147,14 +149,11 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
           </div>
 
           <div className="text-grey-50 inter-small-regular flex flex-col mb-6">
-            <span>
-              The code your customers will enter during checkout. This will
-              appear on your customer’s invoice.
-            </span>
-            <span>Uppercase letters and numbers only.</span>
+            <span>{t("discounts.code_description")}</span>
+            <span>{t("discounts.code_description2")}</span>
           </div>
           <Textarea
-            label="Description"
+            label={t("common.description")}
             required
             placeholder="Summer Sale 2022"
             rows={1}
@@ -170,7 +169,7 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
               render={({ onChange, value }) => {
                 return (
                   <Checkbox
-                    label="This is a template discount"
+                    label={t("common.template_label")}
                     name="is_dynamic"
                     id="is_dynamic"
                     checked={value}
@@ -179,11 +178,7 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
                 )
               }}
             />
-            <IconTooltip
-              content={
-                "Template discounts allow you to define a set of rules that can be used across a group of discounts. This is useful in campaigns that should generate unique codes for each user, but where the rules for all unique codes should be the same."
-              }
-            />
+            <IconTooltip content={t("common.template_tip")} />
           </div>
         </>
       )}

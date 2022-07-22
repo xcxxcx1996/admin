@@ -9,6 +9,7 @@ import { getErrorMessage } from "../../../utils/error-messages"
 import TaxRuleSelector from "./tax-rule-selector"
 import { EditTaxRateDetails } from "./edit-tax-rate-details"
 import { TaxRuleItem } from "./tax-rule-item"
+import { useTranslation } from "react-i18next"
 
 const EditTaxRate = ({ modalContext, regionId, taxRate, onDismiss }) => {
   const updateTaxRate = useAdminUpdateTaxRate(taxRate.id)
@@ -36,11 +37,15 @@ const EditTaxRate = ({ modalContext, regionId, taxRate, onDismiss }) => {
 
     updateTaxRate.mutate(toSubmit, {
       onSuccess: () => {
-        notification("Success", "Successfully updated Tax Rate.", "success")
+        notification(
+          t("common.status.success"),
+          "Successfully updated Tax Rate.",
+          "success"
+        )
         onDismiss()
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -72,7 +77,7 @@ const EditTaxRate = ({ modalContext, regionId, taxRate, onDismiss }) => {
         break
     }
   }
-
+  const { t } = useTranslation()
   return (
     <form onSubmit={handleSubmit(onSave)}>
       <Modal.Content>
@@ -102,7 +107,7 @@ const EditTaxRate = ({ modalContext, regionId, taxRate, onDismiss }) => {
                     )
                   }}
                   index={1}
-                  name="Product Rules"
+                  name={t("settings.tax.product_rules")}
                   description={`Applies to ${rules.products.length} product${
                     rules.products.length > 1 ? "s" : ""
                   }`}
@@ -130,7 +135,7 @@ const EditTaxRate = ({ modalContext, regionId, taxRate, onDismiss }) => {
                     )
                   }}
                   index={2}
-                  name="Product Type Rules"
+                  name={t("settings.tax.type_rules")}
                   description={`Applies to ${
                     rules.product_types.length
                   } product type${rules.product_types.length > 1 ? "s" : ""}`}
@@ -158,7 +163,7 @@ const EditTaxRate = ({ modalContext, regionId, taxRate, onDismiss }) => {
                     )
                   }}
                   index={3}
-                  name="Shipping Option Rules"
+                  name={t("settings.tax.option_rules")}
                   description={`Applies to ${
                     rules.shipping_options.length
                   } shipping option${
@@ -188,7 +193,7 @@ const EditTaxRate = ({ modalContext, regionId, taxRate, onDismiss }) => {
               size="medium"
               variant="secondary"
             >
-              <PlusIcon /> Add Overrides
+              <PlusIcon /> {t("settings.tax.add")}
             </Button>
           )}
         </div>
@@ -202,7 +207,7 @@ const EditTaxRate = ({ modalContext, regionId, taxRate, onDismiss }) => {
             size="small"
             className="w-eventButton justify-center"
           >
-            Cancel
+            {t("common.cancel")}
           </Button>
           <Button
             type="submit"
@@ -210,7 +215,7 @@ const EditTaxRate = ({ modalContext, regionId, taxRate, onDismiss }) => {
             size="small"
             className="w-eventButton justify-center"
           >
-            Save
+            {t("common.save")}
           </Button>
         </div>
       </Modal.Footer>
@@ -224,8 +229,10 @@ const SelectOverridesScreen = (
   onOverridesSelected,
   options = {}
 ) => {
+  const { t } = useTranslation()
+
   return {
-    title: "Add override",
+    title: t("settings.tax.add"),
     onBack: () => pop(),
     view: (
       <TaxRuleSelector
@@ -247,6 +254,7 @@ export const SimpleEditForm = ({ onDismiss, taxRate }) => {
     },
   })
   const notification = useNotification()
+  const { t } = useTranslation()
 
   const onSave = (data) => {
     const toSubmit = {
@@ -255,11 +263,15 @@ export const SimpleEditForm = ({ onDismiss, taxRate }) => {
     }
     updateRegion.mutate(toSubmit, {
       onSuccess: () => {
-        notification("Success", "Successfully updated default rate.", "success")
+        notification(
+          t("common.status.success"),
+          t("settings.tax.update_success"),
+          "success"
+        )
         onDismiss()
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -278,7 +290,7 @@ export const SimpleEditForm = ({ onDismiss, taxRate }) => {
             size="small"
             className="w-eventButton justify-center"
           >
-            Cancel
+            {t("common.cancel")}
           </Button>
           <Button
             type="submit"
@@ -286,7 +298,7 @@ export const SimpleEditForm = ({ onDismiss, taxRate }) => {
             size="small"
             className="w-eventButton justify-center"
           >
-            Save
+            {t("common.save")}
           </Button>
         </div>
       </Modal.Footer>

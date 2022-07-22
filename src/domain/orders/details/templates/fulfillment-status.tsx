@@ -9,7 +9,7 @@ export const FulfillmentStatusComponent = ({ status }) => {
     case "fulfilled":
       return <StatusDot title="Fulfilled" variant="warning" />
     case "canceled":
-      return <StatusDot title="Canceled" variant="danger" />
+      return <StatusDot title={t("orders.status.canceled")} variant="danger" />
     case "partially_fulfilled":
       return <StatusDot title="Partially fulfilled" variant="warning" />
     case "requires_action":

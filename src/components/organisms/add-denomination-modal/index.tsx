@@ -90,7 +90,7 @@ const AddDenominationModal: React.FC<AddDenominationModalProps> = ({
       },
       {
         onSuccess: () => {
-          notification("Success", "Denomination added successfully", "success")
+          notification(t("common.status.success"), "Denomination added successfully", "success")
           handleClose()
         },
         onError: (error) => {
@@ -103,7 +103,7 @@ const AddDenominationModal: React.FC<AddDenominationModalProps> = ({
             }
           }
 
-          notification("Error", errorMessage(), "error")
+          notification(t("common.status.error"), errorMessage(), "error")
         },
       }
     )
@@ -222,7 +222,7 @@ const AddDenominationModal: React.FC<AddDenominationModalProps> = ({
                 onClick={handleClose}
                 className="mr-2 min-w-[130px] justify-center"
               >
-                Cancel
+                {t("common.cancel")}
               </Button>
               <Button
                 variant="primary"
@@ -230,7 +230,7 @@ const AddDenominationModal: React.FC<AddDenominationModalProps> = ({
                 className="mr-2 min-w-[130px] justify-center"
                 type="submit"
               >
-                Save
+                {t("common.save")}
               </Button>
             </div>
           </Modal.Footer>

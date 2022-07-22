@@ -1,6 +1,7 @@
 import { Discount } from "@medusajs/medusa"
 import { navigate } from "gatsby"
 import * as React from "react"
+import { useTranslation } from "react-i18next"
 import Button from "../../../../components/fundamentals/button"
 import CrossIcon from "../../../../components/fundamentals/icons/cross-icon"
 import FocusModal from "../../../../components/molecules/modal/focus-modal"
@@ -30,6 +31,7 @@ const DiscountForm: React.FC<DiscountFormProps> = ({
 }) => {
   const notification = useNotification()
   const { handleSubmit, handleReset } = useDiscountForm()
+  const { t } = useTranslation()
 
   const { onSaveAsActive, onSaveAsInactive } = useFormActions()
 
@@ -50,7 +52,7 @@ const DiscountForm: React.FC<DiscountFormProps> = ({
           handleReset()
         })
         .catch((error) => {
-          notification("Error", getErrorMessage(error), "error")
+          notification(t("common.status.error"), getErrorMessage(error), "error")
         })
     } else {
       closeFormModal()
@@ -64,7 +66,7 @@ const DiscountForm: React.FC<DiscountFormProps> = ({
       closeFormModal()
       handleReset()
     } catch (error) {
-      notification("Error", getErrorMessage(error), "error")
+      notification(t("common.status.error"), getErrorMessage(error), "error")
     }
   }
 
@@ -87,7 +89,7 @@ const DiscountForm: React.FC<DiscountFormProps> = ({
               variant="ghost"
               className="border rounded-rounded"
             >
-              Save as draft
+              {t("common.save")} as draft
             </Button>
             <Button
               size="small"
@@ -104,7 +106,7 @@ const DiscountForm: React.FC<DiscountFormProps> = ({
         <div className="flex justify-center mb-[25%]">
           <div className="medium:w-7/12 large:w-6/12 small:w-4/5 w-full pt-16">
             <h1 className="inter-xlarge-semibold">
-              {isEdit ? "Edit discount" : "Create new discount"}
+              {isEdit ? "Edit discount" : t("discounts.add")}
             </h1>
             <Accordion
               className="pt-7 text-grey-90"
@@ -113,15 +115,15 @@ const DiscountForm: React.FC<DiscountFormProps> = ({
             >
               <Accordion.Item
                 forceMountContent
-                title="Discount type"
+                title={t("discounts.type")}
                 required
-                tooltip="Select a discount type"
+                tooltip={t("discounts.type_tip")}
                 value="promotion-type"
               >
                 <PromotionType />
               </Accordion.Item>
               <Accordion.Item
-                title="General"
+                title={t("common.general")}
                 required
                 value="general"
                 forceMountContent
@@ -130,18 +132,18 @@ const DiscountForm: React.FC<DiscountFormProps> = ({
               </Accordion.Item>
               <Accordion.Item
                 forceMountContent
-                title="Configuration"
+                title={t("discounts.configrations.title")}
                 value="configuration"
-                description="Discount code applies from you hit the publish button and forever if left untouched."
+                description={t("discounts.configrations.description")}
               >
                 <Configuration promotion={discount} isEdit={isEdit} />
               </Accordion.Item>
               <Accordion.Item
                 forceMountContent
-                title="Conditions"
-                description="Discount code apply to all products if left untouched."
+                title={t("discounts.conditions.title")}
+                description={t("discounts.conditions.description")}
                 value="conditions"
-                tooltip="Add conditions to your Discount"
+                tooltip={t("discounts.conditions.tooltip")}
               >
                 <Conditions discount={discount} />
               </Accordion.Item>

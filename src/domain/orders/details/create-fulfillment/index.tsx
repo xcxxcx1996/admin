@@ -22,6 +22,7 @@ import Metadata, {
 import useNotification from "../../../../hooks/use-notification"
 import { getErrorMessage } from "../../../../utils/error-messages"
 import CreateFulfillmentItemsTable from "./item-table"
+import { useTranslation } from "react-i18next"
 
 type CreateFulfillmentModalProps = {
   handleCancel: () => void
@@ -51,7 +52,7 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
   const createOrderFulfillment = useAdminCreateFulfillment(orderId)
   const createSwapFulfillment = useAdminFulfillSwap(orderId)
   const createClaimFulfillment = useAdminFulfillClaim(orderId)
-
+  const { t } = useTranslation()
   const notification = useNotification()
 
   const createFulfillment = () => {
@@ -63,7 +64,7 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
       | typeof createClaimFulfillment
 
     let action: actionType = createOrderFulfillment
-    let successText = "Successfully fulfilled order"
+    let successText = t("orders.notification.fulfiled_success")
     let requestObj
 
     const preparedMetadata = metadata.reduce((acc, next) => {
@@ -90,7 +91,7 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
 
       case "claim":
         action = createClaimFulfillment
-        successText = "Successfully fulfilled claim"
+        successText = t("orders.notification.fulfiled_claim_success")
         requestObj = {
           claim_id: orderToFulfill.id,
           metadata: preparedMetadata,
@@ -111,10 +112,11 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
 
     action.mutate(requestObj, {
       onSuccess: () => {
-        notification("Success", successText, "success")
+        notification(t("common.status.success"), successText, "success")
         handleCancel()
       },
-      onError: (err) => notification("Error", getErrorMessage(err), "error"),
+      onError: (err) =>
+        notification(t("common.status.error"), getErrorMessage(err), "error"),
     })
   }
 
@@ -122,7 +124,7 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
     <Modal handleClose={handleCancel}>
       <Modal.Body>
         <Modal.Header handleClose={handleCancel}>
-          <span className="inter-xlarge-semibold">Create Fulfillment</span>
+          <span className="inter-xlarge-semibold">{t("orders.actions.create_fulfillment")}</span>
         </Modal.Header>
         <Modal.Content>
           <div className="flex flex-col">
@@ -173,7 +175,7 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
                 size="large"
                 onClick={handleCancel}
               >
-                Cancel
+                {t("common.cancel")}
               </Button>
               <Button
                 size="large"
@@ -182,7 +184,7 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
                 disabled={!toFulfill?.length}
                 onClick={createFulfillment}
               >
-                Complete
+                {t("orders.actions.complete")}
               </Button>
             </div>
           </div>

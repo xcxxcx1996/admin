@@ -11,6 +11,7 @@ import CurrencyInput from "../../../components/organisms/currency-input"
 import DeletePrompt from "../../../components/organisms/delete-prompt"
 import useNotification from "../../../hooks/use-notification"
 import { getErrorMessage } from "../../../utils/error-messages"
+import { useTranslation } from "react-i18next"
 
 const EditShipping = ({ shippingOption, region, onDone, onClick }) => {
   const { register, reset, handleSubmit, setValue } = useForm()
@@ -19,7 +20,7 @@ const EditShipping = ({ shippingOption, region, onDone, onClick }) => {
   const deleteOption = useAdminDeleteShippingOption(shippingOption.id)
   const updateOption = useAdminUpdateShippingOption(shippingOption.id)
   const notification = useNotification()
-
+  const { t } = useTranslation()
   useEffect(() => {
     if (shippingOption.requirements) {
       const minSubtotal = shippingOption.requirements.find(
@@ -69,7 +70,7 @@ const EditShipping = ({ shippingOption, region, onDone, onClick }) => {
       },
       onError: (error) => {
         setShowDelete(false)
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -146,8 +147,8 @@ const EditShipping = ({ shippingOption, region, onDone, onClick }) => {
     updateOption.mutate(payload, {
       onSuccess: () => {
         notification(
-          "Success",
-          "Successfully updated shipping option",
+          t("common.status.success"),
+          t("settings.region.update_option_success"),
           "success"
         )
         if (onDone) {
@@ -156,7 +157,7 @@ const EditShipping = ({ shippingOption, region, onDone, onClick }) => {
         onClick()
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -165,8 +166,8 @@ const EditShipping = ({ shippingOption, region, onDone, onClick }) => {
     <>
       {showDelete ? (
         <DeletePrompt
-          text={"Are you sure you want to delete this shipping option?"}
-          successText="Successfully deleted shipping option"
+          text={t("settings.region.option_delete_text")}
+          successText={t("settings.region.option_delete_success")}
           handleClose={() => setShowDelete(false)}
           onDelete={async () => {
             handleDelete()
@@ -194,7 +195,7 @@ const EditShipping = ({ shippingOption, region, onDone, onClick }) => {
                 </div>
                 <div className="grid grid-cols-1 medium:grid-cols-2 gap-base">
                   <Input
-                    label="Name"
+                    label={t("common.name")}
                     name="name"
                     ref={register}
                     placeholder="Shipping option name"
@@ -207,7 +208,7 @@ const EditShipping = ({ shippingOption, region, onDone, onClick }) => {
                   >
                     <CurrencyInput.AmountInput
                       amount={shippingOption.amount}
-                      label="Price"
+                      label={t("common.price")}
                       onChange={(amount) => handleAmountChange(amount)}
                     />
                   </CurrencyInput>
@@ -223,7 +224,7 @@ const EditShipping = ({ shippingOption, region, onDone, onClick }) => {
                       onChange={() => setAdminOnly(!adminOnly)}
                       className="mr-small w-5 h-5 accent-violet-60 rounded-base"
                     />
-                    Show on website
+                    {t("settings.region.show_on_website")}
                   </label>
                 </div>
                 {!shippingOption.is_return && (
@@ -239,7 +240,7 @@ const EditShipping = ({ shippingOption, region, onDone, onClick }) => {
                           amount={
                             shippingOption.requirements?.min_subtotal?.amount
                           }
-                          label="Min. subtotal"
+                          label={t("settings.region.min")}
                           onChange={(amount) => handleMinChange(amount)}
                         />
                       </CurrencyInput>
@@ -252,7 +253,7 @@ const EditShipping = ({ shippingOption, region, onDone, onClick }) => {
                           amount={
                             shippingOption.requirements?.max_subtotal?.amount
                           }
-                          label="Max. subtotal"
+                          label={t("settings.region.max")}
                           onChange={(amount) => handleMaxChange(amount)}
                         />
                       </CurrencyInput>
@@ -260,7 +261,7 @@ const EditShipping = ({ shippingOption, region, onDone, onClick }) => {
                   </>
                 )}
                 <div className="mt-xlarge">
-                  <p className="inter-base-semibold">Danger Zone</p>
+                  <p className="inter-base-semibold">危险</p>
                   <p className="inter-base-regular text-grey-50 mb-base">
                     This will permanently delete this option from your Medusa
                     Store
@@ -269,7 +270,7 @@ const EditShipping = ({ shippingOption, region, onDone, onClick }) => {
                     onClick={() => setShowDelete(true)}
                     className="text-rose-50 inter-base-semibold"
                   >
-                    Delete
+                    {t("common.delete")}
                   </button>
                 </div>
               </Modal.Content>
@@ -282,7 +283,7 @@ const EditShipping = ({ shippingOption, region, onDone, onClick }) => {
                     size="small"
                     className="w-eventButton justify-center"
                   >
-                    Cancel changes
+                    {t("common.cancel_change")}
                   </Button>
                   <Button
                     type="submit"
@@ -290,7 +291,7 @@ const EditShipping = ({ shippingOption, region, onDone, onClick }) => {
                     size="small"
                     className="w-eventButton justify-center"
                   >
-                    Save
+                    {t("common.save")}
                   </Button>
                 </div>
               </Modal.Footer>

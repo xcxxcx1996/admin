@@ -15,6 +15,7 @@ import TrashIcon from "../fundamentals/icons/trash-icon"
 import GridInput from "../molecules/grid-input"
 import Table from "../molecules/table"
 import { useGridColumns } from "./use-grid-columns"
+import { useTranslation } from "react-i18next"
 
 const VariantGrid = ({ product, variants, edit, onVariantsChange }) => {
   const [isDuplicate, setIsDuplicate] = useState(false)
@@ -24,7 +25,7 @@ const VariantGrid = ({ product, variants, edit, onVariantsChange }) => {
     options: any[]
     [k: string]: any
   } | null>(null)
-
+  const { t } = useTranslation()
   const createVariant = useAdminCreateVariant(product?.id)
   const updateVariant = useAdminUpdateVariant(product?.id)
   const deleteVariant = useAdminDeleteVariant(product?.id)
@@ -54,11 +55,15 @@ const VariantGrid = ({ product, variants, edit, onVariantsChange }) => {
       { variant_id: selectedVariant?.id, ...data },
       {
         onSuccess: () => {
-          notification("Success", "Successfully update variant", "success")
+          notification(
+            t("common.status.success"),
+            t("products.variant.update_success"),
+            "success"
+          )
           setSelectedVariant(null)
         },
         onError: (err) => {
-          notification("Error", getErrorMessage(err), "error")
+          notification(t("common.status.error"), getErrorMessage(err), "error")
         },
       }
     )
@@ -66,8 +71,8 @@ const VariantGrid = ({ product, variants, edit, onVariantsChange }) => {
 
   const handleDeleteVariant = async (variant) => {
     const shouldDelete = await dialog({
-      heading: "Delete product variant",
-      text: "Are you sure?",
+      heading: t("products.variant.delete_heading"),
+      text: t("products.variant.delete_text"),
     })
 
     if (shouldDelete) {
@@ -80,11 +85,15 @@ const VariantGrid = ({ product, variants, edit, onVariantsChange }) => {
       { ...variant },
       {
         onSuccess: () => {
-          notification("Success", "Successfully created variant", "success")
+          notification(
+            t("common.status.success"),
+            t("products.variant.create_success"),
+            "success"
+          )
           setSelectedVariant(null)
         },
         onError: (err) => {
-          notification("Error", getErrorMessage(err), "error")
+          notification(t("common.status.error"), getErrorMessage(err), "error")
         },
       }
     )
@@ -93,12 +102,12 @@ const VariantGrid = ({ product, variants, edit, onVariantsChange }) => {
   const editVariantActions = (variant) => {
     return [
       {
-        label: "Edit",
+        label: t("common.edit"),
         icon: <EditIcon size={20} />,
         onClick: () => setSelectedVariant(variant),
       },
       {
-        label: "Duplicate",
+        label: t("common.duplicate"),
         icon: <DuplicateIcon size={20} />,
         onClick: () => {
           setSelectedVariant(variant)
@@ -106,7 +115,7 @@ const VariantGrid = ({ product, variants, edit, onVariantsChange }) => {
         },
       },
       {
-        label: "Delete",
+        label: t("common.delete"),
         icon: <TrashIcon size={20} />,
         onClick: () => handleDeleteVariant(variant),
         variant: "danger",

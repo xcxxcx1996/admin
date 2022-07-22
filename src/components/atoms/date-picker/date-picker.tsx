@@ -10,6 +10,7 @@ import InputContainer from "../../fundamentals/input-container"
 import InputHeader from "../../fundamentals/input-header"
 import CustomHeader from "./custom-header"
 import { DateTimePickerProps } from "./types"
+import { useTranslation } from "react-i18next"
 
 const getDateClassname = (d, tempDate) => {
   return moment(d).format("YY,MM,DD") === moment(tempDate).format("YY,MM,DD")
@@ -29,6 +30,7 @@ const DatePicker: React.FC<DateTimePickerProps> = ({
   tooltipContent,
   tooltip,
 }) => {
+  const { t } = useTranslation()
   const [tempDate, setTempDate] = useState(date)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -86,7 +88,7 @@ const DatePicker: React.FC<DateTimePickerProps> = ({
               onClick={() => setIsOpen(false)}
               className="mr-2 w-1/3 flex justify-center border border-grey-20"
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               size="medium"

@@ -5,6 +5,7 @@ import { getErrorMessage } from "../../../utils/error-messages"
 import Button from "../../fundamentals/button"
 import InputField from "../../molecules/input"
 import Modal from "../../molecules/modal"
+import { useTranslation } from "react-i18next"
 
 type EditUserModalProps = {
   handleClose: () => void
@@ -27,7 +28,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
   const [first_name, setFirstName] = useState(user.first_name)
   const [last_name, setLastName] = useState(user.last_name)
   const notification = useNotification()
-
+  const { t } = useTranslation()
   const submit = () => {
     setIsLoading(true)
     Medusa.users
@@ -36,7 +37,9 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
         last_name,
       })
       .then((res) => onSubmit())
-      .catch((err) => notification("Error", getErrorMessage(err), "error"))
+      .catch((err) =>
+        notification(t("common.status.error"), getErrorMessage(err), "error")
+      )
 
     handleClose()
   }
@@ -50,20 +53,20 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
         <Modal.Content>
           <div className="w-full flex mb-4">
             <InputField
-              label="First Name"
+              label={t("customers.first_name")}
               placeholder="First name..."
               onChange={(e) => setFirstName(e.target.value)}
               value={first_name}
               className="mr-4"
             />
             <InputField
-              label="Last Name"
+              label={t("customers.last_name")}
               placeholder="Last name..."
               onChange={(e) => setLastName(e.target.value)}
               value={last_name}
             />
           </div>
-          <InputField label="Email" disabled value={email} />
+          <InputField label={t("customers.email")} disabled value={email} />
         </Modal.Content>
         <Modal.Footer>
           <div className="w-full flex justify-end">
@@ -73,7 +76,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
               onClick={handleClose}
               className="mr-2"
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               loading={isLoading}
@@ -81,7 +84,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
               size="small"
               onClick={submit}
             >
-              Save
+              {t("common.save")}
             </Button>
           </div>
         </Modal.Footer>

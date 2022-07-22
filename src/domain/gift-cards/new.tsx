@@ -94,13 +94,13 @@ const NewGiftCard: React.FC<NewGiftCardProps> = ({ onClose }) => {
     const trimmedName = data.name.trim()
 
     if (!trimmedName) {
-      notification("Error", "Please enter a name for the Gift Card", "error")
+      notification(t("common.status.error"), "Please enter a name for the Gift Card", "error")
       focusByName("name")
       return
     }
 
     if (!data.denominations) {
-      notification("Error", "Please add at least one denomination", "error")
+      notification(t("common.status.error"), "Please add at least one denomination", "error")
       focusByName("add-denomination")
       return
     }
@@ -138,12 +138,12 @@ const NewGiftCard: React.FC<NewGiftCardProps> = ({ onClose }) => {
       },
       {
         onSuccess: () => {
-          notification("Success", "Successfully created Gift Card", "success")
+          notification(t("common.status.success"), "Successfully created Gift Card", "success")
           refetch()
           navigate("/a/gift-cards/manage")
         },
         onError: (err) => {
-          notification("Error", getErrorMessage(err), "error")
+          notification(t("common.status.error"), getErrorMessage(err), "error")
         },
       }
     )
@@ -164,14 +164,14 @@ const NewGiftCard: React.FC<NewGiftCardProps> = ({ onClose }) => {
             </div>
             <div className="flex flex-col gap-y-base">
               <InputField
-                label={"Name"}
+                label={t("common.name")}
                 required
                 placeholder="The best Gift Card"
                 name="name"
                 ref={register({ required: true })}
               />
               <Textarea
-                label="Description"
+                label={t("common.description")}
                 placeholder="The best Gift Card of all time"
                 name="description"
                 ref={register}
@@ -197,7 +197,7 @@ const NewGiftCard: React.FC<NewGiftCardProps> = ({ onClose }) => {
                           type="button"
                           onClick={() => setThumbnail(null)}
                         >
-                          Delete
+                          {t("common.delete")}
                         </button>
                       </div>
                     </div>
@@ -257,7 +257,7 @@ const NewGiftCard: React.FC<NewGiftCardProps> = ({ onClose }) => {
                 className="w-eventButton"
                 onClick={onClose}
               >
-                Cancel
+                {t("common.cancel")}
               </Button>
               <Button
                 type="submit"

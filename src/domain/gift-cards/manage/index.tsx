@@ -23,6 +23,7 @@ import {
 import Denominations from "./sections/denominations"
 import Images from "./sections/images"
 import Information from "./sections/information"
+import { useTranslation } from "react-i18next"
 
 const ManageGiftCard: React.FC<RouteComponentProps> = () => {
   const { products } = useAdminProducts(
@@ -69,11 +70,15 @@ const ManageGiftCard: React.FC<RouteComponentProps> = () => {
     updateGiftCard.mutate(formValuesToUpdateGiftCardMapper(newData), {
       onSuccess: () => {
         setSubmitting(false)
-        notification("Success", "Product updated successfully", "success")
+        notification(
+          t("common.status.success"),
+          "Product updated successfully",
+          "success"
+        )
       },
       onError: (error) => {
         setSubmitting(false)
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -137,7 +142,7 @@ const UpdateNotification = ({ isLoading = false }) => {
       toast.dismiss(TOAST_ID)
     }
   }, [isDirty])
-
+  const { t } = useTranslation()
   return (
     <Toaster
       visible={visible}
@@ -150,10 +155,10 @@ const UpdateNotification = ({ isLoading = false }) => {
           <FormToasterContainer.ActionButton
             onClick={handleSubmit(onUpdate, handleFormError)}
           >
-            Save
+            {t("common.save")}
           </FormToasterContainer.ActionButton>
           <FormToasterContainer.DiscardButton onClick={resetForm}>
-            Discard
+            {t("common.discard")}
           </FormToasterContainer.DiscardButton>
         </FormToasterContainer.Actions>
       </FormToasterContainer>

@@ -10,12 +10,13 @@ import TagIcon from "../../fundamentals/icons/tag-icon"
 import SidebarCompanyLogo from "../../molecules/sidebar-company-logo"
 import SidebarMenuItem from "../../molecules/sidebar-menu-item"
 import SidebarTeam from "../sidebar-team"
+import { useTranslation } from "react-i18next"
 
 const ICON_SIZE = 18
 
 const Sidebar: React.FC = () => {
   const [currentlyOpen, setCurrentlyOpen] = useState(-1)
-
+  const { t } = useTranslation()
   const { store } = useAdminStore()
 
   const triggerHandler = () => {
@@ -39,25 +40,25 @@ const Sidebar: React.FC = () => {
             pageLink={"/a/orders"}
             icon={<DollarSignIcon size={ICON_SIZE} />}
             triggerHandler={triggerHandler}
-            text={"Orders"}
+            text={t("orders.general.title")}
           />
           <SidebarMenuItem
             pageLink={"/a/products"}
             icon={<TagIcon size={ICON_SIZE} />}
-            text={"Products"}
+            text={t("products.title")}
             triggerHandler={triggerHandler}
           />
           <SidebarMenuItem
             pageLink={"/a/customers"}
             icon={<CustomerIcon size={ICON_SIZE} />}
             triggerHandler={triggerHandler}
-            text={"Customers"}
+            text={t("customers.title")}
           />
           <SidebarMenuItem
             pageLink={"/a/discounts"}
             icon={<SaleIcon size={ICON_SIZE} />}
             triggerHandler={triggerHandler}
-            text={"Discounts"}
+            text={t("discounts.title")}
           />
           <SidebarMenuItem
             pageLink={"/a/gift-cards"}
@@ -75,7 +76,7 @@ const Sidebar: React.FC = () => {
             pageLink={"/a/settings"}
             icon={<GearIcon size={ICON_SIZE} />}
             triggerHandler={triggerHandler}
-            text={"Settings"}
+            text={t("settings.title")}
           />
         </div>
 

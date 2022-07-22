@@ -6,6 +6,7 @@ import { LayeredModalContext } from "../../../components/molecules/modal/layered
 import { ProductSelector } from "./product-selector"
 import { ProductTypeSelector } from "./product-type-selector"
 import { ShippingOptionSelector } from "./shipping-option-selector"
+import { useTranslation } from "react-i18next"
 
 enum TaxRuleType {
   PRODUCTS = "products",
@@ -35,7 +36,7 @@ const TaxRuleSelector: React.FC<TaxRuleSelectorProps> = ({
   isLargeModal = true,
 }) => {
   const isLocked = type && items
-
+  const { t } = useTranslation()
   const { pop } = useContext(LayeredModalContext)
   const [selectedType, setSelectedType] = useState<string>(
     type ?? TaxRuleType.PRODUCTS
@@ -83,20 +84,20 @@ const TaxRuleSelector: React.FC<TaxRuleSelectorProps> = ({
               >
                 <RadioGroup.Item
                   className="flex-1"
-                  label={"Products"}
-                  description={"Select individual products"}
+                  label={t("products.title")}
+                  description={t("settings.tax.select_product")}
                   value={TaxRuleType.PRODUCTS}
                 />
                 <RadioGroup.Item
                   className="flex-1"
                   label={"Product Types"}
-                  description={"Select product types"}
+                  description={t("settings.tax.select_type")}
                   value={TaxRuleType.PRODUCT_TYPES}
                 />
                 <RadioGroup.Item
                   className="flex-1"
-                  label={"Shipping Options"}
-                  description={"Select shipping options"}
+                  label={t("settings.region.option")}
+                  description={t("settings.tax.select_option")}
                   value={TaxRuleType.SHIPPING_OPTIONS}
                 />
               </RadioGroup.Root>
@@ -131,7 +132,7 @@ const TaxRuleSelector: React.FC<TaxRuleSelectorProps> = ({
             className="w-[112px]"
             onClick={() => pop()}
           >
-            Back
+            {t("common.back")}
           </Button>
           <Button
             variant="primary"
@@ -139,7 +140,7 @@ const TaxRuleSelector: React.FC<TaxRuleSelectorProps> = ({
             size="small"
             onClick={handleSubmit}
           >
-            Add
+            {t("common.add")}
           </Button>
         </div>
       </Modal.Footer>

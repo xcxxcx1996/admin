@@ -1,6 +1,7 @@
 import clsx from "clsx"
 import { capitalize } from "lodash"
 import React from "react"
+import { useTranslation } from "react-i18next"
 
 type TableViewHeaderProps<T = string> = {
   views: T[]
@@ -13,6 +14,7 @@ const TableViewHeader: React.FC<TableViewHeaderProps> = ({
   activeView = views[0],
   setActiveView,
 }) => {
+  const { t } = useTranslation()
   return (
     <div className="flex inter-large-semibold gap-x-base text-grey-40">
       {views.map((k, i) => (
@@ -27,7 +29,7 @@ const TableViewHeader: React.FC<TableViewHeaderProps> = ({
             }
           }}
         >
-          {capitalize(k)}
+          {t("titles." + k)}
         </div>
       ))}
     </div>

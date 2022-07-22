@@ -4,6 +4,7 @@ import Modal from "../../../../components/molecules/modal"
 import { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal"
 import AddressForm from "../address-form"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 
 type RMAEditAddressSubModalProps = {
   onSubmit: (address) => void
@@ -28,12 +29,12 @@ const RMAEditAddressSubModal: React.FC<RMAEditAddressSubModalProps> = ({
     onSubmit(data.address)
     pop()
   }
-
+  const { t } = useTranslation()
   return (
     <>
       <Modal.Content isLargeModal={isLargeModal}>
         <div className="h-full">
-          <h2 className="inter-base-semibold mb-4">Search for additional </h2>
+          <h2 className="inter-base-semibold mb-4">{t("orders.field.search_additional")} </h2>
         </div>{" "}
         <AddressForm
           address={address}
@@ -50,7 +51,7 @@ const RMAEditAddressSubModal: React.FC<RMAEditAddressSubModalProps> = ({
             className="w-[112px]"
             onClick={() => pop()}
           >
-            Back
+            {t("common.back")}
           </Button>
           <Button
             variant="primary"
@@ -58,7 +59,7 @@ const RMAEditAddressSubModal: React.FC<RMAEditAddressSubModalProps> = ({
             size="small"
             onClick={addressForm.handleSubmit(handleSubmit)}
           >
-            Add
+            {t("common.add")}
           </Button>
         </div>
       </Modal.Footer>

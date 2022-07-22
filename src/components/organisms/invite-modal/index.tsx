@@ -4,12 +4,14 @@ import Medusa from "../../../services/api"
 import Button from "../../fundamentals/button"
 import InputField from "../../molecules/input"
 import Modal from "../../molecules/modal"
+import { useTranslation } from "react-i18next"
 
 type InviteModalProps = {
   handleClose: () => void
 }
 
 const InviteModal: React.FC<InviteModalProps> = ({ handleClose }) => {
+  const { t } = useTranslation()
   const [email, setEmail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [role, setRole] = useState("member")
@@ -30,11 +32,11 @@ const InviteModal: React.FC<InviteModalProps> = ({ handleClose }) => {
       .then((_res) => {
         setIsLoading(false)
         handleClose()
-        notification("Success", "user(s) invited", "success")
+        notification(t("common.status.success"), "user(s) invited", "success")
       })
       .catch((_error) => {
         setIsLoading(false)
-        notification("Error", "Could not add user(s)", "error")
+        notification(t("common.status.error"), "Could not add user(s)", "error")
         handleClose()
       })
   }
@@ -43,11 +45,13 @@ const InviteModal: React.FC<InviteModalProps> = ({ handleClose }) => {
     <Modal handleClose={handleClose}>
       <Modal.Body>
         <Modal.Header handleClose={handleClose}>
-          <span className="inter-xlarge-semibold">Invite Users</span>
+          <span className="inter-xlarge-semibold">
+            {t("settings.user.invite")}
+          </span>
         </Modal.Header>
         <Modal.Content>
           <InputField
-            label="Email"
+            label={t("customers.email")}
             placeholder="lebron@james.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -61,7 +65,7 @@ const InviteModal: React.FC<InviteModalProps> = ({ handleClose }) => {
               size="large"
               onClick={handleClose}
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               loading={isLoading}
@@ -70,7 +74,7 @@ const InviteModal: React.FC<InviteModalProps> = ({ handleClose }) => {
               variant="primary"
               onClick={handleSubmit}
             >
-              Invite
+              {t("settings.user.invite")}
             </Button>
           </div>
         </Modal.Footer>

@@ -8,7 +8,7 @@ import { useGiftCardForm } from "../form/gift-card-form-context"
 
 const columns = [
   {
-    Header: "Image",
+    Header: "图片",
     accessor: "image",
     Cell: ({ cell }) => {
       return (
@@ -22,7 +22,7 @@ const columns = [
     },
   },
   {
-    Header: "File Name",
+    Header: "文件名",
     accessor: "name",
     Cell: ({ cell }) => {
       return (
@@ -38,7 +38,7 @@ const columns = [
     },
   },
   {
-    Header: <div className="text-center">Thumbnail</div>,
+    Header: <div className="text-center">封面</div>,
     accessor: "thumbnail",
     Cell: ({ cell }) => {
       return (

@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react"
 import { useAdminProducts } from "medusa-react"
 import { useDebounce } from "../../../hooks/use-debounce"
 import { SelectableTable } from "./selectable-table"
+import { useTranslation } from "react-i18next"
 
 export const ProductSelector = ({ items, onChange }) => {
   const PAGE_SIZE = 12
@@ -28,11 +29,11 @@ export const ProductSelector = ({ items, onChange }) => {
     })
     setQuery(q)
   }
-
+  const { t } = useTranslation()
   const columns = useMemo(() => {
     return [
       {
-        Header: "Name",
+        Header: t("common.name"),
         accessor: "title",
         Cell: ({ row: { original } }) => {
           return (
@@ -59,7 +60,7 @@ export const ProductSelector = ({ items, onChange }) => {
 
   return (
     <SelectableTable
-      label="Select Products"
+      label={t("settings.tax.select_product")}
       objectName="Product"
       totalCount={count}
       pagination={pagination}

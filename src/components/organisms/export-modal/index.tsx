@@ -1,6 +1,7 @@
 import React from "react"
 import Button from "../../fundamentals/button"
 import Modal from "../../molecules/modal"
+import { useTranslation } from "react-i18next"
 
 type ExportModalProps = {
   handleClose: () => void
@@ -15,6 +16,7 @@ const ExportModal: React.FC<ExportModalProps> = ({
   loading,
   onSubmit,
 }) => {
+  const { t } = useTranslation()
   return (
     <Modal handleClose={handleClose}>
       <Modal.Body>
@@ -41,7 +43,7 @@ const ExportModal: React.FC<ExportModalProps> = ({
               onClick={handleClose}
               className="mr-2"
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               loading={loading}

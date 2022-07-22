@@ -8,6 +8,7 @@ import TwoSplitPane from "../../components/templates/two-split-pane"
 import useNotification from "../../hooks/use-notification"
 import { currencies } from "../../utils/currencies"
 import { getErrorMessage } from "../../utils/error-messages"
+import { useTranslation } from "react-i18next"
 
 type SelectCurrency = {
   value: string
@@ -16,6 +17,7 @@ type SelectCurrency = {
 
 const CurrencySettings = () => {
   const [storeCurrencies, setStoreCurrencies] = useState<SelectCurrency[]>([])
+  const { t } = useTranslation()
   const [allCurrencies, setAllCurrencies] = useState<SelectCurrency[]>([])
   const [selectedCurrency, setSelectedCurrency] = useState<SelectCurrency>({
     value: "",
@@ -70,10 +72,18 @@ const CurrencySettings = () => {
       },
       {
         onSuccess: () => {
-          notification("Success", "Successfully updated currencies", "success")
+          notification(
+            t("common.status.success"),
+            t("settings.currencies.update_success"),
+            "success"
+          )
         },
         onError: (error) => {
-          notification("Error", getErrorMessage(error), "error")
+          notification(
+            t("common.status.error"),
+            getErrorMessage(error),
+            "error"
+          )
         },
       }
     )
@@ -81,11 +91,11 @@ const CurrencySettings = () => {
 
   const currencyEvents = [
     {
-      label: "Save",
+      label: t("common.save"),
       onClick: (e) => onSubmit(e),
     },
     {
-      label: "Cancel changes",
+      label: t("common.cancel_change"),
       onClick: () => navigate("/a/settings"),
     },
   ]
@@ -94,18 +104,18 @@ const CurrencySettings = () => {
     <div>
       <BreadCrumb
         previousRoute="/a/settings"
-        previousBreadcrumb="Settings"
-        currentPage="Currencies"
+        previousBreadcrumb={t("settings.title")}
+        currentPage={t("settings.currencies.title")}
       />
       <TwoSplitPane>
         <BodyCard
-          title="Currencies"
+          title={t("settings.currencies.title")}
           subtitle="Manage the currencies that you will operate in"
           events={currencyEvents}
           className={"h-auto max-h-full"}
         >
           <Select
-            label="Default store currency"
+            label={t("settings.currencies.default")}
             options={storeCurrencies} // You are only allow to choose default currency from store currencies
             value={selectedCurrency}
             isMultiSelect={false}
@@ -114,7 +124,7 @@ const CurrencySettings = () => {
             className="mb-6"
           />
           <Select
-            label="Store currencies"
+            label={t("settings.currencies.store_currencies")}
             options={allCurrencies}
             value={storeCurrencies}
             isMultiSelect={true}

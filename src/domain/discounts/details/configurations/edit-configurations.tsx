@@ -11,6 +11,7 @@ import Modal from "../../../../components/molecules/modal"
 import SwitchableItem from "../../../../components/molecules/switchable-item"
 import useNotification from "../../../../hooks/use-notification"
 import { getErrorMessage } from "../../../../utils/error-messages"
+import { useTranslation } from "react-i18next"
 
 type EditConfigurationsProps = {
   discount: Discount
@@ -30,7 +31,7 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({
 }) => {
   const { mutate, isLoading } = useAdminUpdateDiscount(discount.id)
   const notification = useNotification()
-
+  const { t } = useTranslation()
   const { control, handleSubmit, reset } = useForm<ConfigurationsForm>({
     defaultValues: mapConfigurations(discount),
   })
@@ -46,12 +47,20 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({
       },
       {
         onSuccess: ({ discount }) => {
-          notification("Success", "Discount updated successfully", "success")
+          notification(
+            t("common.status.success"),
+            t("discounts.conditions.updated"),
+            "success"
+          )
           reset(mapConfigurations(discount))
           onClose()
         },
         onError: (error) => {
-          notification("Error", getErrorMessage(error), "error")
+          notification(
+            t("common.status.error"),
+            getErrorMessage(error),
+            "error"
+          )
         },
       }
     )
@@ -85,17 +94,19 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({
                           onChange(new Date(discount.starts_at))
                         }
                       }}
-                      title="Discount has a start date?"
-                      description="Schedule the discount to activate in the future."
+                      title={t("discounts.configrations.start_title")}
+                      description={t(
+                        "discounts.configrations.start_description"
+                      )}
                     >
                       <div className="flex gap-x-xsmall items-center">
                         <DatePicker
                           date={value!}
-                          label="Start date"
+                          label={t("discounts.configrations.start_date_label")}
                           onSubmitDate={onChange}
                         />
                         <TimePicker
-                          label="Start time"
+                          label={t("discounts.configrations.start_time_label")}
                           date={value!}
                           onSubmitDate={onChange}
                         />
@@ -122,17 +133,19 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({
                           )
                         }
                       }}
-                      title="Discount has an expiry date?"
-                      description="Schedule the discount to deactivate in the future."
+                      title={t("discounts.configrations.expire_title")}
+                      description={t(
+                        "discounts.configrations.expire_description"
+                      )}
                     >
                       <div className="flex gap-x-xsmall items-center">
                         <DatePicker
                           date={value!}
-                          label="Expiry date"
+                          label={t("discounts.configrations.expire_date_label")}
                           onSubmitDate={onChange}
                         />
                         <TimePicker
-                          label="Expiry time"
+                          label={t("discounts.configrations.expire_time_label")}
                           date={value!}
                           onSubmitDate={onChange}
                         />
@@ -155,11 +168,13 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({
                           onChange(10)
                         }
                       }}
-                      title="Limit the number of redemtions?"
-                      description="Limit applies across all customers, not per customer."
+                      title={t("discounts.configrations.usage_limit_title")}
+                      description={t(
+                        "discounts.configrations.usage_limit_description"
+                      )}
                     >
                       <InputField
-                        label="Number of redemptions"
+                        label={t("discounts.configrations.redemption_number")}
                         type="number"
                         placeholder="5"
                         min={1}
@@ -187,8 +202,12 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({
                             onChange("P0Y0M0DT00H00M")
                           }
                         }}
-                        title="Availability duration?"
-                        description="Set the duration of the discount."
+                        title={t(
+                          "discounts.configrations.valid_duration_title"
+                        )}
+                        description={t(
+                          "discounts.configrations.valid_duration_description"
+                        )}
                       >
                         <AvailabilityDuration
                           value={value ?? undefined}
@@ -210,7 +229,7 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({
                 type="button"
                 onClick={onClose}
               >
-                Cancel
+                {t("common.cancel")}
               </Button>
               <Button
                 variant="primary"
@@ -219,7 +238,7 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({
                 type="submit"
                 loading={isLoading}
               >
-                Save
+                {t("common.save")}
               </Button>
             </div>
           </Modal.Footer>

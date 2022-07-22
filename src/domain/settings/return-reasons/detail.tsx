@@ -13,6 +13,7 @@ import useToggleState from "../../../hooks/use-toggle-state"
 import useNotification from "../../../hooks/use-notification"
 import { getErrorMessage } from "../../../utils/error-messages"
 import CreateReturnReasonModal from "./create-reason-modal"
+import { useTranslation } from "react-i18next"
 
 const ReturnReasonDetail = ({ reason }) => {
   const {
@@ -33,17 +34,21 @@ const ReturnReasonDetail = ({ reason }) => {
   const handleDeletion = async () => {
     deleteRR.mutate(undefined)
   }
-
+  const { t } = useTranslation()
   const onSave = (data) => {
     if (data.label === "") {
       return
     }
     updateRR.mutate(data, {
       onSuccess: () => {
-        notification("Success", "Successfully updated return reason", "success")
+        notification(
+          t("common.status.success"),
+          t("settings.return_reason.update_success"),
+          "success"
+        )
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -69,12 +74,12 @@ const ReturnReasonDetail = ({ reason }) => {
       <BodyCard
         actionables={[
           {
-            label: "Duplicate reason",
+            label: t("settings.return_reason.duplicate"),
             icon: <DuplicateIcon size={20} />,
             onClick: () => handleOpenDuplicateModal(),
           },
           {
-            label: "Delete reason",
+            label: t("settings.return_reason.detele_label"),
             variant: "danger",
             icon: <TrashIcon size={20} />,
             onClick: () => handleOpenPrompt(),
@@ -82,23 +87,23 @@ const ReturnReasonDetail = ({ reason }) => {
         ]}
         events={[
           {
-            label: "Save",
+            label: t("common.save"),
             onClick: handleSubmit(onSave),
           },
           {
-            label: "Cancel changes",
+            label: t("common.cancel_change"),
             onClick: handleCancel,
           },
         ]}
-        title="Details"
+        title={t("common.detail")}
         subtitle={reason?.value}
       >
         <form onSubmit={handleSubmit(onSave)}>
-          <Input ref={register} name="label" label="Label" />
+          <Input ref={register} name="label" label={t("common.label")} />
           <Input
             ref={register}
             name="description"
-            label="Description"
+            label={t("common.description")}
             className="mt-base"
           />
         </form>
@@ -111,8 +116,8 @@ const ReturnReasonDetail = ({ reason }) => {
       )}
       {showDanger && (
         <DeletePrompt
-          heading="Delete Return Reason"
-          text="Are you sure you want to delete this return reason?"
+          heading={t("settings.return_reason.delete_heading")}
+          text={t("settings.return_reason.delete_text")}
           handleClose={handleClosePrompt}
           onDelete={handleDeletion}
         />

@@ -11,7 +11,7 @@ type RefundEventProps = {
 const Refund: React.FC<RefundEventProps> = ({ event }) => {
   const args = {
     icon: <BackIcon size={20} />,
-    title: "Refund",
+    title: t("orders.actions.replace"),
     time: event.time,
     topNode: getAmount(event),
     midNode: (

@@ -60,9 +60,9 @@ const AddProductConditionSelector = ({
               options={{
                 enableSearch: true,
                 immediateSearchFocus: true,
-                searchPlaceholder: "Search products...",
+                searchPlaceholder: t("discounts.search.products"),
               }}
-              resourceName="Products"
+              resourceName={t("products.title")}
               totalCount={count || 0}
               selectedIds={items.map((i) => i.id)}
               data={products}

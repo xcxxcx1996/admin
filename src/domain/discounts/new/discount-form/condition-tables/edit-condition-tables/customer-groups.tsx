@@ -1,5 +1,6 @@
 import { useAdminCustomerGroups } from "medusa-react"
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import Spinner from "../../../../../../components/atoms/spinner"
 import Modal from "../../../../../../components/molecules/modal"
 import useQueryFilters from "../../../../../../hooks/use-query-filters"
@@ -22,6 +23,7 @@ const EditCustomerGroupConditionSelector = ({ onClose }) => {
   const [operator, setOperator] = useState<DiscountConditionOperator>(
     conditions.customer_groups.operator
   )
+  const { t } = useTranslation()
 
   const { isLoading, count, customer_groups } = useAdminCustomerGroups(
     params.queryObject,
@@ -57,9 +59,9 @@ const EditCustomerGroupConditionSelector = ({ onClose }) => {
               options={{
                 enableSearch: true,
                 immediateSearchFocus: true,
-                searchPlaceholder: "Search groups...",
+                searchPlaceholder: t("discounts.search.groups"),
               }}
-              resourceName="Customer groups"
+              resourceName={t("customers.groups.title")}
               totalCount={count || 0}
               selectedIds={items.map((i) => i.id)}
               data={customer_groups}

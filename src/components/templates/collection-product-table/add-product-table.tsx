@@ -8,6 +8,7 @@ import IndeterminateCheckbox from "../../molecules/indeterminate-checkbox"
 import Modal from "../../molecules/modal"
 import Table, { TablePagination } from "../../molecules/table"
 import useCollectionProductColumns from "./use-collection-product-columns"
+import { useTranslation } from "react-i18next"
 
 type AddProductsTableProps = {
   existingRelations: any[]
@@ -134,7 +135,7 @@ const AddProductsTable: React.FC<AddProductsTableProps> = ({
     setOffset(0)
     setQuery(q)
   }
-
+  const { t } = useTranslation()
   const [disabled, setDisabled] = useState(true)
 
   useEffect(() => {
@@ -196,7 +197,7 @@ const AddProductsTable: React.FC<AddProductsTableProps> = ({
               limit={PAGE_SIZE}
               offset={offset}
               pageSize={offset + rows.length}
-              title="Products"
+              title={t("products.title")}
               currentPage={pageIndex + 1}
               pageCount={pageCount}
               nextPage={handleNext}
@@ -214,7 +215,7 @@ const AddProductsTable: React.FC<AddProductsTableProps> = ({
               className="w-eventButton"
               onClick={onClose}
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               variant="primary"
@@ -223,7 +224,7 @@ const AddProductsTable: React.FC<AddProductsTableProps> = ({
               onClick={handleSubmit}
               disabled={disabled}
             >
-              Save
+              {t("common.save")}
             </Button>
           </div>
         </Modal.Footer>

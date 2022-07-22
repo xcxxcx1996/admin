@@ -4,8 +4,10 @@ import Actionables from "../../../components/molecules/actionables"
 import EditIcon from "../../../components/fundamentals/icons/edit-icon"
 import TrashIcon from "../../../components/fundamentals/icons/trash-icon"
 import Badge from "../../../components/fundamentals/badge"
+import { useTranslation } from "react-i18next"
 
 export const TaxRuleItem = ({ onEdit, onDelete, index, name, description }) => {
+  const { t } = useTranslation()
   return (
     <div className="p-base border rounded-rounded flex gap-base items-center">
       <div>
@@ -25,12 +27,12 @@ export const TaxRuleItem = ({ onEdit, onDelete, index, name, description }) => {
           forceDropdown
           actions={[
             {
-              label: "Edit",
+              label: t("common.edit"),
               onClick: () => onEdit(),
               icon: <EditIcon size={20} />,
             },
             {
-              label: "Delete rule",
+              label: t("settings.tax.delet_rule"),
               variant: "danger",
               onClick: () => onDelete(),
               icon: <TrashIcon size={20} />,
@@ -41,4 +43,3 @@ export const TaxRuleItem = ({ onEdit, onDelete, index, name, description }) => {
     </div>
   )
 }
-

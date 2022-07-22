@@ -9,12 +9,14 @@ import CurrencyInput from "../../../components/organisms/currency-input"
 import useNotification from "../../../hooks/use-notification"
 import { countries as countryData } from "../../../utils/countries"
 import { getErrorMessage } from "../../../utils/error-messages"
+import { useTranslation } from "react-i18next"
 
 const NewRegion = ({ onDone, onClick }) => {
   const [currencies, setCurrencies] = useState<string[]>([])
   const [selectedCurrency, setSelectedCurrency] = useState<string | undefined>(
     undefined
   )
+  const { t } = useTranslation()
   const [countries, setCountries] = useState([])
   const [paymentOptions, setPaymentOptions] = useState([])
   const [paymentProviders, setPaymentProviders] = useState([])
@@ -77,7 +79,11 @@ const NewRegion = ({ onDone, onClick }) => {
 
   const onSave = (data) => {
     if (!data.countries?.length) {
-      notification("Success", "Choose at least one country", "error")
+      notification(
+        t("common.status.success"),
+        "Choose at least one country",
+        "error"
+      )
       return
     }
 
@@ -89,14 +95,22 @@ const NewRegion = ({ onDone, onClick }) => {
       },
       {
         onSuccess: ({ region }) => {
-          notification("Success", "Successfully created region", "success")
+          notification(
+            t("common.status.success"),
+            t("settings.region.create_success"),
+            "success"
+          )
           if (onDone) {
             onDone(region.id)
           }
           onClick()
         },
         onError: (error) => {
-          notification("Error", getErrorMessage(error), "error")
+          notification(
+            t("common.status.error"),
+            getErrorMessage(error),
+            "error"
+          )
         },
       }
     )
@@ -118,7 +132,9 @@ const NewRegion = ({ onDone, onClick }) => {
         <Modal.Body>
           <Modal.Header handleClose={onClick}>
             <div>
-              <h1 className="inter-xlarge-semibold">Add Region</h1>
+              <h1 className="inter-xlarge-semibold">
+                {t("settings.region.add")}
+              </h1>
             </div>
           </Modal.Header>
           <Modal.Content>
@@ -127,7 +143,7 @@ const NewRegion = ({ onDone, onClick }) => {
               <div className="grid grid-cols-1 medium:grid-cols-2 gap-y-xsmall gap-x-base">
                 <Input
                   name="name"
-                  label="Name"
+                  label={t("common.name")}
                   placeholder="Region name..."
                   ref={register({ required: true })}
                   className="mb-base min-w-[335px] w-full"
@@ -146,20 +162,20 @@ const NewRegion = ({ onDone, onClick }) => {
                   min={0}
                   max={1}
                   name="tax_rate"
-                  label="Tax Rate"
+                  label={t("settings.tax.rate")}
                   ref={register({ max: 1, min: 0 })}
                 />
                 <Input
                   placeholder="1000"
                   name="tax_code"
-                  label="Tax Code"
+                  label={t("settings.tax.code")}
                   ref={register}
                   className="mb-base min-w-[335px] w-full"
                 />
                 <Select
                   isMultiSelect
                   enableSearch
-                  label="Countries"
+                  label={t("settings.region.country")}
                   hasSelectAll
                   options={countryOptions}
                   value={countries}
@@ -169,7 +185,9 @@ const NewRegion = ({ onDone, onClick }) => {
               </div>
             </div>
             <div className="mt-xlarge mb-small">
-              <p className="inter-base-semibold mb-base">Providers</p>
+              <p className="inter-base-semibold mb-base">
+                {t("settings.region.provider")}
+              </p>
               <div className="grid grid-cols-1 medium:grid-cols-2 gap-base">
                 {!!paymentOptions.length && (
                   <Select
@@ -177,7 +195,7 @@ const NewRegion = ({ onDone, onClick }) => {
                     onChange={handlePaymentChange}
                     options={paymentOptions}
                     value={paymentProviders}
-                    label="Payment Providers"
+                    label={t("settings.region.payment")}
                     enableSearch
                   />
                 )}
@@ -186,7 +204,7 @@ const NewRegion = ({ onDone, onClick }) => {
                     onChange={handleFulfillmentChange}
                     options={fulfillmentOptions}
                     value={fulfillmentProviders}
-                    label="Fulfillment Providers"
+                    label={t("settings.region.fulfillment")}
                     enableSearch
                     isMultiSelect
                   />
@@ -203,7 +221,7 @@ const NewRegion = ({ onDone, onClick }) => {
                 size="small"
                 className="w-eventButton justify-center"
               >
-                Cancel Changes
+                {t("common.cancel_change")}
               </Button>
               <Button
                 type="submit"
@@ -211,7 +229,7 @@ const NewRegion = ({ onDone, onClick }) => {
                 size="small"
                 className="w-eventButton justify-center"
               >
-                Save
+                {t("common.save")}
               </Button>
             </div>
           </Modal.Footer>

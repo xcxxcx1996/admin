@@ -2,6 +2,7 @@ import React from "react"
 import Button from "../../../../components/fundamentals/button"
 import useNotification from "../../../../hooks/use-notification"
 import { getErrorMessage } from "../../../../utils/error-messages"
+import { useTranslation } from "react-i18next"
 
 export const PaymentActionables = ({
   order,
@@ -12,7 +13,7 @@ export const PaymentActionables = ({
   const isSystemPayment = order?.payments?.some(
     (p) => p.provider_id === "system"
   )
-
+  const { t } = useTranslation()
   const { payment_status } = order!
 
   // Default label and action
@@ -20,8 +21,13 @@ export const PaymentActionables = ({
   let action = () => {
     capturePayment.mutate(void {}, {
       onSuccess: () =>
-        notification("Success", "Successfully captured payment", "success"),
-      onError: (err) => notification("Error", getErrorMessage(err), "error"),
+        notification(
+          t("common.status.success"),
+          t("orders.notification.capture_payment_success"),
+          "success"
+        ),
+      onError: (err) =>
+        notification(t("common.status.error"), getErrorMessage(err), "error"),
     })
   }
   const loading = capturePayment.isLoading
@@ -39,7 +45,7 @@ export const PaymentActionables = ({
   switch (true) {
     case payment_status === "captured" ||
       payment_status === "partially_refunded": {
-      label = "Refund"
+      label = t("orders.actions.replace")
       action = () => showRefundMenu()
       break
     }

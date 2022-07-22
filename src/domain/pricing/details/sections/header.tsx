@@ -84,7 +84,7 @@ const HeadingBodyCard = ({ priceList, setIsOpen, ...props }) => {
     if (shouldDelete) {
       deletePriceList.mutate(undefined, {
         onSuccess: () => {
-          notification("Success", "Price list deleted successfully", "success")
+          notification(t("common.status.success"), "Price list deleted successfully", "success")
           navigate("/a/pricing/")
         },
         onError: (err) => {

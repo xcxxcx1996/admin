@@ -36,7 +36,7 @@ export const columns: Column<Product>[] = [
     ),
   },
   {
-    Header: <Table.HeadCell>Status</Table.HeadCell>,
+    Header: <Table.HeadCell>状态</Table.HeadCell>,
     accessor: "status",
     Cell: ({ cell: { value } }) => (
       <Table.Cell className="w-[10%] pr-base">

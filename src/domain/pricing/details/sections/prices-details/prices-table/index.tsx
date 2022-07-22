@@ -117,13 +117,13 @@ const PricesTableRow = ({
         deleteProductPrices.mutate(undefined, {
           onSuccess: () => {
             notification(
-              "Success",
+              t("common.status.success"),
               `Deleted prices of product: ${product.title}`,
               "success"
             )
           },
           onError: (err) =>
-            notification("Error", getErrorMessage(err), "error"),
+            notification(t("common.status.error"), getErrorMessage(err), "error"),
         })
       },
     },

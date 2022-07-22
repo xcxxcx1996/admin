@@ -9,13 +9,14 @@ import Details from "./details"
 import New from "./new"
 import DiscountForm from "./new/discount-form"
 import { DiscountFormProvider } from "./new/discount-form/form/discount-form-context"
+import { useTranslation } from "react-i18next"
 
 const DiscountIndex: React.FC<RouteComponentProps> = () => {
   const [isOpen, setIsOpen] = useState(false)
-
+  const { t } = useTranslation()
   const actionables = [
     {
-      label: "Add Discount",
+      label: t("discounts.add"),
       onClick: () => setIsOpen(true),
       icon: <PlusIcon size={20} />,
     },

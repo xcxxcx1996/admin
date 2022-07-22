@@ -15,6 +15,7 @@ import useNotification from "../../../hooks/use-notification"
 import { Option } from "../../../types/shared"
 import { getErrorMessage } from "../../../utils/error-messages"
 import fulfillmentProvidersMapper from "../../../utils/fulfillment-providers.mapper"
+import { useTranslation } from "react-i18next"
 
 const NewShipping = ({ isReturn, region, onCreated, onClick }) => {
   const { register, setValue, handleSubmit } = useForm()
@@ -30,7 +31,7 @@ const NewShipping = ({ isReturn, region, onCreated, onClick }) => {
   const [selectedProfile, setSelectedProfile] = useState(null)
   const createShippingOption = useAdminCreateShippingOption()
   const notification = useNotification()
-
+  const { t } = useTranslation()
   useEffect(() => {
     register("amount", { required: true })
     register("requirements.max_subtotal.amount")
@@ -92,7 +93,7 @@ const NewShipping = ({ isReturn, region, onCreated, onClick }) => {
     createShippingOption.mutate(payload, {
       onSuccess: () => {
         notification(
-          "Success",
+          t("common.status.success"),
           "Successfully created shipping option",
           "success"
         )
@@ -102,7 +103,7 @@ const NewShipping = ({ isReturn, region, onCreated, onClick }) => {
         onClick()
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -169,11 +170,11 @@ const NewShipping = ({ isReturn, region, onCreated, onClick }) => {
           <Modal.Content>
             <div className="grid grid-cols-1 medium:grid-cols-2 gap-base">
               <Input
-                label="Name"
+                label={t("common.name")}
                 name="name"
                 ref={register({ required: true })}
                 required
-                placeholder="New Shipping Option"
+                placeholder={t("settings.region.new_ship_option")}
                 className="flex-grow"
               />
               <CurrencyInput
@@ -182,7 +183,7 @@ const NewShipping = ({ isReturn, region, onCreated, onClick }) => {
                 size="small"
               >
                 <CurrencyInput.AmountInput
-                  label="Price"
+                  label={t("common.price")}
                   onChange={(v) => handleAmountChange("amount", v)}
                   amount={undefined}
                 />
@@ -199,7 +200,7 @@ const NewShipping = ({ isReturn, region, onCreated, onClick }) => {
                   onChange={() => setAdminOnly(!adminOnly)}
                   className="mr-small w-5 h-5 accent-violet-60 rounded-base"
                 />
-                Show on website
+                {t("settings.region.show_on_website")}
               </label>
             </div>
             {!isReturn && (
@@ -212,7 +213,7 @@ const NewShipping = ({ isReturn, region, onCreated, onClick }) => {
                   </div>
                 ) : (
                   <Select
-                    label="Shipping Profile"
+                    label={t("settings.region.profile")}
                     value={selectedProfile}
                     onChange={handleProfileChange}
                     required
@@ -224,7 +225,7 @@ const NewShipping = ({ isReturn, region, onCreated, onClick }) => {
             )}
             <div className="mb-base">
               <Select
-                label="Fulfillment Method"
+                label={t("settings.region.fulfillment")}
                 value={selectedOption}
                 onChange={handleFulfillmentChange}
                 required
@@ -242,7 +243,7 @@ const NewShipping = ({ isReturn, region, onCreated, onClick }) => {
                     size="small"
                   >
                     <CurrencyInput.AmountInput
-                      label="Price"
+                      label={t("common.price")}
                       onChange={(v) =>
                         handleAmountChange(
                           "requirements.min_subtotal.amount",
@@ -258,7 +259,7 @@ const NewShipping = ({ isReturn, region, onCreated, onClick }) => {
                     size="small"
                   >
                     <CurrencyInput.AmountInput
-                      label="Price"
+                      label={t("common.price")}
                       onChange={(v) =>
                         handleAmountChange(
                           "requirements.max_subtotal.amount",
@@ -280,7 +281,7 @@ const NewShipping = ({ isReturn, region, onCreated, onClick }) => {
                 className="justify-center w-eventButton"
                 onClick={onClick}
               >
-                Cancel
+                {t("common.cancel")}
               </Button>
               <Button
                 type="submit"
@@ -288,7 +289,7 @@ const NewShipping = ({ isReturn, region, onCreated, onClick }) => {
                 size="small"
                 className="justify-center w-eventButton"
               >
-                Save
+                {t("common.save")}
               </Button>
             </div>
           </Modal.Footer>

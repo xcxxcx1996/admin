@@ -10,12 +10,14 @@ import fulfillmentProvidersMapper from "../../../utils/fulfillment-providers.map
 import paymentProvidersMapper from "../../../utils/payment-providers-mapper"
 import RegionDetails from "./details"
 import NewRegion from "./new"
+import { useTranslation } from "react-i18next"
 
 const Regions = () => {
   const { regions, isLoading, refetch } = useAdminRegions()
   const [selectedRegion, setSelectedRegion] = useState<string | undefined>(
     undefined
   )
+  const { t } = useTranslation()
   const [addRegion, setAddRegion] = useState(false)
 
   useEffect(() => {
@@ -59,17 +61,17 @@ const Regions = () => {
       <div>
         <BreadCrumb
           previousRoute="/a/settings"
-          previousBreadcrumb="Settings"
-          currentPage="Regions"
+          previousBreadcrumb={t("settings.title")}
+          currentPage={t("settings.regions.title")}
         />
         <TwoSplitPane>
           <BodyCard
-            title="Regions"
+            title={t("settings.regions.title")}
             subtitle="Manage the markets that you will operate within"
             actionables={[
               {
                 icon: <PlusIcon />,
-                label: "Add region",
+                label: t("settings.region.add"),
                 onClick: () => setAddRegion(!addRegion),
               },
             ]}
@@ -84,14 +86,14 @@ const Regions = () => {
                 onValueChange={setSelectedRegion}
               >
                 {regions.map((r) => {
-                  const providers = `Payment providers: ${
+                  const providers = `${t("settings.region.payment")} ${
                     r.payment_providers
                       .map((pp) => paymentProvidersMapper(pp.id).label)
-                      .join(", ") || "not configured"
-                  } - Fulfillment providers: ${
+                      .join(", ") || t("settings.region.not_configured")
+                  } - ${t("settings.region.fulfillment")} ${
                     r.fulfillment_providers
                       .map((fp) => fulfillmentProvidersMapper(fp.id).label)
-                      .join(", ") || "not configured"
+                      .join(", ") || t("settings.region.not_configured")
                   }`
                   return (
                     <RadioGroup.Item

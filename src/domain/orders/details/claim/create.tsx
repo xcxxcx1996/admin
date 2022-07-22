@@ -12,6 +12,7 @@ import {
   useAdminShippingOptions,
 } from "medusa-react"
 import React, { useContext, useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 import Button from "../../../../components/fundamentals/button"
 import CheckIcon from "../../../../components/fundamentals/icons/check-icon"
 import TrashIcon from "../../../../components/fundamentals/icons/trash-icon"
@@ -128,7 +129,7 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
 
   // Includes both order items and swap items
   const [allItems, setAllItems] = useState<any[]>([])
-
+  const { t } = useTranslation()
   const formatAddress = (address) => {
     const addr = [address.address_1]
     if (address.address_2) {
@@ -251,11 +252,15 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
     mutate(data, {
       onSuccess: () => {
         refetch()
-        notification("Success", "Successfully created claim", "success")
+        notification(
+          t("common.status.success"),
+          t("orders.notification.create_claim_success"),
+          "success"
+        )
         onDismiss()
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -334,7 +339,7 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
           </div>
           <div className="mt-4">
             <h3 className="inter-base-semibold">
-              Shipping Return
+              {t("orders.field.shipping_return")}
               {returnShippingMethod && (
                 <span className="text-grey-40 inter-base-regular">
                   ({returnShippingMethod.region.name})
@@ -343,7 +348,7 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
             </h3>
             <Select
               clearSelected
-              label="Shipping Method"
+              label={t("orders.field.shipping_method")}
               className="mt-2"
               placeholder="Add a shipping method"
               value={
@@ -407,7 +412,7 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
                   <div className="w-3 h-3 bg-violet-60 rounded-full"></div>
                 )}
               </div>
-              Replace
+              {t("orders.actions.replace")}
             </div>
             <div
               className="cursor-pointer items-center flex"
@@ -434,7 +439,7 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
           {isReplace && (
             <div className="mt-8">
               <div className="flex justify-between items-center">
-                <h3 className="inter-base-semibold ">Items to send</h3>
+                <h3 className="inter-base-semibold ">{t("orders.field.item_to_send")}</h3>
                 {itemsToAdd.length === 0 ? (
                   <Button
                     variant="ghost"
@@ -450,7 +455,7 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
                       )
                     }}
                   >
-                    Add Product
+                    {t("orders.actions.add_product")}
                   </Button>
                 ) : (
                   <></>
@@ -480,13 +485,15 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
                         )
                       }}
                     >
-                      Add Product
+                      {t("orders.actions.add_product")}
                     </Button>
                   </div>
                 </>
               )}
               <div className="mt-8">
-                <span className="inter-base-semibold">Shipping Address</span>
+                <span className="inter-base-semibold">
+                  {t("orders.field.shipping_address")}
+                </span>
                 {shippingAddress ? (
                   <>
                     <div className="flex w-full inter-small-regular text-grey-50">
@@ -509,7 +516,7 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
                         size="small"
                         className="border border-grey-20"
                       >
-                        Edit
+                        {t("common.edit")}
                       </Button>
                     </div>
                   </>
@@ -535,20 +542,21 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
                         size="small"
                         className="border border-grey-20"
                       >
-                        Ship to a different address
+                        {t("orders.actions.ship_to_different")}
                       </Button>
                     </div>
                   </div>
                 )}
               </div>
               <div>
-                <h3 className="inter-base-semibold mt-8">Shipping new</h3>
+                <h3 className="inter-base-semibold mt-8">
+                  {t("orders.actions.ship_new")}
+                </h3>
                 <span className="inter-small-regular text-grey-50">
-                  Shipping new items is free by default. Use custom price, if
-                  this is not the case
+                  {t("orders.description.ship_new")}
                 </span>
                 <Select
-                  label="Shipping Method"
+                  label={t("orders.field.shipping_method")}
                   className="mt-2"
                   placeholder="Add a shipping method"
                   value={
@@ -585,7 +593,7 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
                             }
                           >
                             {showCustomPrice.standard
-                              ? "Submit"
+                              ? t("orders.actions.submit")
                               : "Set custom price"}
                           </Button>
                         )}
@@ -667,7 +675,7 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
                 size="small"
                 variant="ghost"
               >
-                Back
+                {t("common.back")}
               </Button>
               <Button
                 onClick={onSubmit}
@@ -677,7 +685,7 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
                 size="small"
                 variant="primary"
               >
-                Complete
+                {t("orders.actions.complete")}
               </Button>
             </div>
           </div>

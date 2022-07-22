@@ -8,6 +8,7 @@ import Modal from "../../../../components/molecules/modal"
 import { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal"
 import Select from "../../../../components/molecules/select"
 import Medusa from "../../../../services/api"
+import { useTranslation } from "react-i18next"
 
 type RMAReturnReasonSubModalProps = {
   onSubmit: (reason, note, images) => void
@@ -32,6 +33,7 @@ const RMAReturnReasonSubModal: React.FC<RMAReturnReasonSubModalProps> = ({
   const { return_reasons } = useAdminReturnReasons()
   const [note, setNote] = useState(existingNote || "")
   const [files, setFiles] = useState<any[]>([])
+  const { t } = useTranslation()
   const [selectedReason, setSelectedReason] = useState(
     reason ? { value: reason, label: reason.label } : null
   )
@@ -58,9 +60,9 @@ const RMAReturnReasonSubModal: React.FC<RMAReturnReasonSubModalProps> = ({
     <>
       <Modal.Content isLargeModal={isLargeModal}>
         <div className="h-full">
-          <h2 className="inter-base-semibold mb-4">Reason for Return</h2>
+          <h2 className="inter-base-semibold mb-4">{t("orders.field.return_reason")}</h2>
           <Select
-            label="Reason"
+            label={t("orders.field.reason")}
             value={selectedReason}
             onChange={setSelectedReason}
             options={
@@ -70,7 +72,7 @@ const RMAReturnReasonSubModal: React.FC<RMAReturnReasonSubModalProps> = ({
             }
           />
           <InputField
-            label={"Note"}
+            label={t("orders.field.note")}
             value={note}
             className="my-4"
             onChange={(val) => onChange(val)}
@@ -136,7 +138,7 @@ const RMAReturnReasonSubModal: React.FC<RMAReturnReasonSubModalProps> = ({
             className="w-[112px]"
             onClick={() => pop()}
           >
-            Back
+            {t("common.back")}
           </Button>
           <Button
             variant="primary"
@@ -148,7 +150,7 @@ const RMAReturnReasonSubModal: React.FC<RMAReturnReasonSubModalProps> = ({
               pop()
             }}
           >
-            Add
+            {t("common.add")}
           </Button>
         </div>
       </Modal.Footer>

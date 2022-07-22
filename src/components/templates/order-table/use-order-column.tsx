@@ -8,18 +8,31 @@ import Tooltip from "../../atoms/tooltip"
 import StatusDot from "../../fundamentals/status-indicator"
 import CustomerAvatarItem from "../../molecules/customer-avatar-item"
 import Table from "../../molecules/table"
+import { useTranslation } from "react-i18next"
 
 const useOrderTableColums = () => {
+  const { t } = useTranslation()
   const decideStatus = (status) => {
     switch (status) {
       case "captured":
-        return <StatusDot variant="success" title={"Paid"} />
+        return (
+          <StatusDot variant="success" title={t("orders.status.captured")} />
+        )
       case "awaiting":
-        return <StatusDot variant="default" title={"Awaiting"} />
+        return (
+          <StatusDot variant="default" title={t("orders.status.awaiting")} />
+        )
       case "requires_action":
-        return <StatusDot variant="danger" title={"Requires action"} />
+        return (
+          <StatusDot
+            variant="danger"
+            title={t("orders.status.request_action")}
+          />
+        )
       case "canceled":
-        return <StatusDot variant="warning" title={"Canceled"} />
+        return (
+          <StatusDot variant="warning" title={t("orders.status.canceled")} />
+        )
       default:
         return <StatusDot variant="primary" title={"N/A"} />
     }
@@ -28,7 +41,7 @@ const useOrderTableColums = () => {
   const columns = useMemo(
     () => [
       {
-        Header: <Table.HeadCell className="pl-2">Order</Table.HeadCell>,
+        Header: <Table.HeadCell className="pl-2">订单</Table.HeadCell>,
         accessor: "display_id",
         Cell: ({ cell: { value }, index }) => (
           <Table.Cell
@@ -38,7 +51,7 @@ const useOrderTableColums = () => {
         ),
       },
       {
-        Header: "Date added",
+        Header: "添加时间",
         accessor: "created_at",
         Cell: ({ cell: { value }, index }) => (
           <Table.Cell key={index}>
@@ -49,7 +62,7 @@ const useOrderTableColums = () => {
         ),
       },
       {
-        Header: "Customer",
+        Header: "顾客",
         accessor: "shipping_address",
         Cell: ({ row, cell: { value }, index }) => (
           <Table.Cell key={index}>
@@ -64,21 +77,21 @@ const useOrderTableColums = () => {
         ),
       },
       {
-        Header: "Fulfillment",
+        Header: "货物状态",
         accessor: "fulfillment_status",
         Cell: ({ cell: { value }, index }) => (
           <Table.Cell key={index}>{value}</Table.Cell>
         ),
       },
       {
-        Header: "Payment status",
+        Header: "支付状态",
         accessor: "payment_status",
         Cell: ({ cell: { value }, index }) => (
           <Table.Cell key={index}>{decideStatus(value)}</Table.Cell>
         ),
       },
       {
-        Header: () => <div className="text-right">Total</div>,
+        Header: () => <div className="text-right">总额</div>,
         accessor: "total",
         Cell: ({ row, cell: { value }, index }) => (
           <Table.Cell key={index}>

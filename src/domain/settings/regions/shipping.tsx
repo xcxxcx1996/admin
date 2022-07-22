@@ -7,6 +7,7 @@ import Actionables from "../../../components/molecules/actionables"
 import ShippingOption from "../../../components/molecules/shipping-option"
 import EditShipping from "./edit-shipping"
 import NewShipping from "./new-shipping"
+import { useTranslation } from "react-i18next"
 
 type ShippingProps = {
   region: Region
@@ -16,7 +17,7 @@ const Shipping: React.FC<ShippingProps> = ({ region }) => {
   const [editOption, setEditOption] = useState<Option | null>(null)
   const [showAddOption, setAddOption] = useState(false)
   const [showAddReturnOption, setAddReturnOption] = useState(false)
-
+  const { t } = useTranslation()
   const {
     shipping_options,
     isLoading: loadingOptions,
@@ -26,7 +27,7 @@ const Shipping: React.FC<ShippingProps> = ({ region }) => {
   const outboundOptions = [
     {
       icon: <PlusIcon />,
-      label: "Add Option",
+      label: t("settings.region.add_option"),
       onClick: () => setAddOption(true),
     },
   ]
@@ -34,7 +35,7 @@ const Shipping: React.FC<ShippingProps> = ({ region }) => {
   const inboundDropdownOptions = [
     {
       icon: <PlusIcon />,
-      label: "Add Return",
+      label: t("settings.region.add_return"),
       onClick: () => setAddReturnOption(true),
     },
   ]
@@ -55,7 +56,7 @@ const Shipping: React.FC<ShippingProps> = ({ region }) => {
     <>
       <div className="mb-2xlarge">
         <div className="flex items-center justify-between mb-base">
-          <h2 className="inter-base-semibold">Shipping Options</h2>
+          <h2 className="inter-base-semibold">{t("settings.region.option")}</h2>
           <Actionables actions={outboundOptions} />
         </div>
         <div className="flex flex-col">
@@ -84,7 +85,9 @@ const Shipping: React.FC<ShippingProps> = ({ region }) => {
       </div>
       <div>
         <div className="flex items-center justify-between mb-base">
-          <h2 className="inter-base-semibold">Return Shipping Options</h2>
+          <h2 className="inter-base-semibold">
+            {t("settings.region.return_option")}
+          </h2>
           <Actionables actions={inboundDropdownOptions} />
         </div>
         <div className="flex flex-col">

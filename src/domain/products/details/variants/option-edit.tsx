@@ -137,7 +137,7 @@ const NewOption = ({ productId, options, onDismiss }) => {
                 size="large"
                 onClick={onDismiss}
               >
-                Cancel
+                {t("common.cancel")}
               </Button>
               <Button type="submit" variant="primary">
                 Save

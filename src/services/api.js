@@ -424,7 +424,10 @@ export default {
       const path = `/admin/orders/${orderId}/shipment`
       return medusaRequest("POST", path, payload)
     },
-
+    createFullShipment(orderId, payload) {
+      const path = `/admin/orders/create-full-shipment/${orderId}/shipment`
+      return medusaRequest("POST", path, payload)
+    },
     updateClaim(orderId, claimId, payload) {
       const path = `/admin/orders/${orderId}/claims/${claimId}`
       return medusaRequest("POST", path, payload)

@@ -4,6 +4,7 @@ import { formatAmountWithSymbol } from "../../../utils/prices"
 import Badge from "../../fundamentals/badge"
 import StatusDot from "../../fundamentals/status-indicator"
 import Table from "../../molecules/table"
+import { useTranslation } from "react-i18next"
 
 enum PromotionStatus {
   SCHEDULED = "SCHEDULED",
@@ -13,6 +14,7 @@ enum PromotionStatus {
 }
 
 const getPromotionStatus = (promotion) => {
+  const { t } = useTranslation()
   if (!promotion.is_disabled) {
     const date = new Date()
     if (new Date(promotion.starts_at) > date) {
@@ -81,10 +83,15 @@ const getPromotionAmount = (promotion) => {
 }
 
 export const usePromotionTableColumns = () => {
+  const { t } = useTranslation()
   const columns = useMemo(
     () => [
       {
-        Header: <Table.HeadCell className="pl-2">Code</Table.HeadCell>,
+        Header: (
+          <Table.HeadCell className="pl-2">
+            {t("discounts.code_label")}
+          </Table.HeadCell>
+        ),
         accessor: "code",
         Cell: ({ cell: { value }, index }) => (
           <Table.Cell key={index}>
@@ -97,14 +104,14 @@ export const usePromotionTableColumns = () => {
         ),
       },
       {
-        Header: "Description",
+        Header: t("common.description"),
         accessor: "rule.description",
         Cell: ({ cell: { value }, index }) => (
           <Table.Cell key={index}>{value}</Table.Cell>
         ),
       },
       {
-        Header: <div className="text-right">Amount</div>,
+        Header: <div className="text-right">{t("products.prices.amount")}</div>,
         id: "amount",
         Cell: ({ row: { original }, index }) => {
           return (
@@ -124,14 +131,16 @@ export const usePromotionTableColumns = () => {
         ),
       },
       {
-        Header: "Status",
+        Header: t("orders.field.status"),
         accessor: "ends_at",
         Cell: ({ row: { original }, index }) => (
           <Table.Cell key={index}>{getPromotionStatusDot(original)}</Table.Cell>
         ),
       },
       {
-        Header: () => <div className="text-right">Redemptions</div>,
+        Header: () => (
+          <div className="text-right">{t("discounts.redemption_number")}</div>
+        ),
         accessor: "usage_count",
         Cell: ({ row: { original }, index }) => {
           return (

@@ -3,6 +3,7 @@ import React, { ReactNode, useReducer } from "react"
 import Button from "../../fundamentals/button"
 import Modal, { ModalProps } from "../../molecules/modal"
 import LayeredModal, { ILayeredModalContext } from "./layered-modal"
+import { useTranslation } from "react-i18next"
 
 enum SteppedActions {
   ENABLENEXTPAGE,
@@ -86,7 +87,6 @@ type SteppedProps = {
 
 export const SteppedProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, defaultContext)
-
   return (
     <SteppedContext.Provider
       value={{
@@ -138,6 +138,8 @@ const SteppedModal: React.FC<SteppedProps> = ({
     onSubmit()
     context.reset()
   }
+  const { t } = useTranslation()
+
   return (
     <ModalElement
       layeredContext={layeredContext}
@@ -190,7 +192,7 @@ const SteppedModal: React.FC<SteppedProps> = ({
             onClick={() => context.goToPreviousPage()}
             className="w-[112px]"
           >
-            Back
+            {t("common.back")}
           </Button>
           <Button
             variant="primary"
@@ -203,7 +205,9 @@ const SteppedModal: React.FC<SteppedProps> = ({
             }
             className="w-[112px]"
           >
-            {context.currentStep === steps.length - 1 ? "Submit" : "Next"}
+            {context.currentStep === steps.length - 1
+              ? t("orders.actions.submit")
+              : "Next"}
           </Button>
         </div>
       </Modal.Footer>

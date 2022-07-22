@@ -1,4 +1,5 @@
 import React, { useContext, useMemo } from "react"
+import { useTranslation } from "react-i18next"
 import { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal"
 import { DiscountConditionType } from "../../types"
 import AddCollectionConditionSelector from "./condition-tables/add-condition-tables/collections"
@@ -29,6 +30,7 @@ const useConditionModalItems = ({
   onClose,
 }: UseConditionModalItemsProps) => {
   const layeredModalContext = useContext(LayeredModalContext)
+  const { t } = useTranslation()
 
   const items: ConditionItem[] = useMemo(
     () => [

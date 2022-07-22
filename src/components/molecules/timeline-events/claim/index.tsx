@@ -136,7 +136,7 @@ function ClaimRefundOrReplacement(event: ClaimEvent) {
       <span className="text-grey-50 mb-2xsmall">{`${
         event.refundStatus && event.refundStatus === "refunded"
           ? "Refunded"
-          : "Refund"
+          : t("orders.actions.replace")
       } amount:`}</span>
       <span className="inter-small-semibold">
         {formatAmountWithSymbol({

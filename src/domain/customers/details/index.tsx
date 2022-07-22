@@ -49,7 +49,7 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ id }) => {
     <div>
       <Breadcrumb
         currentPage={t("customers.detail")}
-        previousBreadcrumb={"Customers"}
+        previousBreadcrumb={t("customers.title")}
         previousRoute="/a/customers"
       />
       <BodyCard className={"h-auto w-full pt-[100px] mb-4"}>
@@ -87,7 +87,7 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ id }) => {
           </div>
           <div className="flex flex-col pl-6">
             <div className="inter-smaller-regular text-grey-50 mb-1">
-              Orders
+              {t("orders.general.title")}
             </div>
             <div>{customer?.orders.length}</div>
           </div>

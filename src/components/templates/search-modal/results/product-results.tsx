@@ -19,7 +19,7 @@ const ProductResults = ({
   selected,
 }: ProductResultsProps) => {
   return products.length > 0 ? (
-    <SectionCollapsible title={"Products"} length={products.length || 0}>
+    <SectionCollapsible title={t("products.title")} length={products.length || 0}>
       <div className="mt-large">
         <div className="flex flex-col">
           {products?.slice(0, 5).map((product, index) => (

@@ -1,4 +1,5 @@
 import React, { useContext } from "react"
+import { useTranslation } from "react-i18next"
 import Button from "../../../../../../components/fundamentals/button"
 import { LayeredModalContext } from "../../../../../../components/molecules/modal/layered-modal"
 import { useConditions } from "../../../../details/conditions/add-condition/conditions-provider"
@@ -24,11 +25,12 @@ const DetailsConditionFooter: React.FC<AddConditionFooterProps> = ({
 }) => {
   const { pop, reset } = useContext(LayeredModalContext)
   const { updateCondition, updateAndSave } = useConditions()
+  const { t } = useTranslation()
 
   return (
     <div className="w-full flex justify-end gap-x-xsmall">
       <Button variant="ghost" size="small" onClick={onClose}>
-        Cancel
+        {t("common.cancel")}
       </Button>
       <Button
         variant="primary"

@@ -20,7 +20,7 @@ const StockAndInventory = () => {
   return (
     <BodyCard
       title={t("products.stock.title")}
-      subtitle="To start selling, all you need is a name, price, and image"
+      subtitle={t("products.tip")}
     >
       <div className="mt-large">
         {!isVariantsView && (

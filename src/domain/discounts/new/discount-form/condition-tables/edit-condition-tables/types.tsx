@@ -1,5 +1,6 @@
 import { useAdminProductTypes } from "medusa-react"
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import Spinner from "../../../../../../components/atoms/spinner"
 import Modal from "../../../../../../components/molecules/modal"
 import useQueryFilters from "../../../../../../hooks/use-query-filters"
@@ -26,6 +27,7 @@ const EditTypeConditionSelector = ({ onClose }) => {
       keepPreviousData: true,
     }
   )
+  const { t } = useTranslation()
 
   const changed = (values: string[]) => {
     const selectedTypes =
@@ -48,9 +50,9 @@ const EditTypeConditionSelector = ({ onClose }) => {
               options={{
                 enableSearch: true,
                 immediateSearchFocus: true,
-                searchPlaceholder: "Search by type...",
+                searchPlaceholder: t("discounts.search.types"),
               }}
-              resourceName="Types"
+              resourceName={t("products.type")}
               totalCount={count || 0}
               selectedIds={items?.map((c) => c.id)}
               data={product_types}

@@ -1,11 +1,11 @@
 import { Router } from "@reach/router"
 import React from "react"
+import { useTranslation } from "react-i18next"
 import SettingsCard from "../../components/atoms/settings-card"
 import CoinsIcon from "../../components/fundamentals/icons/coins-icon"
 import CrosshairIcon from "../../components/fundamentals/icons/crosshair-icon"
 import DollarSignIcon from "../../components/fundamentals/icons/dollar-sign-icon"
 import HappyIcon from "../../components/fundamentals/icons/happy-icon"
-import MailIcon from "../../components/fundamentals/icons/mail-icon"
 import MapPinIcon from "../../components/fundamentals/icons/map-pin-icon"
 import TaxesIcon from "../../components/fundamentals/icons/taxes-icon"
 import TruckIcon from "../../components/fundamentals/icons/truck-icon"
@@ -22,63 +22,64 @@ import Taxes from "./taxes"
 import Users from "./users"
 
 const SettingsIndex = () => {
+  const { t } = useTranslation()
   return (
     <SettingsOverview>
       <SettingsCard
-        heading={"Regions"}
-        description={"Manage the markets you will operate within"}
+        heading={t("settings.regions.title")}
+        description={t("settings.regions.description")}
         icon={<MapPinIcon />}
         to={`/a/settings/regions`}
       />
       <SettingsCard
-        heading={"Currencies"}
-        description={"Manage the markets you will operate within"}
+        heading={t("settings.currencies.title")}
+        description={t("settings.currencies.description")}
         icon={<CoinsIcon />}
         to={`/a/settings/currencies`}
       />
       <SettingsCard
-        heading={"Store Details"}
-        description={"Manage your business details"}
+        heading={t("settings.store.title")}
+        description={t("settings.store.description")}
         icon={<CrosshairIcon />}
         to={`/a/settings/details`}
       />
-      <SettingsCard
-        heading={"Shipping"}
-        description={"Manage shipping profiles"}
+      {/* <SettingsCard
+        heading={t("orders.field.shipping")}
+        description={t("settings.currencies.description")}
         icon={<TruckIcon />}
         to={`/a/settings/shipping-profiles`}
         disabled={true}
-      />
+      /> */}
       <SettingsCard
-        heading={"Return Reasons"}
-        description={"Manage Order settings"}
+        heading={t("settings.return_reason.title")}
+        description={t("settings.return_reason.description")}
         icon={<DollarSignIcon />}
         to={`/a/settings/return-reasons`}
       />
       <SettingsCard
+        heading={t("settings.tax.title")}
+        description={t("settings.tax.description")}
+        icon={<TaxesIcon />}
+        to={`/a/settings/taxes`}
+      />
+      <SettingsCard
         heading={"The Team"}
-        description={"Manage users of your Medusa Store"}
+        description={t("settings.user.description")}
         icon={<UsersIcon />}
         to={`/a/settings/team`}
       />
       <SettingsCard
         heading={"Personal Information"}
-        description={"Mange your Medusa profile"}
+        description={t("settings.currencies.description")}
         icon={<HappyIcon />}
         to={`/a/settings/personal-information`}
       />
-      <SettingsCard
+      {/* <SettingsCard
         heading={"hello@medusajs.com"}
         description={"Can’t find the answers you’re looking for?"}
         icon={<MailIcon />}
         externalLink={"mailto: hello@medusajs.com"}
-      />
-      <SettingsCard
-        heading={"Tax Settings"}
-        description={"Manage taxes across regions and products"}
-        icon={<TaxesIcon />}
-        to={`/a/settings/taxes`}
-      />
+      /> */}
     </SettingsOverview>
   )
 }

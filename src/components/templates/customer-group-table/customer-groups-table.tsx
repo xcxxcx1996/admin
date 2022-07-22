@@ -2,6 +2,7 @@ import { CustomerGroup } from "@medusajs/medusa"
 import { navigate } from "gatsby"
 import { useAdminCustomerGroups } from "medusa-react"
 import React, { useContext } from "react"
+import { useTranslation } from "react-i18next"
 import {
   HeaderGroup,
   Row,
@@ -36,7 +37,7 @@ const defaultQueryProps = {
 function CustomerGroupsPlaceholder() {
   return (
     <div className="h-full flex center justify-center items-center min-h-[756px]">
-      <span className="text-xs text-gray-400">No customer groups yet</span>
+      <span className="text-xs text-gray-400">还未创建客户组</span>
     </div>
   )
 }
@@ -90,15 +91,15 @@ type CustomerGroupsTableRowProps = {
 function CustomerGroupsTableRow(props: CustomerGroupsTableRowProps) {
   const { row } = props
   const { showModal } = useContext(CustomerGroupContext)
-
+  const { t } = useTranslation()
   const actions = [
     {
-      label: "Edit",
+      label: t("common.edit"),
       onClick: showModal,
       icon: <EditIcon size={20} />,
     },
     {
-      label: "Details",
+      label: t("orders.field.detail"),
       onClick: () => navigate(row.original.id),
       icon: <DetailsIcon size={20} />,
     },
@@ -154,7 +155,7 @@ function CustomerGroupsTable(props: CustomerGroupsTableProps) {
   )
 
   // ********* HANDLERS *********
-
+  const { t } = useTranslation()
   const handleNext = () => {
     if (!table.canNextPage) {
       return
@@ -217,7 +218,7 @@ function CustomerGroupsTable(props: CustomerGroupsTableProps) {
         limit={queryObject.limit}
         offset={queryObject.offset}
         pageSize={queryObject.offset + table.rows.length}
-        title="Customers"
+        title={t("customers.title")}
         currentPage={table.state.pageIndex + 1}
         pageCount={table.pageCount}
         nextPage={handleNext}

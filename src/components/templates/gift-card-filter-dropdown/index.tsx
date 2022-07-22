@@ -5,6 +5,7 @@ import FilterDropdownItem from "../../../components/molecules/filter-dropdown/it
 import SaveFilterItem from "../../../components/molecules/filter-dropdown/save-field"
 import TabFilter from "../../../components/molecules/filter-tab"
 import PlusIcon from "../../fundamentals/icons/plus-icon"
+import { useTranslation } from "react-i18next"
 
 const statusFilters = [
   "completed",
@@ -55,7 +56,7 @@ const OrderFilters = ({
 }) => {
   const [tempState, setTempState] = useState(filters)
   const [name, setName] = useState("")
-
+  const { t } = useTranslation()
   const handleRemoveTab = (val) => {
     if (onRemoveTab) {
       onRemoveTab(val)
@@ -115,7 +116,7 @@ const OrderFilters = ({
             )}
           >
             <div className="flex rounded-rounded items-center bg-grey-5 border border-grey-20 inter-small-semibold px-2 h-6">
-              Filters
+              {t("common.filters")}
               <div className="text-grey-40 ml-1 flex items-center rounded">
                 <span className="text-violet-60 inter-small-semibold">
                   {numberOfFilters ? numberOfFilters : "0"}
@@ -129,7 +130,7 @@ const OrderFilters = ({
         }
       >
         <FilterDropdownItem
-          filterTitle="Status"
+          filterTitle={t("orders.field.status")}
           options={statusFilters}
           filters={tempState.status.filter}
           open={tempState.status.open}
@@ -150,7 +151,7 @@ const OrderFilters = ({
           setFilter={(val) => setSingleFilter("fulfillment", val)}
         />
         <FilterDropdownItem
-          filterTitle="Date"
+          filterTitle={t("common.date")}
           options={dateFilters}
           filters={tempState.date.filter}
           open={tempState.date.open}

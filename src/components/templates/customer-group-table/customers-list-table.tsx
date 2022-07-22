@@ -18,6 +18,7 @@ import MailIcon from "../../fundamentals/icons/mail-icon"
 import TrashIcon from "../../fundamentals/icons/trash-icon"
 import useQueryFilters from "../../../hooks/use-query-filters"
 import { FilteringOptionProps } from "../../molecules/table/filtering-option"
+import { useTranslation } from "react-i18next"
 
 /* ********************************** */
 /* ************** TYPES ************* */
@@ -82,7 +83,7 @@ function CustomersListTableRow(props: CustomersListTableRowProps) {
 
   const actions = [
     {
-      label: "Details",
+      label: t("orders.field.detail"),
       onClick: () => navigate(`/a/customers/${row.original.id}`),
       icon: <DetailsIcon size={20} />,
     },
@@ -144,7 +145,7 @@ function CustomersListTable(props: CustomersListTableProps) {
     manualPagination: true,
     autoResetPage: false,
   }
-
+  const { t } = useTranslation()
   const table = useTable(tableConfig, useSortBy, usePagination)
 
   // ********* HANDLERS *********
@@ -212,7 +213,7 @@ function CustomersListTable(props: CustomersListTableProps) {
         limit={queryObject.limit}
         offset={queryObject.offset}
         pageSize={queryObject.offset + table.rows.length}
-        title="Customers"
+        title={t("customers.title")}
         currentPage={table.state.pageIndex + 1}
         pageCount={table.pageCount}
         nextPage={handleNext}

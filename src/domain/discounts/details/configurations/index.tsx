@@ -5,6 +5,7 @@ import NumberedItem from "../../../../components/molecules/numbered-item"
 import BodyCard from "../../../../components/organisms/body-card"
 import EditConfigurations from "./edit-configurations"
 import useDiscountConfigurations from "./use-discount-configurations"
+import { useTranslation } from "react-i18next"
 
 type ConfigurationsProps = {
   discount: Discount
@@ -13,15 +14,15 @@ type ConfigurationsProps = {
 const Configurations: React.FC<ConfigurationsProps> = ({ discount }) => {
   const configurations = useDiscountConfigurations(discount)
   const [showModal, setShowModal] = useState(false)
-
+  const { t } = useTranslation()
   return (
     <>
       <BodyCard
-        title={"Configurations"}
+        title={t("discounts.configurations.title")}
         className="min-h-[200px]"
         actionables={[
           {
-            label: "Edit configurations",
+            label: t("discounts.configurations.edit"),
             onClick: () => setShowModal(true),
             icon: <EditIcon size={20} />,
           },

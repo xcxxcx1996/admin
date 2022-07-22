@@ -10,6 +10,7 @@ import Table, { TablePagination } from "../../molecules/table"
 import OrderFilters from "../order-filter-dropdown"
 import useOrderTableColums from "./use-order-column"
 import { useOrderFilters } from "./use-order-filters"
+import { useTranslation } from 'react-i18next';
 
 const DEFAULT_PAGE_SIZE = 15
 
@@ -110,7 +111,7 @@ const OrderTable: React.FC<RouteComponentProps> = () => {
       previousPage()
     }
   }
-
+  const { t } = useTranslation()
   const updateUrlFromFilter = (obj = {}) => {
     const stringified = qs.stringify(obj)
     window.history.replaceState(`/a/orders`, "", `${`?${stringified}`}`)
@@ -198,7 +199,7 @@ const OrderTable: React.FC<RouteComponentProps> = () => {
         limit={queryObject.limit}
         offset={queryObject.offset}
         pageSize={queryObject.offset + rows.length}
-        title="Orders"
+        title={t("orders.general.title")}
         currentPage={pageIndex + 1}
         pageCount={pageCount}
         nextPage={handleNext}

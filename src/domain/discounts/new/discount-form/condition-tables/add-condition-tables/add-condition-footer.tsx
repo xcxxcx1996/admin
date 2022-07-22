@@ -35,7 +35,7 @@ const AddConditionFooter: React.FC<AddConditionFooterProps> = ({
           reset()
         }}
       >
-        Cancel
+        {t("common.cancel")}
       </Button>
       <Button
         variant="primary"

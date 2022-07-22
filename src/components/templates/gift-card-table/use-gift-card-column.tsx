@@ -21,7 +21,7 @@ const useGiftCardTableColums = () => {
         ),
       },
       {
-        Header: "Order",
+        Header: "订单",
         accessor: "order_id",
         Cell: ({ row, cell: { value }, index }) => (
           <Table.Cell

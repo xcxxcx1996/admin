@@ -1,13 +1,16 @@
 import i18next from "i18next"
 
 i18next.init({
-  fallbackLng: "en",
+  fallbackLng: "zh",
   resources: {
     "zh-Hant": {
       translations: require("../locales/tw/translations.json"),
     },
     en: {
       translations: require("../locales/en/translations.json"),
+    },
+    zh: {
+      translations: require("../locales/zh/translations.json"),
     },
   },
   ns: ["translations"],

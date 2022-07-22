@@ -1,5 +1,6 @@
 import { useAdminCollections } from "medusa-react"
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import Spinner from "../../../../../../components/atoms/spinner"
 import Modal from "../../../../../../components/molecules/modal"
 import useQueryFilters from "../../../../../../hooks/use-query-filters"
@@ -18,6 +19,8 @@ import EditConditionFooter from "./edit-condition-footer"
 const EditCollectionConditionSelector = ({ onClose }) => {
   const params = useQueryFilters(defaultQueryProps)
   const { conditions } = useDiscountForm()
+  const { t } = useTranslation()
+
   const [items, setItems] = useState(
     conditions.product_collections?.items || []
   )
@@ -60,10 +63,10 @@ const EditCollectionConditionSelector = ({ onClose }) => {
               options={{
                 enableSearch: true,
                 immediateSearchFocus: true,
-                searchPlaceholder: "Search by title...",
+                searchPlaceholder: t("discounts.search.collection"),
                 filters: [{ title: "Title", name: "title" }],
               }}
-              resourceName="Collections"
+              resourceName={t("collections.title")}
               totalCount={count || 0}
               selectedIds={items?.map((c) => c.id)}
               data={collections}

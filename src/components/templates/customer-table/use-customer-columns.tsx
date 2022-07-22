@@ -1,18 +1,20 @@
 import moment from "moment"
 import React, { useMemo } from "react"
+import { useTranslation } from "react-i18next"
 import { getColor } from "../../../utils/color"
 import CustomerAvatarItem from "../../molecules/customer-avatar-item"
 
 export const useCustomerColumns = () => {
+  const { t } = useTranslation()
   const columns = useMemo(
     () => [
       {
-        Header: "Date added",
+        Header: "添加日期",
         accessor: "created_at", // accessor is the "key" in the data
         Cell: ({ cell: { value } }) => moment(value).format("DD MMM YYYY"),
       },
       {
-        Header: "Name",
+        Header: t("common.name"),
         accessor: "customer",
         Cell: ({ row }) => (
           <CustomerAvatarItem
@@ -22,7 +24,7 @@ export const useCustomerColumns = () => {
         ),
       },
       {
-        Header: "Email",
+        Header: t("customers.emial"),
         accessor: "email",
       },
       {

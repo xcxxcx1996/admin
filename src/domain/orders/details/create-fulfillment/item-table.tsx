@@ -4,6 +4,7 @@ import CheckIcon from "../../../../components/fundamentals/icons/check-icon"
 import MinusIcon from "../../../../components/fundamentals/icons/minus-icon"
 import PlusIcon from "../../../../components/fundamentals/icons/plus-icon"
 import Table from "../../../../components/molecules/table"
+import { useTranslation } from "react-i18next"
 
 const CreateFulfillmentItemsTable = ({
   items,
@@ -54,13 +55,15 @@ const CreateFulfillmentItemsTable = ({
       setQuantities(newQuantities)
     }
   }
-
+  const { t } = useTranslation()
   return (
     <Table>
       <Table.HeadRow className="text-grey-50 inter-small-semibold border-t border-t-grey-20">
-        <Table.HeadCell>Details</Table.HeadCell>
+        <Table.HeadCell>{t("orders.field.detail")}</Table.HeadCell>
         <Table.HeadCell />
-        <Table.HeadCell className="text-right pr-8">Quantity</Table.HeadCell>
+        <Table.HeadCell className="text-right pr-8">
+          {t("orders.field.quantity")}
+        </Table.HeadCell>
       </Table.HeadRow>
       <Table.Body>
         {items?.map((item) => {

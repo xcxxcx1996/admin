@@ -19,7 +19,7 @@ const DiscountResults = ({
   selected,
 }: DiscountResultsProps) => {
   return discounts.length > 0 ? (
-    <SectionCollapsible title={"Discounts"} length={discounts?.length || 0}>
+    <SectionCollapsible title={t("discounts.title")} length={discounts?.length || 0}>
       <div className="mt-large">
         <div className="flex flex-col">
           {discounts?.map((discount, index) => (

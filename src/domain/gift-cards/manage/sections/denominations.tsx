@@ -40,13 +40,13 @@ const Denominations: React.FC<DenominationsProps> = ({ giftCard }) => {
       deleteGiftCardVariant.mutate(editDenom!.id, {
         onSuccess: () => {
           notification(
-            "Success",
+            t("common.status.success"),
             "Successfully updated denominations",
             "success"
           )
           setEditDenom(null)
         },
-        onError: (err) => notification("Error", getErrorMessage(err), "error"),
+        onError: (err) => notification(t("common.status.error"), getErrorMessage(err), "error"),
       })
       return
     }
@@ -68,13 +68,13 @@ const Denominations: React.FC<DenominationsProps> = ({ giftCard }) => {
       {
         onSuccess: () => {
           notification(
-            "Success",
+            t("common.status.success"),
             "Successfully updated denominations",
             "success"
           )
           setEditDenom(null)
         },
-        onError: (err) => notification("Error", getErrorMessage(err), "error"),
+        onError: (err) => notification(t("common.status.error"), getErrorMessage(err), "error"),
       }
     )
   }

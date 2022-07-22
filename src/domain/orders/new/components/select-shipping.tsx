@@ -40,7 +40,7 @@ const SelectShippingMethod = ({
             <AlertIcon size={20} />
           </div>
           <div className="flex flex-col">
-            <span className="inter-small-semibold">Attention!</span>
+            <span className="inter-small-semibold">{t("orders.actions.attention")}</span>
             You don't have any options for orders without shipping. Please add
             one (e.g. "In-store fulfillment") with "Show on website" unchecked
             in region settings and continue.

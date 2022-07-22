@@ -23,12 +23,12 @@ const useCollectionActions = (collection) => {
 
   const getActions = (coll): ActionType[] => [
     {
-      label: "Edit",
+      label: t("common.edit"),
       onClick: () => navigate(`/a/collections/${coll.id}`),
       icon: <EditIcon size={20} />,
     },
     {
-      label: "Delete",
+      label: t("common.delete"),
       variant: "danger",
       onClick: handleDelete,
       icon: <TrashIcon size={20} />,

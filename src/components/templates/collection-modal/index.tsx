@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import Button from "../../fundamentals/button"
 import IconTooltip from "../../molecules/icon-tooltip"
 import InputField from "../../molecules/input"
@@ -19,6 +20,7 @@ const CollectionModal: React.FC<CollectionModalProps> = ({
   isEdit = false,
   collection,
 }) => {
+  const { t } = useTranslation()
   const { register, setValue, handleSubmit } = useForm()
   const [metadata, setMetadata] = useState<MetadataField[]>([])
 
@@ -99,10 +101,10 @@ const CollectionModal: React.FC<CollectionModalProps> = ({
                 type="button"
                 onClick={onClose}
               >
-                Cancel
+                {t("common.cancel")}
               </Button>
               <Button variant="primary" size="small">
-                {`${isEdit ? "Save" : "Publish"} collection`}
+                {`${isEdit ? t("common.save") : t("common.publish")} collection`}
               </Button>
             </div>
           </Modal.Footer>

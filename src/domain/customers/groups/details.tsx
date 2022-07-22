@@ -126,7 +126,7 @@ function CustomerGroupCustomersList(props: CustomerGroupCustomersListProps) {
 
   return (
     <BodyCard
-      title="Customers"
+      title={t("customers.title")}
       actionables={actions}
       className="min-h-0 w-full my-4 min-h-[756px]"
     >

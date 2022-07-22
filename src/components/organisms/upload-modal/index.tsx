@@ -267,7 +267,7 @@ function UploadModal(props: UploadModalProps) {
               size="small"
               onClick={onClose}
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <div className="flex gap-2">
               <Button

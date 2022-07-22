@@ -6,6 +6,7 @@ import Button from "../../fundamentals/button"
 import Modal from "../../molecules/modal"
 import RadioGroup from "../../organisms/radio-group"
 import PriceAmount from "./price-amount"
+import { useTranslation } from "react-i18next"
 
 const MODES = {
   APPLY_ALL: "all",
@@ -41,7 +42,7 @@ const PriceOverrides = ({
       prices: prices,
     },
   })
-
+  const { t } = useTranslation()
   const onClick = handleSubmit((values) => {
     if (mode === MODES.APPLY_ALL) {
       onSubmit({
@@ -148,7 +149,7 @@ const PriceOverrides = ({
             size="large"
             onClick={onClose}
           >
-            Cancel
+            {t("common.cancel")}
           </Button>
           <Button
             size="large"

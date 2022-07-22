@@ -34,10 +34,10 @@ const EmailModal: React.FC<EmailModalProps> = ({
           <div className="space-y-4">
             <div className="flex mt-4 space-x-4">
               <Input
-                label="Email"
+                label={t("customers.email")}
                 name="email"
                 ref={register}
-                placeholder="Email"
+                placeholder={t("customers.email")}
               />
             </div>
           </div>
@@ -50,7 +50,7 @@ const EmailModal: React.FC<EmailModalProps> = ({
               size="large"
               onClick={handleClose}
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               size="large"
@@ -58,7 +58,7 @@ const EmailModal: React.FC<EmailModalProps> = ({
               variant="primary"
               onClick={handleSubmit(submit)}
             >
-              Save
+              {t("common.save")}
             </Button>
           </div>
         </Modal.Footer>

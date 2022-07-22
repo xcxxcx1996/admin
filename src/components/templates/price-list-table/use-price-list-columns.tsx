@@ -6,12 +6,14 @@ import Actionables from "../../molecules/actionables"
 import Table from "../../molecules/table"
 import usePriceListActions from "./use-price-list-actions"
 import { formatPriceListGroups, getPriceListStatus } from "./utils"
+import { useTranslation } from "react-i18next"
 
 export const usePriceListTableColumns = () => {
+  const { t } = useTranslation()
   const columns = useMemo<Column<PriceList>[]>(
     () => [
       {
-        Header: <Table.HeadCell>Name</Table.HeadCell>,
+        Header: <Table.HeadCell>{t("common.name")}</Table.HeadCell>,
         accessor: "name",
         Cell: ({ cell: { value } }) => (
           <Table.Cell>
@@ -20,12 +22,12 @@ export const usePriceListTableColumns = () => {
         ),
       },
       {
-        Header: "Description",
+        Header: t("common.description"),
         accessor: "description",
         Cell: ({ cell: { value } }) => <Table.Cell>{value}</Table.Cell>,
       },
       {
-        Header: "Status",
+        Header: t("orders.field.status"),
         accessor: "status",
         Cell: ({ row: { original } }) => (
           <Table.Cell>{getPriceListStatus(original)}</Table.Cell>

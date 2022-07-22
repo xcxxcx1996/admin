@@ -8,13 +8,14 @@ import UnpublishIcon from "../../fundamentals/icons/unpublish-icon"
 import { ActionType } from "../../molecules/actionables"
 import { isActive } from "./utils"
 import PublishIcon from "../../fundamentals/icons/publish-icon"
+import { useTranslation } from "react-i18next"
 
 const usePriceListActions = (priceList) => {
   const dialog = useImperativeDialog()
   const notification = useNotification()
   const updatePrice = useAdminUpdatePriceList(priceList?.id)
   const deletePrice = useAdminDeletePriceList(priceList?.id)
-
+  const { t } = useTranslation()
   const onDelete = async () => {
     const shouldDelete = await dialog({
       heading: "Delete Price List",
@@ -24,12 +25,12 @@ const usePriceListActions = (priceList) => {
       deletePrice.mutate(undefined, {
         onSuccess: () => {
           notification(
-            "Success",
+            t("common.status.success"),
             "Successfully deleted the price list",
             "success"
           )
         },
-        onError: (err) => notification("Error", getErrorMessage(err), "error"),
+        onError: (err) => notification(t("common.status.error"), getErrorMessage(err), "error"),
       })
     }
   }
@@ -42,7 +43,7 @@ const usePriceListActions = (priceList) => {
       {
         onSuccess: () => {
           notification(
-            "Success",
+            t("common.status.success"),
             `Successfully ${
               isActive(priceList) ? "unpublished" : "published"
             } price list`,
@@ -55,7 +56,7 @@ const usePriceListActions = (priceList) => {
 
   const getActions = (): ActionType[] => [
     {
-      label: isActive(priceList) ? "Unpublish" : "Publish",
+      label: isActive(priceList) ? t("common.unpublish") : t("common.publish"),
       onClick: onUpdate,
       icon: isActive(priceList) ? (
         <UnpublishIcon size={20} />
@@ -64,7 +65,7 @@ const usePriceListActions = (priceList) => {
       ),
     },
     {
-      label: "Delete",
+      label: t("common.delete"),
       onClick: onDelete,
       icon: <TrashIcon size={20} />,
       variant: "danger",

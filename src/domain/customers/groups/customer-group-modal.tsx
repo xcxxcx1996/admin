@@ -89,7 +89,7 @@ function CustomerGroupModal(props: CustomerGroupModalProps) {
               size="large"
               onClick={handleClose}
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               size="medium"

@@ -13,10 +13,11 @@ import ConditionOperator from "../shared/condition-operator"
 import { SelectableTable } from "../shared/selectable-table"
 import { TagColumns, TagHeader, TagRow } from "../shared/tags"
 import AddConditionFooter from "./add-condition-footer"
+import { useTranslation } from "react-i18next"
 
 const AddTagConditionSelector = ({ onClose }: AddConditionSelectorProps) => {
   const params = useQueryFilters(defaultQueryProps)
-
+  const { t } = useTranslation()
   const { conditions } = useDiscountForm()
 
   const [items, setItems] = useState(conditions.product_tags?.items || [])
@@ -50,7 +51,7 @@ const AddTagConditionSelector = ({ onClose }: AddConditionSelectorProps) => {
               options={{
                 enableSearch: true,
                 immediateSearchFocus: true,
-                searchPlaceholder: "Search by tag...",
+                searchPlaceholder: t("discount.search.tags"),
               }}
               resourceName="Tags"
               totalCount={count || 0}

@@ -64,7 +64,7 @@ const General = ({ showViewOptions = true, isEdit = false, product }) => {
       isEdit={isEdit}
       product={product}
       title={t("common.general")}
-      subtitle="To start selling, all you need is a name, price, and image"
+      subtitle={t("products.tip")}
     >
       <div className="mt-large">
         <h6 className="inter-base-semibold mb-1">{t("common.detail")}</h6>
@@ -72,8 +72,7 @@ const General = ({ showViewOptions = true, isEdit = false, product }) => {
           htmlFor="name"
           className="inter-small-regular text-grey-50 block max-w-[370px] mb-base"
         >
-          Give your product a short and clear name. 50-60 characters is the
-          recommended length for search engines.
+          给你的产品起一个简短而清晰的名字。50-60个字符。
         </label>
         <div className="flex gap-8 mb-base">
           <Input
@@ -101,8 +100,7 @@ const General = ({ showViewOptions = true, isEdit = false, product }) => {
           className="inter-small-regular text-grey-50 block max-w-[370px] mb-base"
           htmlFor="description"
         >
-          Give your product a short and clear description. 120-160 characters is
-          the recommended length for search engines.
+          给你的产品一个简短而清晰的描述。120-160个字符
         </label>
         <div className="grid grid-rows-3 grid-cols-2 gap-x-8 gap-y-4 mb-large">
           <Textarea

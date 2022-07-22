@@ -91,7 +91,7 @@ const EditCustomerModal = ({ handleClose, customer }) => {
               onClick={handleClose}
               className="mr-2"
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               loading={updateCustomer.isLoading}
@@ -100,7 +100,7 @@ const EditCustomerModal = ({ handleClose, customer }) => {
               size="small"
               onClick={handleSubmit(submit)}
             >
-              Save
+              {t("common.save")}
             </Button>
           </div>
         </Modal.Footer>

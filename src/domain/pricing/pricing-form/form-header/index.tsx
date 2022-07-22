@@ -11,6 +11,7 @@ import {
   mapFormValuesToUpdatePriceListPrices,
 } from "../form/mappers"
 import { usePriceListForm } from "../form/pricing-form-context"
+import { useTranslation } from "react-i18next"
 import {
   CreatePriceListFormValues,
   HeaderAction,
@@ -19,11 +20,10 @@ import {
   PriceListStatus,
   ViewType,
 } from "../types"
-
 const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
   const { handleSubmit } = usePriceListForm()
   const notification = useNotification()
-
+  const { t } = useTranslation()
   const closeForm = () => {
     if (props.viewType !== ViewType.CREATE && props.onClose) {
       props.onClose()
@@ -43,7 +43,7 @@ const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
           navigate(`/a/pricing/${price_list.id}`)
         },
         onError: (error) => {
-          notification("Error", getErrorMessage(error), "error")
+          notification(t("common.status.error"), getErrorMessage(error), "error")
         },
       }
     )
@@ -57,7 +57,7 @@ const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
           navigate(`/a/pricing/${price_list.id}`)
         },
         onError: (error) => {
-          notification("Error", getErrorMessage(error), "error")
+          notification(t("common.status.error"), getErrorMessage(error), "error")
         },
       }
     )
@@ -69,7 +69,7 @@ const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
         closeForm()
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -80,7 +80,7 @@ const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
         props.onClose && props.onClose()
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -95,7 +95,7 @@ const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
         onClick: handleSubmit(onPublish),
       }
       secondaryAction = {
-        label: "Save as draft",
+        label: t("common.save_draft"),
         onClick: handleSubmit(onSaveAsDraft),
       }
       break
@@ -105,7 +105,7 @@ const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
         onClick: handleSubmit(onUpdateDetails),
       }
       secondaryAction = {
-        label: "Cancel",
+        label: t("common.cancel"),
         onClick: closeForm,
       }
       break
@@ -115,7 +115,7 @@ const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
         onClick: handleSubmit(onUpdatePrices),
       }
       secondaryAction = {
-        label: "Cancel",
+        label: t("common.cancel"),
         onClick: closeForm,
       }
       break

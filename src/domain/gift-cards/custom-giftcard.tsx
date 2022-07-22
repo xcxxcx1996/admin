@@ -11,6 +11,7 @@ import useNotification from "../../hooks/use-notification"
 import { getErrorMessage } from "../../utils/error-messages"
 import { focusByName } from "../../utils/focus-by-name"
 import { validateEmail } from "../../utils/validate-email"
+import { useTranslation } from "react-i18next"
 
 type CustomGiftcardProps = {
   onDismiss: () => void
@@ -24,7 +25,7 @@ const CustomGiftcard: React.FC<CustomGiftcardProps> = ({ onDismiss }) => {
   const { register, handleSubmit } = useForm()
 
   const notification = useNotification()
-
+  const { t } = useTranslation()
   const createGiftCard = useAdminCreateGiftCard()
 
   useEffect(() => {
@@ -38,13 +39,13 @@ const CustomGiftcard: React.FC<CustomGiftcardProps> = ({ onDismiss }) => {
 
   const onSubmit = (data) => {
     if (!giftCardAmount) {
-      notification("Error", "Please enter an amount", "error")
+      notification(t("common.status.error"), "Please enter an amount", "error")
       focusByName("amount")
       return
     }
 
     if (!validateEmail(data.metadata.email)) {
-      notification("Error", "Invalid email address", "error")
+      notification(t("common.status.error"), "Invalid email address", "error")
       focusByName("metadata.email")
       return
     }
@@ -59,11 +60,15 @@ const CustomGiftcard: React.FC<CustomGiftcardProps> = ({ onDismiss }) => {
 
     createGiftCard.mutate(update, {
       onSuccess: () => {
-        notification("Success", "Created Custom Gift Card", "success")
+        notification(
+          t("common.status.success"),
+          "Created Custom Gift Card",
+          "success"
+        )
         onDismiss()
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
         onDismiss()
       },
     })
@@ -118,7 +123,7 @@ const CustomGiftcard: React.FC<CustomGiftcardProps> = ({ onDismiss }) => {
             <span className="inter-base-semibold">Receiver</span>
             <div className="grid grid-cols-1 gap-y-xsmall mt-4">
               <InputField
-                label={"Email"}
+                label={t("customers.email")}
                 required
                 name="metadata.email"
                 placeholder="lebron@james.com"
@@ -143,7 +148,7 @@ const CustomGiftcard: React.FC<CustomGiftcardProps> = ({ onDismiss }) => {
               size="small"
               className="w-[112px]"
             >
-              Cancel
+              {t("common.cancel")}
             </Button>
             <Button
               variant="primary"

@@ -35,6 +35,7 @@ import OrderCanceled from "../../molecules/timeline-events/order-canceled"
 import OrderPlaced from "../../molecules/timeline-events/order-placed"
 import Refund from "../../molecules/timeline-events/refund"
 import Return from "../../molecules/timeline-events/return"
+import { useTranslation } from "react-i18next"
 
 type TimelineProps = {
   orderId: string
@@ -43,6 +44,7 @@ type TimelineProps = {
 const Timeline: React.FC<TimelineProps> = ({ orderId }) => {
   const { events, refetch } = useBuildTimelime(orderId)
   const notification = useNotification()
+  const { t } = useTranslation()
   const createNote = useAdminCreateNote()
   const { order } = useAdminOrder(orderId)
   const [showRequestReturn, setShowRequestReturn] = useState(false)
@@ -52,12 +54,12 @@ const Timeline: React.FC<TimelineProps> = ({ orderId }) => {
   const actions: ActionType[] = [
     {
       icon: <BackIcon size={20} />,
-      label: "Request Return",
+      label: t("orders.field.request_return"),
       onClick: () => setShowRequestReturn(true),
     },
     {
       icon: <RefreshIcon size={20} />,
-      label: "Register Exchange",
+      label: t("orders.actions.register_exchange"),
       onClick: () => setshowCreateSwap(true),
     },
     {
@@ -78,8 +80,10 @@ const Timeline: React.FC<TimelineProps> = ({ orderId }) => {
         value: value,
       },
       {
-        onSuccess: () => notification("Success", "Added note", "success"),
-        onError: (err) => notification("Error", getErrorMessage(err), "error"),
+        onSuccess: () =>
+          notification(t("common.status.success"), "Added note", "success"),
+        onError: (err) =>
+          notification(t("common.status.error"), getErrorMessage(err), "error"),
       }
     )
   }
@@ -89,7 +93,9 @@ const Timeline: React.FC<TimelineProps> = ({ orderId }) => {
       <div className="h-full w-5/12 rounded-rounded bg-grey-0 border border-grey-20">
         <div className="py-large px-xlarge border-b border-grey-20">
           <div className="flex items-center justify-between">
-            <h3 className="inter-xlarge-semibold">Timeline</h3>
+            <h3 className="inter-xlarge-semibold">
+              {t("orders.general.timeline")}
+            </h3>
             <div
               className={clsx({
                 "pointer-events-none opacity-50": !events,

@@ -6,31 +6,32 @@ import Input from "../../components/molecules/input"
 import BodyCard from "../../components/organisms/body-card"
 import useNotification from "../../hooks/use-notification"
 import { getErrorMessage } from "../../utils/error-messages"
+import { useTranslation } from "react-i18next"
 
 const AccountDetails = () => {
+  const { t } = useTranslation()
   const { register, reset, handleSubmit } = useForm()
   const { store, isSuccess } = useAdminStore()
   const updateStore = useAdminUpdateStore()
   const notification = useNotification()
-
   useEffect(() => {
     if (!isSuccess) {
       return
     }
     reset({
-      name: store.name,
-      swap_link_template: store.swap_link_template,
-      payment_link_template: store.payment_link_template,
-      invite_link_template: store.invite_link_template,
+      name: store?.name,
+      swap_link_template: store?.swap_link_template,
+      payment_link_template: store?.payment_link_template,
+      invite_link_template: store?.invite_link_template,
     })
   }, [store, isSuccess, reset])
 
   const handleCancel = () => {
     reset({
-      name: store.name,
-      swap_link_template: store.swap_link_template,
-      payment_link_template: store.payment_link_template,
-      invite_link_template: store.invite_link_template,
+      name: store?.name,
+      swap_link_template: store?.swap_link_template,
+      payment_link_template: store?.payment_link_template,
+      invite_link_template: store?.invite_link_template,
     })
   }
 
@@ -40,16 +41,19 @@ const AccountDetails = () => {
       !validateUrl(data.payment_link_template) ||
       !validateUrl(data.invite_link_template)
     ) {
-      notification("Error", "Malformed url", "error")
+      notification(t("common.status.error"), "Malformed url", "error")
       return
     }
-
     updateStore.mutate(data, {
       onSuccess: () => {
-        notification("Success", "Successfully updated store", "success")
+        notification(
+          t("common.status.success"),
+          t("settings.store.update_success"),
+          "success"
+        )
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
@@ -59,47 +63,51 @@ const AccountDetails = () => {
       <div className="max-w-[632px]">
         <BreadCrumb
           previousRoute="/a/settings/"
-          previousBreadcrumb="Settings"
-          currentPage="Store Details"
+          previousBreadcrumb={t("settings.title")}
+          currentPage={t("settings.store.title")}
         />
         <BodyCard
           events={[
             {
-              label: "Save",
+              label: t("common.save"),
               type: "button",
               onClick: handleSubmit(onSubmit),
             },
-            { label: "Cancel Changes", type: "button", onClick: handleCancel },
+            {
+              label: t("common.cancel_change"),
+              type: "button",
+              onClick: handleCancel,
+            },
           ]}
-          title="Store Details"
+          title={t("settings.store.title")}
           subtitle="Manage your business details"
         >
           <h6 className="mt-large inter-base-semibold">General</h6>
           <Input
             className="mt-base"
-            label="Store name"
+            label={t("settings.store.name")}
             name="name"
-            placeholder="Medusa Store"
+            placeholder="云九鼎"
             ref={register}
           />
-          <h6 className="mt-2xlarge inter-base-semibold">Advanced settings</h6>
+          <h6 className="mt-2xlarge inter-base-semibold">{t("settings.advance")}</h6>
           <Input
             className="mt-base"
-            label="Swap link template"
+            label={t("settings.store.swap_link_template")}
             name="swap_link_template"
             placeholder="https://acme.inc/swap"
             ref={register}
           />
           <Input
             className="mt-base"
-            label="Draft order link template"
+            label={t("settings.store.payment_link_template")}
             name="payment_link_template"
             placeholder="https://acme.inc/swap"
             ref={register}
           />
           <Input
             className="mt-base"
-            label="Invite link template"
+            label={t("settings.store.invite_link_template")}
             name="invite_link_template"
             placeholder="https://acme.inc/invite={invite_token}"
             ref={register}

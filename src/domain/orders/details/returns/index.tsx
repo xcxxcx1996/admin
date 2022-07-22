@@ -20,6 +20,7 @@ import { getErrorMessage } from "../../../../utils/error-messages"
 import { displayAmount } from "../../../../utils/prices"
 import { removeNullish } from "../../../../utils/remove-nullish"
 import { filterItems } from "../utils/create-filtering"
+import { useTranslation } from "react-i18next"
 
 type ReturnMenuProps = {
   order: Order
@@ -47,7 +48,7 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
   const [allItems, setAllItems] = useState<Omit<LineItem, "beforeInsert">[]>([])
 
   const notification = useNotification()
-
+  const { t } = useTranslation()
   const requestReturnOrder = useAdminRequestReturn(order.id)
 
   useEffect(() => {
@@ -120,9 +121,15 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
       .mutateAsync(data)
       .then(() => onDismiss())
       .then(() =>
-        notification("Success", "Successfully returned order", "success")
+        notification(
+          t("common.status.success"),
+          t("orders.notification.return_success"),
+          "success"
+        )
       )
-      .catch((error) => notification("Error", getErrorMessage(error), "error"))
+      .catch((error) =>
+        notification(t("common.status.error"), getErrorMessage(error), "error")
+      )
       .finally(() => setSubmitting(false))
   }
 
@@ -161,11 +168,13 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
     <LayeredModal context={layoutmodalcontext} handleClose={onDismiss}>
       <Modal.Body>
         <Modal.Header handleClose={onDismiss}>
-          <h2 className="inter-xlarge-semibold">Request Return</h2>
+          <h2 className="inter-xlarge-semibold">
+            {t("orders.field.request_return")}
+          </h2>
         </Modal.Header>
         <Modal.Content>
           <div className="mb-7">
-            <h3 className="inter-base-semibold">Items to return</h3>
+            <h3 className="inter-base-semibold">{t("orders.field.item_to_return")}</h3>
             <RMASelectProductTable
               order={order}
               allItems={allItems}
@@ -182,7 +191,7 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
               </div>
             ) : (
               <Select
-                label="Shipping Method"
+                label={t("orders.field.shipping_method")}
                 className="mt-2"
                 placeholder="Add a shipping method"
                 value={shippingMethod}
@@ -191,7 +200,7 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
                   shippingOptions?.map((o) => ({
                     label: o.name,
                     value: o.id,
-                    tax_rates: o.tax_rates
+                    tax_rates: o.tax_rates,
                   })) || []
                 }
               />
@@ -222,7 +231,7 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
                 </div>
               )}
               <div className="flex inter-base-semibold justify-between w-full">
-                <span>Total Refund</span>
+                <span>{t("orders.field.total_refund")}</span>
                 <div className="flex items-center">
                   {!refundEdited && (
                     <>
@@ -293,7 +302,7 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
                 size="small"
                 variant="ghost"
               >
-                Back
+                {t("common.back")}
               </Button>
               <Button
                 onClick={onSubmit}
@@ -303,7 +312,7 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
                 size="small"
                 variant="primary"
               >
-                Submit
+                {t("orders.actions.submit")}
               </Button>
             </div>
           </div>

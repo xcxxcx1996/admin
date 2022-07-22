@@ -6,31 +6,36 @@ import { ActionType } from "../../../../components/molecules/actionables"
 import useNotification from "../../../../hooks/use-notification"
 import { getErrorMessage } from "../../../../utils/error-messages"
 import { DiscountConditionType } from "../../types"
+import { useTranslation } from "react-i18next"
 
 export const useDiscountConditions = (discount: Discount) => {
   const { refetch } = useAdminDiscount(discount.id)
   const { mutate } = useAdminDiscountRemoveCondition(discount.id)
   const notification = useNotification()
-
+  const { t } = useTranslation()
   const removeCondition = (conditionId: string) => {
     mutate(conditionId, {
       onSuccess: () => {
-        notification("Success", "Condition removed", "success")
+        notification(
+          t("common.status.success"),
+          t("discounts.conditions.delete_success"),
+          "success"
+        )
         refetch()
       },
       onError: (error) => {
-        notification("Error", getErrorMessage(error), "error")
+        notification(t("common.status.error"), getErrorMessage(error), "error")
       },
     })
   }
 
   const itemized = discount.rule.conditions.map((condition) => ({
     type: condition.type,
-    title: getTitle(condition.type),
-    description: getDescription(condition.type),
+    title: t("discounts.conditions." + getTitle(condition.type)),
+    description: t("discounts.conditions." + getDescription(condition.type)),
     actions: [
       {
-        label: "Delete condition",
+        label: t("discounts.condistions.delete"),
         icon: <TrashIcon size={16} />,
         variant: "danger",
         onClick: () => removeCondition(condition.id),
@@ -44,29 +49,29 @@ export const useDiscountConditions = (discount: Discount) => {
 const getTitle = (type: DiscountConditionType) => {
   switch (type) {
     case DiscountConditionType.PRODUCTS:
-      return "Product"
+      return "title_product"
     case DiscountConditionType.PRODUCT_COLLECTIONS:
-      return "Collection"
+      return "title_collection"
     case DiscountConditionType.PRODUCT_TAGS:
-      return "Tag"
+      return "title_tag"
     case DiscountConditionType.PRODUCT_TYPES:
-      return "Type"
+      return "title_type"
     case DiscountConditionType.CUSTOMER_GROUPS:
-      return "Customer Group"
+      return "title_customer_groups"
   }
 }
 
 const getDescription = (type: DiscountConditionType) => {
   switch (type) {
     case DiscountConditionType.PRODUCTS:
-      return "Discount is applicable to specific products"
+      return "description_product"
     case DiscountConditionType.PRODUCT_COLLECTIONS:
-      return "Discount is applicable to specific collections"
+      return "description_collections"
     case DiscountConditionType.PRODUCT_TAGS:
-      return "Discount is applicable to specific product tags"
+      return "description_tags"
     case DiscountConditionType.PRODUCT_TYPES:
-      return "Discount is applicable to specific product types"
+      return "description_types"
     case DiscountConditionType.CUSTOMER_GROUPS:
-      return "Discount is applicable to specific customer groups"
+      return "description_customer_groups"
   }
 }

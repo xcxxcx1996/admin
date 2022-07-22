@@ -11,6 +11,7 @@ import CurrencyInput from "../../../../components/organisms/currency-input"
 import useNotification from "../../../../hooks/use-notification"
 import { Option } from "../../../../types/shared"
 import { getErrorMessage } from "../../../../utils/error-messages"
+import { useTranslation } from "react-i18next"
 
 type EditGeneralProps = {
   discount: Discount
@@ -27,7 +28,7 @@ type GeneralForm = {
 const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
   const { mutate, isLoading } = useAdminUpdateDiscount(discount.id)
   const notification = useNotification()
-
+  const { t } = useTranslation()
   const { control, handleSubmit, reset, register } = useForm<GeneralForm>({
     defaultValues: mapGeneral(discount),
   })
@@ -46,12 +47,20 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
       },
       {
         onSuccess: ({ discount }) => {
-          notification("Success", "Discount updated successfully", "success")
+          notification(
+            t("common.status.success"),
+            t("discounts.update_success"),
+            "success"
+          )
           reset(mapGeneral(discount))
           onClose()
         },
         onError: (error) => {
-          notification("Error", getErrorMessage(error), "error")
+          notification(
+            t("common.status.error"),
+            getErrorMessage(error),
+            "error"
+          )
         },
       }
     )
@@ -98,7 +107,7 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
               name="regions"
               control={control}
               rules={{
-                required: "Atleast one region is required",
+                required: t("discounts.region_require"),
                 validate: (value) =>
                   Array.isArray(value) ? value.length > 0 : !!value,
               }}
@@ -109,7 +118,7 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
                     onChange={(value) => {
                       onChange(type === "fixed" ? [value] : value)
                     }}
-                    label="Choose valid regions"
+                    label={t("discounts.region_label")}
                     isMultiSelect={type !== "fixed"}
                     hasSelectAll={type !== "fixed"}
                     enableSearch
@@ -121,12 +130,12 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
             />
             <div className="flex gap-x-base gap-y-base my-base">
               <InputField
-                label="Code"
+                label={t("discounts.code_label")}
                 className="flex-1"
                 placeholder="SUMMERSALE10"
                 required
                 name="code"
-                ref={register({ required: "Code is required" })}
+                ref={register({ required: t("discounts.code_require") })}
               />
 
               {type !== "free_shipping" && (
@@ -143,13 +152,13 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
                           name="value"
                           control={control}
                           rules={{
-                            required: "Amount is required",
+                            required: t("discounts.amount_require"),
                             min: 1,
                           }}
                           render={({ value, onChange }) => {
                             return (
                               <CurrencyInput.AmountInput
-                                label={"Amount"}
+                                label={t("discounts.amount_label")}
                                 required
                                 amount={value}
                                 onChange={onChange}
@@ -162,7 +171,7 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
                   ) : (
                     <div className="flex-1">
                       <InputField
-                        label="Percentage"
+                        label={t("discounts.percentage_label")}
                         min={0}
                         required
                         type="number"
@@ -170,7 +179,7 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
                         prefix={"%"}
                         name="value"
                         ref={register({
-                          required: "Percentage is required",
+                          required: t("discounts.percentage_require"),
                           valueAsNumber: true,
                         })}
                       />
@@ -181,20 +190,17 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
             </div>
 
             <div className="text-grey-50 inter-small-regular flex flex-col mb-6">
-              <span>
-                The code your customers will enter during checkout. This will
-                appear on your customer’s invoice.
-              </span>
-              <span>Uppercase letters and numbers only.</span>
+              <span>{t("discounts.code_description")}</span>
+              <span>{t("discounts.code_description2")}</span>
             </div>
             <Textarea
-              label="Description"
+              label={t("commons.description")}
               required
               placeholder="Summer Sale 2022"
               rows={1}
               name="description"
               ref={register({
-                required: "Description is required",
+                required: t("discounts.description_require"),
               })}
             />
           </Modal.Content>
@@ -207,7 +213,7 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
                 type="button"
                 onClick={onClose}
               >
-                Cancel
+                {t("common.cancel")}
               </Button>
               <Button
                 variant="primary"
@@ -216,7 +222,7 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
                 type="submit"
                 loading={isLoading}
               >
-                Save
+                {t("common.save")}
               </Button>
             </div>
           </Modal.Footer>

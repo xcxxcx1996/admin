@@ -6,6 +6,7 @@ import MinusIcon from "../../fundamentals/icons/minus-icon"
 import PlusIcon from "../../fundamentals/icons/plus-icon"
 import TrashIcon from "../../fundamentals/icons/trash-icon"
 import Table from "../../molecules/table"
+import { useTranslation } from "react-i18next"
 
 type RMAReturnProductsTableProps = {
   isAdditionalItems?: boolean
@@ -39,13 +40,16 @@ const RMAReturnProductsTable: React.FC<RMAReturnProductsTableProps> = ({
   handleRemoveItem,
   handleToAddQuantity,
 }) => {
+  const { t } = useTranslation()
   return (
     <Table>
       <Table.HeadRow className="text-grey-50 inter-small-semibold">
-        <Table.HeadCell>Product Details</Table.HeadCell>
-        <Table.HeadCell className="text-right pr-8">Quantity</Table.HeadCell>
+        <Table.HeadCell>商品详情</Table.HeadCell>
+        <Table.HeadCell className="text-right pr-8">
+          {t("orders.field.quantity")}
+        </Table.HeadCell>
         <Table.HeadCell className="text-right">
-          {isAdditionalItems ? "Unit Price" : "Refundable"}
+          {isAdditionalItems ? t("orders.field.unity_price") : "Refundable"}
         </Table.HeadCell>
         <Table.HeadCell></Table.HeadCell>
         <Table.HeadCell></Table.HeadCell>

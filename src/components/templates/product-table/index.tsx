@@ -11,6 +11,7 @@ import ProductOverview from "./overview"
 import useProductActions from "./use-product-actions"
 import useProductTableColumn from "./use-product-column"
 import { useProductFilters } from "./use-product-filters"
+import { useTranslation } from "react-i18next"
 
 const DEFAULT_PAGE_SIZE = 15
 const DEFAULT_PAGE_SIZE_TILE_VIEW = 18
@@ -41,7 +42,7 @@ const ProductTable: React.FC<ProductTableProps> = () => {
     queryObject,
     representationObject,
   } = useProductFilters(location.search, defaultQueryProps)
-
+  const { t } = useTranslation()
   const offs = parseInt(queryObject.offset) || 0
   const limit = parseInt(queryObject.limit)
 
@@ -222,7 +223,7 @@ const ProductTable: React.FC<ProductTableProps> = () => {
           limit={limit}
           offset={offs}
           pageSize={offs + rows.length}
-          title="Products"
+          title={t("products.title")}
           currentPage={pageIndex + 1}
           pageCount={pageCount}
           nextPage={handleNext}

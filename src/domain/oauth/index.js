@@ -17,7 +17,7 @@ const Oauth = ({ app_name }) => {
           })
         }
       >
-        Complete Installation
+        {t("orders.actions.complete")} Installation
       </Button>
     </>
   )

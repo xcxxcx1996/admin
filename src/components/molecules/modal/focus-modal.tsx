@@ -2,6 +2,7 @@ import clsx from "clsx"
 import React from "react"
 import Button from "../../fundamentals/button"
 import CrossIcon from "../../fundamentals/icons/cross-icon"
+import { useTranslation } from "react-i18next"
 
 type FocusModalElementProps = {
   className?: string
@@ -74,6 +75,7 @@ const BasicFocusModalHeader: React.FC<BasicFocusModalProps> = ({
   cancelText,
   submitText,
 }) => {
+  const { t } = useTranslation()
   return (
     <FocusModal.Header>
       <div className="medium:w-8/12 w-full px-8 flex justify-between">
@@ -92,7 +94,7 @@ const BasicFocusModalHeader: React.FC<BasicFocusModalProps> = ({
             variant="ghost"
             className="border rounded-rounded"
           >
-            {cancelText || "Cancel"}
+            {cancelText || t("common.cancel")}
           </Button>
           <Button
             size="small"

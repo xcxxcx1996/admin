@@ -89,10 +89,10 @@ const CollectionDetails: React.FC<RouteComponentProps> = ({ location }) => {
       }
 
       setShowAddProducts(false)
-      notification("Success", "Updated products in collection", "success")
+      notification(t("common.status.success"), "Updated products in collection", "success")
       refetch()
     } catch (error) {
-      notification("Error", getErrorMessage(error), "error")
+      notification(t("common.status.error"), getErrorMessage(error), "error")
     }
   }
 
@@ -107,7 +107,7 @@ const CollectionDetails: React.FC<RouteComponentProps> = ({ location }) => {
       <div className="flex flex-col h-full">
         <Breadcrumb
           currentPage="Edit Collection"
-          previousBreadcrumb="Collections"
+          previousBreadcrumb={t("collections.title")}
           previousRoute="/a/products?view=collections"
         />
         <div className="rounded-rounded py-large px-xlarge border border-grey-20 bg-grey-0 mb-large">
@@ -158,7 +158,7 @@ const CollectionDetails: React.FC<RouteComponentProps> = ({ location }) => {
         </div>
         <BodyCard
           title={t("products.title")}
-          subtitle="To start selling, all you need is a name, price, and image."
+          subtitle={t("products.tip")}
           className="h-full"
           actionables={[
             {

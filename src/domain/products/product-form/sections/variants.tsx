@@ -103,11 +103,11 @@ const Variants = ({ isEdit, product }) => {
 
     createVariant.mutate(newVariant, {
       onSuccess: () => {
-        notification("Success", "Successfully added a variant", "success")
+        notification(t("common.status.success"), "Successfully added a variant", "success")
         setShowAddVariantModal(false)
       },
       onError: (err) => {
-        notification("Error", getErrorMessage(err), "error")
+        notification(t("common.status.error"), getErrorMessage(err), "error")
       },
     })
   }

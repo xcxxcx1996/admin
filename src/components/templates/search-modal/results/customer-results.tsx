@@ -20,7 +20,7 @@ const CustomerResults = ({
   selected,
 }: CustomerResultsProps) => {
   return customers.length > 0 ? (
-    <SectionCollapsible title={"Customers"} length={customers?.length || 0}>
+    <SectionCollapsible title={t("customers.title")} length={customers?.length || 0}>
       <div className="mt-large">
         <div className="flex flex-col">
           {customers?.map((customer, index) => (

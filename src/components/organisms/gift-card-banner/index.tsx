@@ -8,6 +8,7 @@ import StatusIndicator from "../../fundamentals/status-indicator"
 import { ActionType } from "../../molecules/actionables"
 import BannerCard from "../../molecules/banner-card"
 import TagGrid from "../../molecules/tag-grid.tsx"
+import { useTranslation } from "react-i18next"
 
 type GiftCardVariant = {
   prices: {
@@ -39,19 +40,21 @@ const GiftCardBanner: React.FC<GiftCardBannerProps> = ({
   onUnpublish,
   onDelete,
 }) => {
+  const { t } = useTranslation()
   const actions: ActionType[] = [
     {
-      label: "Edit",
+      label: t("common.edit"),
       onClick: onEdit,
       icon: <EditIcon size={16} />,
     },
     {
-      label: status === "published" ? "Unpublish" : "Publish",
+      label:
+        status === "published" ? t("common.unpublish") : t("common.publish"),
       onClick: onUnpublish,
       icon: <UnpublishIcon size={16} />,
     },
     {
-      label: "Delete",
+      label: t("common.delete"),
       onClick: onDelete,
       icon: <TrashIcon size={16} />,
       variant: "danger",
@@ -85,7 +88,11 @@ const GiftCardBanner: React.FC<GiftCardBannerProps> = ({
           <TagGrid tags={denominations} badgeVariant="default" />
           <StatusIndicator
             variant={status === "published" ? "success" : "danger"}
-            title={status === "published" ? "Published" : "Unpublished"}
+            title={
+              status === "published"
+                ? t("common.status.published")
+                : t("common.status.unpublished")
+            }
           />
         </div>
       </BannerCard.Footer>

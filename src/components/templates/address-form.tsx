@@ -51,8 +51,8 @@ const AddressForm = ({
           ref={form.register({
             required: true,
           })}
-          placeholder="First Name"
-          label="First Name"
+          placeholder={t("customers.first_name")}
+          label={t("customers.first_name")}
           required={true}
           name={`${[type]}.first_name`}
         />
@@ -60,8 +60,8 @@ const AddressForm = ({
           ref={form.register({
             required: true,
           })}
-          placeholder="Last Name"
-          label="Last Name"
+          placeholder={t("customers.last_name")}
+          label={t("customers.last_name")}
           required={true}
           name={`${[type]}.last_name`}
         />
@@ -69,8 +69,8 @@ const AddressForm = ({
           ref={form.register({
             required: true,
           })}
-          placeholder="Email"
-          label="Email"
+          placeholder={t("customers.email")}
+          label={t("customers.email")}
           type="email"
           required={true}
           name={`email`}

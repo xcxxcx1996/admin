@@ -8,6 +8,7 @@ import LayeredModal, {
 } from "../../../../components/molecules/modal/layered-modal"
 import Table from "../../../../components/molecules/table"
 import { formatAmountWithSymbol } from "../../../../utils/prices"
+import { useTranslation } from "react-i18next"
 
 const reasonOptions = {
   missing_item: "Missing Item",
@@ -18,7 +19,7 @@ const reasonOptions = {
 
 const ClaimDetails = ({ claim, order, onDismiss }) => {
   const layeredModalContext = useContext(LayeredModalContext)
-
+  const { t } = useTranslation()
   return (
     <LayeredModal context={layeredModalContext} handleClose={onDismiss}>
       <Modal.Body>
@@ -32,10 +33,10 @@ const ClaimDetails = ({ claim, order, onDismiss }) => {
               <Table.HeadRow className="text-grey-50 inter-small-semibold">
                 <Table.HeadCell>Product Details</Table.HeadCell>
                 <Table.HeadCell className="text-right pr-8">
-                  Quantity
+                  {t("orders.field.quantity")}
                 </Table.HeadCell>
                 <Table.HeadCell className="text-right">
-                  Unit Price
+                  {t("orders.field.unity_price")}
                 </Table.HeadCell>
                 <Table.HeadCell></Table.HeadCell>
               </Table.HeadRow>
@@ -166,7 +167,7 @@ const ReasonDetails = (pop, claimItem) => {
             </div>
             <InputField
               disabled={true}
-              label={"Note"}
+              label={t("orders.field.reason")}
               value={claimItem.note}
               className="my-4"
             />
@@ -190,7 +191,7 @@ const ReasonDetails = (pop, claimItem) => {
                 pop()
               }}
             >
-              Back
+              {t("common.back")}
             </Button>
           </div>
         </Modal.Footer>

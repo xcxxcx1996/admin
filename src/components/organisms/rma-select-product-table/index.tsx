@@ -112,7 +112,7 @@ const RMASelectProductTable: React.FC<RMASelectProductTableProps> = ({
     <Table>
       <Table.HeadRow className="text-grey-50 inter-small-semibold">
         <Table.HeadCell colSpan={2}>Product Details</Table.HeadCell>
-        <Table.HeadCell className="text-right pr-8">Quantity</Table.HeadCell>
+        <Table.HeadCell className="text-right pr-8">{t("orders.field.quantity")}</Table.HeadCell>
         <Table.HeadCell className="text-right">Refundable</Table.HeadCell>
         <Table.HeadCell></Table.HeadCell>
       </Table.HeadRow>
@@ -284,7 +284,7 @@ const ReturnReasonScreen = (
   setReturnReason
 ) => {
   return {
-    title: "Return Reasons",
+    title: t("settings.return_reason.title"),
     onBack: () => pop(),
     view: (
       <RMAReturnReasonSubModal

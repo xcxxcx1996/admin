@@ -2,6 +2,7 @@ import { omit } from "lodash"
 import qs from "qs"
 import { useMemo, useReducer, useState } from "react"
 import { relativeDateFormatToTimestamp } from "../../../utils/time"
+import { useTranslation } from "react-i18next"
 
 type GiftCardDateFilter = null | {
   gt?: string
@@ -341,15 +342,15 @@ export const useGiftCardFilters = (
 
     return null
   }, [representationObject, tabs])
-
+  const { t } = useTranslation()
   const availableTabs = useMemo(() => {
     return [
       {
-        label: "Complete",
+        label: t("orders.actions.complete"),
         value: "complete",
       },
       {
-        label: "Incomplete",
+        label: t("orders.actions.incomplete"),
         value: "incomplete",
       },
       ...tabs,

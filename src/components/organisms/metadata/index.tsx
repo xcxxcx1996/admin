@@ -3,6 +3,7 @@ import Button from "../../fundamentals/button"
 import PlusIcon from "../../fundamentals/icons/plus-icon"
 import TrashIcon from "../../fundamentals/icons/trash-icon"
 import InputField from "../../molecules/input"
+import { useTranslation } from "react-i18next"
 
 type AddMetadataProps = {
   metadata: MetadataField[]
@@ -21,7 +22,7 @@ const Metadata: React.FC<AddMetadataProps> = ({
   heading = "Metadata",
 }) => {
   const [localData, setLocalData] = useState<MetadataField[]>([])
-
+  const { t } = useTranslation()
   useEffect(() => {
     setLocalData(metadata)
   }, [metadata])
@@ -94,6 +95,8 @@ type FieldProps = {
 }
 
 const Field: React.FC<FieldProps> = ({ field, updateKey, updateValue }) => {
+  const { t } = useTranslation()
+
   return (
     <div className="flex items-center w-full gap-x-xsmall">
       <div className="maw-w-[200px]">
@@ -108,7 +111,7 @@ const Field: React.FC<FieldProps> = ({ field, updateKey, updateValue }) => {
       </div>
       <div className="flex-grow">
         <InputField
-          label="Value"
+          label={t("common.value")}
           placeholder="Some value"
           defaultValue={field.value}
           onChange={(e) => {

@@ -13,6 +13,7 @@ import TrashIcon from "../../../../components/fundamentals/icons/trash-icon"
 import CustomItemSubModal from "./custom-item-sub-modal"
 import { SteppedContext } from "../../../../components/molecules/modal/stepped-modal"
 import ImagePlaceholder from "../../../../components/fundamentals/image-placeholder"
+import { useTranslation } from "react-i18next"
 
 const Items = ({
   items,
@@ -66,16 +67,16 @@ const Items = ({
       disableNextPage()
     }
   }, [])
-
+  const { t } = useTranslation()
   return (
     <div className="flex flex-col min-h-[705px] pt-4">
       <span className="inter-base-semibold mb-4">Items for the order</span>
       {items.length > 0 && (
         <Table>
           <Table.HeadRow className="text-grey-50 border-t inter-small-semibold">
-            <Table.HeadCell>Details</Table.HeadCell>
+            <Table.HeadCell>{t("orders.field.detail")}</Table.HeadCell>
             <Table.HeadCell className="text-right pr-8">
-              Quantity
+              {t("orders.field.quantity")}
             </Table.HeadCell>
             <Table.HeadCell className="text-right">
               Price (excl. Taxes)

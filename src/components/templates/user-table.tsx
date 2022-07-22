@@ -9,6 +9,7 @@ import SidebarTeamMember from "../molecules/sidebar-team-member"
 import Table from "../molecules/table"
 import DeletePrompt from "../organisms/delete-prompt"
 import EditUser from "../organisms/edit-user-modal"
+import { useTranslation } from "react-i18next"
 
 type UserListElement = {
   entity: any
@@ -37,7 +38,7 @@ const UserTable: React.FC<UserTableProps> = ({
   const [deleteUser, setDeleteUser] = useState(false)
   const [selectedInvite, setSelectedInvite] = useState(null)
   const notification = useNotification()
-
+  const { t } = useTranslation()
   useEffect(() => {
     setElements([
       ...users.map((user, i) => ({
@@ -62,7 +63,6 @@ const UserTable: React.FC<UserTableProps> = ({
     setSelectedUser(null)
     setSelectedInvite(null)
   }
-
   const getUserTableRow = (user, index) => {
     return (
       <Table.Row
@@ -110,7 +110,7 @@ const UserTable: React.FC<UserTableProps> = ({
                 .resend(invite.id)
                 .then(() => {
                   notification(
-                    "Success",
+                    t("common.status.success"),
                     "Invitiation link has been resent",
                     "success"
                   )
@@ -189,7 +189,7 @@ const UserTable: React.FC<UserTableProps> = ({
       ],
     },
     {
-      title: "Status",
+      title: t("orders.field.status"),
       options: [
         {
           title: "All",
@@ -259,10 +259,12 @@ const UserTable: React.FC<UserTableProps> = ({
       >
         <Table.Head>
           <Table.HeadRow>
-            <Table.HeadCell className="w-72">Name</Table.HeadCell>
-            <Table.HeadCell className="w-80">Email</Table.HeadCell>
+            <Table.HeadCell className="w-72">{t("common.name")}</Table.HeadCell>
+            <Table.HeadCell className="w-80">
+              {t("customers.email")}
+            </Table.HeadCell>
             <Table.HeadCell className="w-72">Team permissions</Table.HeadCell>
-            <Table.HeadCell>Status</Table.HeadCell>
+            <Table.HeadCell>{t("orders.field.status")}</Table.HeadCell>
           </Table.HeadRow>
         </Table.Head>
         <Table.Body>{shownElements.map((e) => e.tableElement)}</Table.Body>
@@ -274,7 +276,11 @@ const UserTable: React.FC<UserTableProps> = ({
             heading={"Remove user"}
             onDelete={() =>
               Medusa.users.delete(selectedUser.id).then(() => {
-                notification("Success", "User has been removed", "success")
+                notification(
+                  t("common.status.success"),
+                  "User has been removed",
+                  "success"
+                )
                 triggerRefetch()
               })
             }
@@ -285,7 +291,11 @@ const UserTable: React.FC<UserTableProps> = ({
             handleClose={handleClose}
             user={selectedUser}
             onSubmit={() => {
-              notification("Success", "User has been updated", "success")
+              notification(
+                t("common.status.success"),
+                "User has been updated",
+                "success"
+              )
               triggerRefetch()
             }}
           />
@@ -296,7 +306,11 @@ const UserTable: React.FC<UserTableProps> = ({
           heading={"Remove invite"}
           onDelete={() =>
             Medusa.invites.delete(selectedInvite.id).then(() => {
-              notification("Success", "Invitiation has been removed", "success")
+              notification(
+                t("common.status.success"),
+                "Invitiation has been removed",
+                "success"
+              )
               triggerRefetch()
             })
           }
