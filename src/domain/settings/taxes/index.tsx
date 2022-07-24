@@ -59,8 +59,8 @@ const Taxes = () => {
         <TwoSplitPane threeCols>
           <BodyCard
             forceDropdown
-            title={t("settings.regions.title")}
-            subtitle={t("settings.regions.title")}
+            title={t("settings.region.title")}
+            subtitle={t("settings.region.title")}
             actionables={[
               {
                 icon: <GearIcon />,

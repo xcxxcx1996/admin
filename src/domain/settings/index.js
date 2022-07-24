@@ -26,7 +26,7 @@ const SettingsIndex = () => {
   return (
     <SettingsOverview>
       <SettingsCard
-        heading={t("settings.regions.title")}
+        heading={t("settings.region.title")}
         description={t("settings.regions.description")}
         icon={<MapPinIcon />}
         to={`/a/settings/regions`}

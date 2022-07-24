@@ -110,11 +110,12 @@
   },
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop -p 7000",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
+    "start": "gatsby  develop -p 7000",
+    "produce": "gatsby clean && gatsby build && gatsby serve -H 0.0.0.0 -p 7000 ",
+    "develop": "gatsby develop -p 7000 -H 0.0.0.0",
+    "serve": "gatsby serve -H 0.0.0.0 -p 7000",
     "clean": "gatsby clean",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"

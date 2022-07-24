@@ -30,9 +30,10 @@ const CustomerOrdersTable: React.FC<CustomerOrdersTableProps> = ({
   const width = useObserveWidth(containerRef)
 
   const calcImages = (order) => {
+    console.log(order)
     const columns = Math.max(Math.floor(width / 20) - 1, 1)
-    const visibleImages = order.items.slice(0, columns)
-    const remainder = order.items.length - columns
+    const visibleImages = order.items?.slice(0, columns)
+    const remainder = order.items?.length - columns
 
     return { visibleImages, remainder }
   }
@@ -92,7 +93,7 @@ const CustomerOrdersTable: React.FC<CustomerOrdersTableProps> = ({
                     ref={containerRef}
                     className="flex space-x-1 w-[60px] mr-2 items-center"
                   >
-                    {visibleImages.map((tag) => (
+                    {visibleImages?.map((tag) => (
                       <div className="h-[35px] w-[25px] flex items-center ">
                         <img
                           className="rounded object-cover"

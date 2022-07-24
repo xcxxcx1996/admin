@@ -10,14 +10,14 @@
     "footerText": "Built with Gatsby"
   },
   "titles": {
-    "orders": "Products",
-    "drafts": "Products",
-    "customers": "Products",
-    "groups": "Products",
-    "prcoducts": "Products",
+    "orders": "Orders",
+    "drafts": "Draft Orders",
+    "customers": "Customers",
+    "groups": "Groups",
+    "Price list": "Price list",
     "products": "Products",
-    "collections": "Products",
-    "discounts": "Products"
+    "collections": "Collections",
+    "discounts": "Discounts"
   },
 
   "common": {
@@ -161,6 +161,7 @@
       "order": "Order"
     },
     "general": {
+      "order": "Order",
       "timeline": "Timeline",
       "title": "Orders",
       "item_shipped": "Items Shipped",

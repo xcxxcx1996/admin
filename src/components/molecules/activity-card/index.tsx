@@ -22,12 +22,12 @@ export const ActivityCard: React.FC<ActivityCardProps> = (
     icon,
     relativeTimeElapsed,
     shouldShowStatus,
-    children
+    children,
   } = props
 
-  const date = !!props.date && new Date(props.date).toLocaleDateString(
-    "en-us",
-    {
+  const date =
+    !!props.date &&
+    new Date(props.date).toLocaleDateString("en-us", {
       hour12: true,
       day: "2-digit",
       month: "short",
@@ -40,15 +40,10 @@ export const ActivityCard: React.FC<ActivityCardProps> = (
   const getTimeElement = () => {
     return (
       <div className="flex cursor-default">
-        {
-          !!relativeTimeElapsed && (
-            <span >{relativeTimeElapsed}</span>
-          )
-        }
-        {
-          shouldShowStatus &&
-          <StatusIndicator variant={"primary"} className="ml-2"/>
-        }
+        {!!relativeTimeElapsed && <span>{relativeTimeElapsed}</span>}
+        {shouldShowStatus && (
+          <StatusIndicator variant={"primary"} className="ml-2" />
+        )}
       </div>
     )
   }
@@ -59,28 +54,19 @@ export const ActivityCard: React.FC<ActivityCardProps> = (
         <div className="relative w-full h-full">
           <div className="flex justify-between inter-small-semibold text-grey-90">
             <div className="flex">
-              {
-                !!icon && icon
-              }
+              {!!icon && icon}
               <span>{title}</span>
             </div>
 
-            {
-              ((!!relativeTimeElapsed || shouldShowStatus)) && (
-                formattedDate ? (
-                  <Tooltip content={formattedDate}>
-                    {getTimeElement()}
-                  </Tooltip>
-                ) : (
-                  getTimeElement()
-                )
-              )
-            }
+            {(!!relativeTimeElapsed || shouldShowStatus) &&
+              (formattedDate ? (
+                <Tooltip content={formattedDate}>{getTimeElement()}</Tooltip>
+              ) : (
+                getTimeElement()
+              ))}
           </div>
 
-          <div className={clsx(!!icon && "pl-8")}>
-            {children}
-          </div>
+          <div className={clsx(!!icon && "pl-8")}>{children}</div>
         </div>
       </div>
     </div>

@@ -62,11 +62,11 @@ const Regions = () => {
         <BreadCrumb
           previousRoute="/a/settings"
           previousBreadcrumb={t("settings.title")}
-          currentPage={t("settings.regions.title")}
+          currentPage={t("settings.region.title")}
         />
         <TwoSplitPane>
           <BodyCard
-            title={t("settings.regions.title")}
+            title={t("settings.region.title")}
             subtitle="Manage the markets that you will operate within"
             actionables={[
               {

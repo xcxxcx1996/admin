@@ -178,7 +178,7 @@ const OrderFilters = ({
           setFilter={(val) => setSingleFilter("fulfillment", val)}
         />
         <FilterDropdownItem
-          filterTitle={t("settings.regions.title")}
+          filterTitle={t("settings.region.title")}
           options={
             regions?.map((region) => ({
               value: region.id,

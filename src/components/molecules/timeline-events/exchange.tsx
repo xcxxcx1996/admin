@@ -142,7 +142,11 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
     Medusa.orders
       .processSwapPayment(event.orderId, event.id)
       .then((_res) => {
-        notification(t("common.status.success"), "Payment processed successfully", "success")
+        notification(
+          t("common.status.success"),
+          "Payment processed successfully",
+          "success"
+        )
         refetch()
       })
       .catch((err) => {
@@ -205,7 +209,7 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
           <div>
             <span className="mr-2 inter-small-semibold">Requested on:</span>
             <span className="text-grey-50">
-              {new Date(event.time).toUTCString()}
+              {new Date(event.time).toLocaleString()}
             </span>
           </div>
         )}

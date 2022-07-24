@@ -73,7 +73,9 @@ const EventContainer: React.FC<EventContainerProps> = ({
         </div>
         <div className="mt-2xsmall w-full inter-small-regular">
           <div className="flex items-center justify-between">
-            <div className="text-grey-50">{new Date(time).toUTCString()}</div>
+            <div className="text-grey-50">
+              {new Date(time).toLocaleString()}
+            </div>
             {midNode}
           </div>
           {children && isExpanded && (
