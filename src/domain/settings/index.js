@@ -63,7 +63,7 @@ const SettingsIndex = () => {
         to={`/a/settings/taxes`}
       />
       <SettingsCard
-        heading={"The Team"}
+        heading={t("settings.user.title")}
         description={t("settings.user.description")}
         icon={<UsersIcon />}
         to={`/a/settings/team`}

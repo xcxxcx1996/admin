@@ -14,7 +14,6 @@ const languages = {
 
 const LanguageMenu = (props) => {
   const { t, i18n } = useTranslation()
-  console.log(i18n)
   const [language, setLanguage] = useState("zh")
 
   function handleChange(language: string) {

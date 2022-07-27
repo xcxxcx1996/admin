@@ -6,6 +6,16 @@
     "button_login": "登陆",
     "error_text": "用户名或密码错误"
   },
+  "titles": {
+    "orders": "订单",
+    "drafts": "预创建订单",
+    "customers": "用户",
+    "groups": "用户组",
+    "Price list": "价格表",
+    "products": "商品",
+    "collections": "商品集合",
+    "discounts": "折扣"
+  },
   "common": {
     "delete": "删除",
     "duplicate": "复制",
@@ -33,11 +43,22 @@
       "success": "成功",
       "product": "商品",
       "successfully": "成功",
-      "error": "出错啦"
+      "error": "出错啦",
+      "unpublished": "取消发布"
     },
     "metadata": "元数据",
     "true": "是",
-    "false": "否"
+    "false": "否",
+    "cancel_change": "取消",
+    "back": "返回",
+    "add": "添加",
+    "value": "值",
+    "label": "标签",
+    "date": "日期",
+    "total": "总计",
+    "apply": "应用",
+    "clear": "清除",
+    "filters": "过滤"
   },
   "draft_orders": {},
   "oauth": {},
@@ -116,7 +137,9 @@
       "delete_heading": "删除货物种类",
       "delete_text": "您确定想要删除该商品种类",
       "create_success": "成功创建商品种类"
-    }
+    },
+
+    "tip": "如果确定销售，你所需要的是一个名称、价格和图片。"
   },
   "collections": {
     "title": "产品集合",
@@ -127,7 +150,6 @@
     "delete_confirm": "确定"
   },
   "giftcards": {},
-  "orders": {},
   "customers": {
     "edit": "编辑客户",
     "title": "客户",
@@ -254,6 +276,212 @@
       "valid_duration_tip": "选择折扣类型"
     }
   },
+  "orders": {
+    "header": {
+      "order": "订单"
+    },
+    "general": {
+      "order": "订单",
+      "timeline": "时间轴",
+      "title": "订单",
+      "item_shipped": "货物已寄出",
+      "item_fulfilled": "货物已打包",
+      "claim_item_shipped": "索赔物品已寄出",
+      "order_placed": "已下单",
+      "exchange_shipped": "换货已发出"
+    },
+    "actions": {
+      "export": "导出订单",
+      "replace": "替换",
+      "refund": "退款",
+      "add_product": "添加商品",
+      "ship_to_different": "运送到不同的地址",
+      "ship_new": "运输新货",
+      "send_notifications": "Send notifications",
+      "complete": "完成",
+      "incomplete": "未完成",
+      "create_fulfillment": "开始打包",
+      "mark_shipped": "标记打包货物已寄出",
+      "add_tracking_number": "+ 新的额外运单号",
+      "attention": "注意！！",
+      "create_refund": "创建退款",
+      "submit": "提交",
+      "register_exchange": "记录为换货",
+      "edit_shipping_address": "编辑运输地址"
+    },
+    "description": {
+      "ship_new": "默认情况下，运送新物品是免费的。如果不是这样的话，请使用自定义价格。",
+      "attention": "您的一个或多个付款是系统支付。请注意，对于这种支付，后台不记录捕获和退款。"
+    },
+    "field": {
+      "shipping_address": "发货地址",
+      "shipping_return": "运输返回",
+      "quantity": "数目",
+      "discount": "折扣",
+      "other": "其他",
+      "detail": "详情",
+      "refund_amount": "退款金额",
+      "reason": "原因",
+      "note": "注意",
+      "request_return": "请求退货",
+      "item_to_return": "物品返回",
+      "shipping": "运输",
+      "shipping_method": "运输方式",
+      "total_refund": "总退款",
+      "received_return": "收到退货件",
+      "ship_cost": "运费",
+      "search_additional": "搜索更多",
+      "status": "状态",
+      "return_reason": "退货原因",
+      "item_to_send": "发货物品",
+      "return_total": "总退件",
+      "addition_total": "额外总计",
+      "outbond_shipping": "外邦航运",
+      "checkout_calculated": "结账时计算额",
+      "different": "预估差额",
+      "total_swap": "总换货",
+      "refunded_swap": "换货资金偿还",
+      "refunded_return": "退货退款",
+      "manually_refunded": "手动退款",
+      "net_total": "净额总计",
+      "unity_price": "单价"
+    },
+    "notification": {
+      "export_success": "成功启动导出",
+      "create_claim_success": "成功创建索赔",
+      "fulfiled_success": "成功完成订单",
+      "fulfiled_claim_success": "成功履行索赔",
+      "mark_swap_success": "成功地将交换品标记为已发货",
+      "mark_claim_success": "成功地将索赔标记为已发货",
+      "refund_order_success": "成功退款",
+      "return_success": "成功退单",
+      "received_success": "成功收回退货",
+      "canceled_swap_success": "成功地取消换货",
+      "cancel_fulfillment": "取消打包?",
+      "cancel_fulfillment_text": "您确定取消打包?",
+      "cancel_claim_success": "成功取消索赔",
+      "cancel_order_success": "成功取消订单",
+      "capture_payment_success": "成功捕获支付"
+    },
+    "status": {
+      "completed": "已完成",
+      "processing": "处理中",
+      "canceled": "已取消",
+      "request_action": "取消更多步骤",
+      "captured": "已支付",
+      "awaiting": "等待捕获",
+      "paid": "已支付"
+    }
+  },
   "pricing": {},
-  "settings": {}
+  "settings": {
+    "title": "设置",
+    "advance": "高级设置",
+    "store": {
+      "title": "电商详情",
+      "subtitle": "管理您的电商",
+      "description": "管理你的业务细节",
+      "update_success": "成功更新电商信息",
+      "name": "电商名",
+      "cancel_change": "取消更改",
+      "invite_link_template": "邀请链接模版",
+      "payment_link_template": "支付链接模版",
+      "swap_link_template": "退换货模版"
+    },
+    "currencies": {
+      "title": "货币管理",
+      "subtitle": "管理你要经营的货币",
+      "description": "管理你将在其中运作的市场区域的货币",
+      "update_success": "成功更新货币",
+      "default": "电商默认货币",
+      "store_currencies": "电商的默认货币（如CNY）"
+    },
+    "tax": {
+      "title": "税率",
+      "subtitle": "选择你希望管理电商覆盖地区的税收",
+      "description": "选择你希望管理税收的地区",
+      "to_region": "前往区域设置",
+      "new_tax_rate": "新建税率",
+      "tax_calculation_setting": "税率计算设置",
+      "override": "覆盖",
+      "product_rules": "商品规则",
+      "type_rules": "商品种类规则",
+      "option_rules": "运输方式规则",
+      "add": "添加覆盖",
+      "name": "名称",
+      "rate": "比率",
+      "code": "代码",
+      "edit": "编辑税率",
+      "update_success": "成功更新税率",
+      "add_success": "成功创建税率",
+      "select_product": "选择商品",
+      "select_type": "选择商品类型",
+      "select_option": "选择商品运输方式",
+      "select_region": "选择地区",
+      "system_tax_provider": "系统税率提供",
+      "region_update_success": "地区税收设置已成功更新。",
+      "provider": "税率提供机",
+      "automatically": "自动计算税收？",
+      "automatically_tip": "当勾选时，后台将自动对该区域的购物车进行税收计算。当没有勾选时，你将不得不在结账时手动计算税收。如果使用第三方的税收供应商，建议手动计算税收，以避免执行太多的请求。",
+      "giftcard": "对礼品卡征税？",
+      "giftcard_description": "勾选后，税收将在结账时应用于礼品卡。在一些国家，税收法规要求在购买时对礼品卡征税。",
+      "delete_rate_heading": "删除税率",
+      "delete_rate_text": "你确定要删除这个税率吗？",
+      "delet_rule": "删除税收规则",
+      "delete_success": "税率已删除"
+    },
+    "return_reason": {
+      "title": "退货原因",
+      "subtitle": "管理退回物品的原因",
+      "description": "管理退货的原因",
+
+      "create_error": "不能用现有的代码创建一个退货",
+      "create_success": "创建新的退货原因",
+      "duplicate": "拷贝原因",
+      "add": "添加原因",
+      "detele_label": "删除原因",
+      "delete_heading": "删除退货原因",
+      "delete_text": "您确定删除该退货原因？",
+      "update_success": "成功删除退货原因。"
+    },
+    "region": {
+      "title": "地区",
+      "subtitle": "管理你将在电商中运作的市场区域",
+      "description": "管理你将在电商中运作的市场区域",
+      "duplicate_success": "成功拷贝区域",
+      "not_found": "地区未找到",
+      "duplicate": "拷贝地区",
+      "add": "添加地区",
+      "delete": "删除地区",
+      "country": "国家",
+      "payment": "支付提供方",
+      "fulfillment": "快递服务提供方",
+      "delete_text": "你确定要从你的电商中删除这个区域吗？",
+      "delete_success": "成功删除该区域",
+      "delete_confirm": "是的，确定",
+      "update_option_success": "成功更新快递选项",
+      "option_delete_text": "你确定要删除这个运输选项吗？",
+      "option_delete_success": "成功地删除了运输选项",
+      "show_on_website": "商店前台可见",
+      "min": "最低限度的商品总额",
+      "max": "最高限度的商品总额",
+      "option_delete_tip": "这将从你的商店中永久地删除这个选项。",
+      "not_configured": "未设置",
+      "add_option": "添加运输选项",
+      "add_return_option": "添加退货运输选项",
+      "new_ship_option": "新建运输选项",
+      "requirement": "前置条件",
+      "profile": "运输简介",
+      "create_success": "成功创建运输简介",
+      "add_return": "增加返回",
+      "option": "运输选项",
+      "return_option": "退货运输选项",
+      "provider": "提供方"
+    },
+    "user": {
+      "title": "团队",
+      "subtitle": "管理您的后台团队",
+      "invite": "邀请用户"
+    }
+  }
 }

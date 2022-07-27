@@ -380,7 +380,7 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
                 type="checkbox"
               />
               <span className="ml-3 flex items-center text-grey-90 gap-x-xsmall">
-                Send notifications
+                {t("orders.actions.send_notification")}
                 <IconTooltip content="If unchecked the customer will not receive communication about this exchange" />
               </span>
             </div>

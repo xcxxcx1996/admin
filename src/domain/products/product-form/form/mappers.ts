@@ -1,11 +1,6 @@
 import { SINGLE_PRODUCT_VIEW } from "./product-form-context"
 
 export const productToFormValuesMapper = (product) => {
-  let thumbnail = product?.images?.length
-    ? product.images.findIndex((img) => img.url === product.thumbnail)
-    : 0
-  thumbnail = thumbnail === -1 ? 0 : thumbnail
-
   return {
     ...product,
     collection: product?.collection
@@ -20,7 +15,7 @@ export const productToFormValuesMapper = (product) => {
       : product?.thumbnail
       ? [{ url: product?.thumbnail }]
       : [],
-    thumbnail,
+    thumbnail: product.images.length ? product.thumbnail : null,
     origin_country: product?.origin_country
       ? {
           value: product.origin_country,
@@ -75,9 +70,7 @@ export const formValuesToCreateProductMapper = (values, viewType) => {
     handle: values.handle,
     status: values.status || "published",
     description: values.description,
-    thumbnail: values?.images?.length
-      ? values.images[values.thumbnail]
-      : undefined,
+    thumbnail: values?.images.length ? values.thumbnail : null,
     collection_id: values?.collection ? values.collection.value : undefined,
     type: values?.type
       ? { id: values.type.value, value: values.type.label }
@@ -104,7 +97,7 @@ export const formValuesToUpdateProductMapper = (values) => {
     handle: values.handle,
     status: values.status,
     description: values.description,
-    thumbnail: values.images.length ? values.images[values.thumbnail] : null,
+    thumbnail: values?.images.length ? values.thumbnail : null,
     collection_id: values?.collection ? values.collection.value : null,
     type: values?.type
       ? { id: values.type.value, value: values.type.label }

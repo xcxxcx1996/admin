@@ -43,7 +43,11 @@ const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
           navigate(`/a/pricing/${price_list.id}`)
         },
         onError: (error) => {
-          notification(t("common.status.error"), getErrorMessage(error), "error")
+          notification(
+            t("common.status.error"),
+            getErrorMessage(error),
+            "error"
+          )
         },
       }
     )
@@ -57,7 +61,11 @@ const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
           navigate(`/a/pricing/${price_list.id}`)
         },
         onError: (error) => {
-          notification(t("common.status.error"), getErrorMessage(error), "error")
+          notification(
+            t("common.status.error"),
+            getErrorMessage(error),
+            "error"
+          )
         },
       }
     )

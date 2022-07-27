@@ -16,7 +16,6 @@ const Images = () => {
     control,
   } = useProductForm()
   const { t } = useTranslation()
-
   const columns = [
     {
       Header: t("products.images.image_header"),
@@ -60,7 +59,7 @@ const Images = () => {
           <div className="flex justify-center">
             <RadioGroup.SimpleItem
               className="justify-center"
-              value={cell.row.index}
+              value={cell.row.original.url}
             />
           </div>
         )

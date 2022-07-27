@@ -169,7 +169,7 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
               render={({ onChange, value }) => {
                 return (
                   <Checkbox
-                    label={t("common.template_label")}
+                    label={t("discounts.template_label")}
                     name="is_dynamic"
                     id="is_dynamic"
                     checked={value}
@@ -178,7 +178,7 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
                 )
               }}
             />
-            <IconTooltip content={t("common.template_tip")} />
+            <IconTooltip content={t("discounts.template_tip")} />
           </div>
         </>
       )}

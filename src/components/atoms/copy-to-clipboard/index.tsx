@@ -30,7 +30,7 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = ({
 
   useEffect(() => {
     if (isCopied) {
-      notification(t("common.status.success"), "Copied!", "success")
+      notification(t("common.status.success"), "已复制!", "success")
     }
   }, [isCopied])
 

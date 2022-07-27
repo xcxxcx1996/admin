@@ -10,12 +10,12 @@ COPY package.json /tmp/package.json
 RUN yarn config set registry https://registry.npm.taobao.org/
 RUN npm config set registry https://registry.npm.taobao.org
 RUN cd /tmp && yarn install
-RUN mkdir -p /app/medusa-storefront && cp -a /tmp/node_modules /app/medusa-storefront/
+RUN mkdir -p /app/medusa-admin && cp -a /tmp/node_modules /app/medusa-admin/
 
 
-WORKDIR /app/medusa-storefront
+WORKDIR /app/medusa-admin
 
-COPY . /app/medusa-storefront
-EXPOSE 8000
-#RUN ["yarn","build"]
+COPY . /app/medusa-admin
+EXPOSE 7000
+RUN ["yarn","build"]
 

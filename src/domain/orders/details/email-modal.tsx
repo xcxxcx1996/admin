@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import Button from "../../../components/fundamentals/button"
 import Input from "../../../components/molecules/input"
 import Modal from "../../../components/molecules/modal"
+import { useTranslation } from "react-i18next"
 
 type EmailModalProps = {
   handleClose: () => void
@@ -16,6 +17,7 @@ const EmailModal: React.FC<EmailModalProps> = ({
   handleClose,
   handleSave,
 }) => {
+  const { t } = useTranslation()
   const { register, handleSubmit } = useForm({
     defaultValues: { email },
   })

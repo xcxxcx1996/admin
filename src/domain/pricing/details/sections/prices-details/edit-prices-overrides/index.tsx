@@ -12,6 +12,7 @@ import ProductVariantLeaf from "./product-variant-leaf"
 import { useParams } from "@reach/router"
 import { mapToPriceList } from "./mappers"
 import { mergeExistingWithDefault } from "../../../utils"
+import { useTranslation } from "react-i18next"
 
 type EditPricesOverridesModalProps = {
   product: Product
@@ -22,6 +23,7 @@ const EditPricesOverridesModal = ({
   close,
   product,
 }: EditPricesOverridesModalProps) => {
+  const { t } = useTranslation()
   const context = useLayeredModal()
   const { id: priceListId } = useParams()
   const updatePriceList = useAdminUpdatePriceList(priceListId)

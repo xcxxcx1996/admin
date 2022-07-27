@@ -5,11 +5,12 @@ import useImperativeDialog from "../../../hooks/use-imperative-dialog"
 import EditIcon from "../../fundamentals/icons/edit-icon"
 import TrashIcon from "../../fundamentals/icons/trash-icon"
 import { ActionType } from "../../molecules/actionables"
+import { useTranslation } from "react-i18next"
 
 const useCollectionActions = (collection) => {
   const dialog = useImperativeDialog()
   const deleteCollection = useAdminDeleteCollection(collection?.id)
-
+  const { t } = useTranslation()
   const handleDelete = async () => {
     const shouldDelete = await dialog({
       heading: "Delete Collection",

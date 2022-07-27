@@ -147,7 +147,7 @@ const StockAndInventory = () => {
                 return (
                   <Select
                     enableSearch
-                    label={t("products.stock.origin_country")}
+                    label={t("products.stock.country_origin")}
                     placeholder="Select a country"
                     options={countryOptions}
                     value={value}

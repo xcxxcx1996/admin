@@ -17,7 +17,7 @@ const defaultProduct = {
   type: null,
   collection: null,
   id: "",
-  thumbnail: 0,
+  thumbnail: "",
   title: "",
   handle: "",
   description: "",

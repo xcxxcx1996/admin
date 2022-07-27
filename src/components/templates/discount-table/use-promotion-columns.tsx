@@ -139,7 +139,9 @@ export const usePromotionTableColumns = () => {
       },
       {
         Header: () => (
-          <div className="text-right">{t("discounts.redemption_number")}</div>
+          <div className="text-right">
+            {t("discounts.configrations.redemption_number")}
+          </div>
         ),
         accessor: "usage_count",
         Cell: ({ row: { original }, index }) => {

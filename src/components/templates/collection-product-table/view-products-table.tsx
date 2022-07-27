@@ -9,6 +9,7 @@ import TrashIcon from "../../fundamentals/icons/trash-icon"
 import Table, { TablePagination } from "../../molecules/table"
 import DeletePrompt from "../../organisms/delete-prompt"
 import useViewProductColumns from "./use-view-product-columns"
+import { useTranslation } from "react-i18next"
 
 type ViewProductsTableProps = {
   collectionId: string
@@ -25,7 +26,7 @@ const ViewProductsTable: React.FC<ViewProductsTableProps> = ({
   const [numPages, setNumPages] = useState(0)
   const [currentPage, setCurrentPage] = useState(0)
   const debouncedSearchTerm = useDebounce(query, 500)
-
+  const { t } = useTranslation()
   const [showDelete, setShowDelete] = useState(false)
   const [idToDelete, setIdToDelete] = useState<string | undefined>(undefined)
 

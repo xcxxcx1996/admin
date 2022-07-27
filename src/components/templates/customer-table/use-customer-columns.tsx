@@ -24,7 +24,7 @@ export const useCustomerColumns = () => {
         ),
       },
       {
-        Header: t("customers.emial"),
+        Header: t("customers.email"),
         accessor: "email",
       },
       {
@@ -33,7 +33,9 @@ export const useCustomerColumns = () => {
       },
       {
         accessor: "orders",
-        Header: () => <div className="text-right">Orders</div>,
+        Header: () => (
+          <div className="text-right">{t("orders.general.title")}</div>
+        ),
         Cell: ({ cell: { value } }) => (
           <div className="text-right">{value?.length || 0}</div>
         ),

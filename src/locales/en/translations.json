@@ -6,9 +6,6 @@
     "button_login": "Login",
     "error_text": "These credentials do not match our records"
   },
-  "home": {
-    "footerText": "Built with Gatsby"
-  },
   "titles": {
     "orders": "Orders",
     "drafts": "Draft Orders",
@@ -54,7 +51,6 @@
     "metadata": "Metadata",
     "true": "True",
     "false": "False",
-
     "cancel_change": "Cancel Changes",
     "back": "Back",
     "add": "Add",

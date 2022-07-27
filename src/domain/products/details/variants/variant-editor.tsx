@@ -15,6 +15,9 @@ import { countries as countryData } from "../../../../utils/countries"
 import { focusByName } from "../../../../utils/focus-by-name"
 import usePricesFieldArray from "../../product-form/form/usePricesFieldArray"
 import { useTranslation } from "react-i18next"
+import { useProductForm } from "../../product-form/form/product-form-context"
+import DraggableTable from "../../../../components/templates/draggable-table"
+import RadioGroup from "../../../../components/organisms/radio-group"
 
 const defaultVariant = {
   prices: [] as any,
@@ -41,6 +44,59 @@ const VariantEditor = ({
       : null
     return defaultCountry || null
   })
+
+  const { images } = useProductForm()
+  const [selectImageIndex, setSelectImageIndex] = useState(0)
+  const imagesCol = [
+    {
+      Header: t("products.images.image_header"),
+      accessor: "image",
+      Cell: ({ cell }) => {
+        return (
+          <div className="py-base large:w-[176px] xsmall:w-[80px]">
+            <img
+              className="h-[80px] w-[80px] object-cover rounded"
+              src={cell.row.original.url}
+            />
+          </div>
+        )
+      },
+    },
+    {
+      Header: t("products.images.file_name_header"),
+      accessor: "name",
+      Cell: ({ cell }) => {
+        return (
+          <div className="large:w-[700px] medium:w-[400px] small:w-auto">
+            <p className="inter-small-regular">{cell.row.original?.name}</p>
+            <span className="inter-small-regular text-grey-50">
+              {typeof cell.row.original.size === "number"
+                ? `${(cell.row.original.size / 1024).toFixed(2)} KB`
+                : cell.row.original?.size}
+            </span>
+          </div>
+        )
+      },
+    },
+    {
+      Header: (
+        <div className="text-center">
+          {t("products.images.thumbnail_header")}
+        </div>
+      ),
+      accessor: "thumbnail",
+      Cell: ({ cell }) => {
+        return (
+          <div className="flex justify-center">
+            <RadioGroup.SimpleItem
+              className="justify-center"
+              value={cell.row.index}
+            />
+          </div>
+        )
+      },
+    },
+  ]
 
   const { control, register, reset, watch, handleSubmit } = useForm({
     defaultValues: variant,
@@ -69,8 +125,11 @@ const VariantEditor = ({
     name: "options",
     keyName: "indexId",
   })
-
   useEffect(() => {
+    const imageId = images.findIndex(
+      (value) => value.url == variant?.metadata?.image?.url
+    )
+    setSelectImageIndex(imageId)
     reset({
       ...variant,
       options: Object.values(optionsMap),
@@ -102,7 +161,7 @@ const VariantEditor = ({
     data.height = data?.height ? parseInt(data.height, 10) : undefined
     data.width = data?.width ? parseInt(data.width, 10) : undefined
     data.length = data?.length ? parseInt(data.length, 10) : undefined
-
+    data.metadata = { image: images[selectImageIndex] }
     const cleaned = convertEmptyStringToNull(data)
     onSubmit(cleaned)
   }
@@ -324,7 +383,7 @@ const VariantEditor = ({
           </div>
           <div className="mb-8">
             <label className="inter-base-semibold flex items-center gap-xsmall">
-              Customs <IconTooltip content={"Variant customs information"} />
+              其他 <IconTooltip content={"Variant customs information"} />
             </label>
             <div className="w-full grid mt-4 medium:grid-cols-2 grid-cols-1 gap-y-base gap-x-xsmall">
               <Input
@@ -352,6 +411,28 @@ const VariantEditor = ({
                 placeholder={t("products.stock.material")}
                 ref={register}
               />
+            </div>
+          </div>
+          <div className="mb-8">
+            <label className="inter-base-semibold flex items-center gap-xsmall">
+              Images <IconTooltip content={"Variant customs information"} />
+            </label>
+            <div className="w-full grid mt-4 medium:grid-cols-2 grid-cols-1 gap-y-base gap-x-xsmall">
+              {/* // todo 选择图片 */}
+              <RadioGroup.Root
+                // defaultValue={0}
+                value={selectImageIndex}
+                onValueChange={(value) => {
+                  setSelectImageIndex(parseInt(value))
+                }}
+              >
+                <DraggableTable
+                  onDelete={() => {}}
+                  columns={imagesCol}
+                  entities={images}
+                  setEntities={() => {}}
+                />
+              </RadioGroup.Root>
             </div>
           </div>
         </Modal.Content>

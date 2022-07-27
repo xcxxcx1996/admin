@@ -164,7 +164,7 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
                 type="checkbox"
               />
               <span className="ml-3 flex items-center text-grey-90 gap-x-xsmall">
-                Send notifications
+                {t("orders.actions.send_notification")}
                 <IconTooltip content="" />
               </span>
             </div>

@@ -4,6 +4,7 @@ import Button from "../../../components/fundamentals/button"
 import Input from "../../../components/molecules/input"
 import Modal from "../../../components/molecules/modal"
 import Select from "../../../components/molecules/select"
+import { useTranslation } from "react-i18next"
 
 type AddressModalProps = {
   handleClose: () => void
@@ -23,7 +24,7 @@ const AddressModal: React.FC<AddressModalProps> = ({
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: { ...address },
   })
-
+  const { t } = useTranslation()
   register("country_code")
 
   const countryOptions = allowedCountries
