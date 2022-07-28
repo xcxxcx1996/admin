@@ -11,6 +11,7 @@ RUN yarn config set registry https://registry.npm.taobao.org/
 RUN npm config set registry https://registry.npm.taobao.org
 RUN cd /tmp && yarn install
 RUN mkdir -p /app/medusa-admin && cp -a /tmp/node_modules /app/medusa-admin/
+ENV GATSBY_MEDUSA_BACKEND_URL=https://medusa.yunjiuding.com
 
 
 WORKDIR /app/medusa-admin
