@@ -15,6 +15,7 @@ import DraftOrders from "../domain/orders/draft-orders"
 import Pricing from "../domain/pricing"
 import Products from "../domain/products"
 import Settings from "../domain/settings"
+import ThirdParty from "../domain/third-party"
 
 const IndexPage = () => {
   useHotkeys("g + o", () => navigate("/a/orders"))
@@ -32,6 +33,7 @@ const IndexPage = () => {
         <PrivateRoute path="discounts/*" component={Discounts} />
         <PrivateRoute path="customers/*" component={Customers} />
         <PrivateRoute path="pricing/*" component={Pricing} />
+        <PrivateRoute path="third-party/*" component={ThirdParty} />
         <PrivateRoute path="settings/*" component={Settings} />
       </Router>
     </Layout>

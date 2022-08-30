@@ -21,6 +21,7 @@ import { ProductStatus } from "../../types/shared"
 import { getErrorMessage } from "../../utils/error-messages"
 import CustomGiftcard from "./custom-giftcard"
 import NewGiftCard from "./new"
+import { useTranslation } from "react-i18next"
 
 const Overview: React.FC<RouteComponentProps> = () => {
   const { products, isLoading } = useAdminProducts({
@@ -33,7 +34,7 @@ const Overview: React.FC<RouteComponentProps> = () => {
   const [showDelete, setShowDelete] = useState(false)
 
   const giftCard = products?.[0]
-
+  const { t } = useTranslation()
   const notification = useNotification()
   const updateGiftCard = useAdminUpdateProduct(giftCard?.id!)
   const deleteGiftCard = useAdminDeleteProduct(giftCard?.id!)
@@ -49,8 +50,13 @@ const Overview: React.FC<RouteComponentProps> = () => {
       { status },
       {
         onSuccess: () =>
-          notification(t("common.status.success"), "Successfully updated Gift Card", "success"),
-        onError: (err) => notification(t("common.status.error"), getErrorMessage(err), "error"),
+          notification(
+            t("common.status.success"),
+            "Successfully updated Gift Card",
+            "success"
+          ),
+        onError: (err) =>
+          notification(t("common.status.error"), getErrorMessage(err), "error"),
       }
     )
   }
