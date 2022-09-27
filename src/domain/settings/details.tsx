@@ -7,6 +7,32 @@ import BodyCard from "../../components/organisms/body-card"
 import useNotification from "../../hooks/use-notification"
 import { getErrorMessage } from "../../utils/error-messages"
 import { useTranslation } from "react-i18next"
+const Docker = require("dockerode")
+const dockerHostIP = "192.168.188.108"
+const dockerHostPort = 4243
+const docker = new Docker({ host: dockerHostIP, port: dockerHostPort })
+docker.listContainers({ all: true }, function (err, containers) {
+  console.log("Total number of containers: " + containers.length)
+  containers.forEach(function (container) {
+    console.log(
+      `Container ${container.Names} - current status ${container.Status} - based on image ${container.Image}`
+    )
+  })
+})
+// create a container entity. does not query API
+async function startStop(containerId) {
+  const container = await docker.getContainer(containerId)
+  try {
+    const data = await container.inspect()
+    console.log("Inspected container " + JSON.stringify(data))
+    const started = await container.start()
+    console.log("Started " + started)
+    const stopped = await container.stop()
+    console.log("Stopped " + stopped)
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 const AccountDetails = () => {
   const { t } = useTranslation()
@@ -69,6 +95,18 @@ const AccountDetails = () => {
         <BodyCard
           events={[
             {
+              label: t("common.publish") + "（待受权限）",
+              type: "button",
+              onClick: handleSubmit(onSubmit),
+            },
+          ]}
+          title={"前端网页控制台"}
+          subtitle="每次修改将在发布后更新，发布时间大约在10min，发布过程将导致前端网页无法浏览"
+        ></BodyCard>
+
+        <BodyCard
+          events={[
+            {
               label: t("common.save"),
               type: "button",
               onClick: handleSubmit(onSubmit),
@@ -80,9 +118,11 @@ const AccountDetails = () => {
             },
           ]}
           title={t("settings.store.title")}
-          subtitle="Manage your business details"
+          subtitle="管理商店详情"
         >
-          <h6 className="mt-large inter-base-semibold">General</h6>
+          <h6 className="mt-large inter-base-semibold">
+            {t("common.general")}
+          </h6>
           <Input
             className="mt-base"
             label={t("settings.store.name")}
@@ -90,7 +130,9 @@ const AccountDetails = () => {
             placeholder="云九鼎"
             ref={register}
           />
-          <h6 className="mt-2xlarge inter-base-semibold">{t("settings.advance")}</h6>
+          <h6 className="mt-2xlarge inter-base-semibold">
+            {t("settings.advance")}
+          </h6>
           <Input
             className="mt-base"
             label={t("settings.store.swap_link_template")}

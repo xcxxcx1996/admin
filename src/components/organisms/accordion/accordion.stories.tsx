@@ -12,7 +12,7 @@ const Template: ComponentStory<typeof Accordion> = (args) => (
   <div className="max-w-3xl max-h-6xlarge">
     <Accordion {...args}>
       <Accordion.Item
-        title={"General"}
+        title={"通用"}
         required
         value={"item.1"}
         description="test 12342 "
